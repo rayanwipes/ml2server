@@ -1,9 +1,10 @@
+import pickle
 import sklearn.ensemble
 import sklearn.datasets
-import pickle
 
 
 from random import randint
+from sklearn.externals import joblib
 
 
 class RandomForests:
@@ -18,7 +19,7 @@ class RandomForests:
 
     @staticmethod
     def _load_model_from_file(filename):
-        return pickle.load(filename)
+        return joblib.load(filename)
 
     @staticmethod
     def _load_model(model):
@@ -50,7 +51,7 @@ class RandomForests:
         return pickle.dumps(self.rf)
 
     def dump_model_into_file(self, filename):
-        pickle.dump(self.rf, filename)
+        joblib.dump(self.rf, filename)
 
     def fit(self, data):
         X, y = data
