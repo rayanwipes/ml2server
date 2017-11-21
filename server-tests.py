@@ -1,11 +1,6 @@
 import os
 import unittest
 
-from project import app, db, mail
-
-
-TEST_DB = 'test.db'
-
 class BasicTests(unittest.TestCase):
 
     # executed prior to each test
