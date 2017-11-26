@@ -13,7 +13,7 @@ class SupportVectorMachine():
 
     """Build classifier for SVM"""
     def __init__(self):
-        self.classifier = svm.SVC(gamma=0.001, C=100)
+        self.classifier = SupportVectorMachine._make_svm_classifier()
 
     """Trains the SVM on imported data"""
     def fit(self, data, features):
