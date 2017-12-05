@@ -9,7 +9,7 @@ class NaiveBayes():
 
     """Make the Classifier based on needed Model"""
     @staticmethod
-    def _make_NB_classifier(modeltype):
+    def _make_NB_classifier(modeltype=0):
         if modeltype == 0:
             return naive_bayes.GaussianNB()
         elif modeltype == 1:
