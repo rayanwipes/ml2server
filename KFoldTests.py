@@ -5,7 +5,7 @@ class TestKFoldCrossValidation(unittest.TestCase):
         self.assertEqual("1","1")
 
     def testKFold(self):
-        values = [(1,2),(1,2),(1,2),(1,2),(1,2),(1,2),(1,2),(1,2),(1,2),(1,2),(1,2)]
+        # values = [(1,2),(1,2),(1,2),(1,2),(1,2),(1,2),(1,2),(1,2),(1,2),(1,2),(1,2)]
         n = len(values)
         average =[]
         for value in range(0,n):
