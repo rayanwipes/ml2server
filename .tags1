@@ -1,0 +1,13 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	0	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+getData	/cs/home/jk218/project-code/wrapper.py	/^def getData(request):$/;"	function	line:3
+svm	/cs/home/jk218/project-code/wrapper.py	/^def svm(data):$/;"	function	line:8
+rf	/cs/home/jk218/project-code/wrapper.py	/^def rf(data):$/;"	function	line:16
+nb	/cs/home/jk218/project-code/wrapper.py	/^def nb(data):$/;"	function	line:19
+sort	/cs/home/jk218/project-code/wrapper.py	/^def sort(request):$/;"	function	line:28
+spamReader	/cs/home/jk218/project-code/wrapper.py	/^spamReader = csv.reader(open('publisher.csv', newline=''), delimiter=',', quotechar='|')$/;"	variable	line:38
+test	/cs/home/jk218/project-code/wrapper.py	/^test= {'x': [],'y': []}$/;"	variable	line:42
