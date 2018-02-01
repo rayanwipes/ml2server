@@ -1,5 +1,6 @@
 from sklearn import svm
 from sklearn import datasets
+from numpy import array_equal
 
 import matplotlib.pyplot as plt
 
@@ -33,25 +34,48 @@ class SupportVectorMachine():
         plt.show()
 
 
+def analyse(testing_svm, digits):
+    accuracy = 0
+    actual = []
+
+    for i in range(-49, 0):
+        prediction = testing_svm.predict(digits.data[i].reshape(1, -1))
+        actual.append(digits.target[i])
+        if array_equal(prediction, actual):
+            accuracy += 1
+        actual.pop()
+
+    return accuracy
+
+
 def gamma_value_tests():
     print "Analysis of altering SVM gamma value:"
-    print "Gamma value= 1"
     digits = datasets.load_digits()
-    svm_gamma1 = SupportVectorMachine(0.01)
-    svm_gamma1.fit(digits.data[:-10], digits.target[:-10])
-    accuracy1 = 0
+    gamma_values = [1, 0.5, 0.25, 0.1, 0.05, 0.01, 0.001, 0.0001, 0.00001]
 
-    for i in range(-9, 0):
-        prediction = svm_gamma1.predict(digits.data[i].reshape(1,-1))
-        print "Prediction for ", i, prediction
-        print "Actual= ", digits.target[i]
-        if prediction == digits.target[i]:
-            accuracy1 + 1
+    for i in gamma_values:
+        svm_gamma1 = SupportVectorMachine(i)
+        svm_gamma1.fit(digits.data[:-50], digits.target[:-50])
 
-    print accuracy1
+        print "With a gamma value of ", i, " algorithm correctly predicts ", analyse(svm_gamma1, digits), \
+            " out of 50\n"
 
+
+def fit_size_tests():
+    print "Analysis of altering amount of training data:"
+    digits = datasets.load_digits()
+    # 1797
+    fit_sizes = [-1500, -1250, -1000, -750, -500, -250, -100, -50]
+
+    for i in fit_sizes:
+        svm_gamma1 = SupportVectorMachine(0.01)
+        svm_gamma1.fit(digits.data[:i], digits.target[:i])
+
+        print "Trained on ", i, ", algorithm correctly predicts ", analyse(svm_gamma1, digits), \
+            " out of 50\n"
 
 if __name__ == "__main__":
     # svm = SupportVectorMachine(0.01)
     # svm.test()
-    gamma_value_tests()
+    # gamma_value_tests()
+    fit_size_tests()
