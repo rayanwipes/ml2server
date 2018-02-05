@@ -1,5 +1,0 @@
-getData	/cs/home/jk218/project-code/wrapper.py	/^def getData(request):$/;"	function	line:3
-svm	/cs/home/jk218/project-code/wrapper.py	/^def svm(data):$/;"	function	line:12
-rf	/cs/home/jk218/project-code/wrapper.py	/^def rf(data):$/;"	function	line:20
-nb	/cs/home/jk218/project-code/wrapper.py	/^def nb(data):$/;"	function	line:28
-sort	/cs/home/jk218/project-code/wrapper.py	/^def sort(operation,model_type,data_fName,existing_model=None):$/;"	function	line:40
