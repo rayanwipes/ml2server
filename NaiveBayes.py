@@ -1,6 +1,7 @@
 from sklearn import naive_bayes
 from sklearn import datasets
 from sklearn import metrics
+from sklearn.externals import joblib
 
 # import matplotlib.pyplot as plt
 
@@ -16,12 +17,25 @@ class NaiveBayes():
             return naive_bayes.MultinomialNB()
         elif modeltype == 2:
             return naive_bayes.BernoulliNB()
-            
 
     """Build classifier for Naive Bayes"""
-    def __init__(self, modeltype=0):
-        self.model = NaiveBayes._make_NB_classifier(modeltype)
+    def __init__(self,modeltype=0, model=None):
+        if model == None:
+            self.model = NaiveBayes._make_NB_classifier(modeltype)
+        else:
+            self.model = NaiveBayes.loadModel()
+            
     
+    """Save Model To file"""
+    def saveModel(self):
+        joblib.dump(self.model,'nb.pkl')
+
+    """Load Model from file"""
+    def loadModel(self):
+        self.model = joblib.load('nb.pkl')
+        return self
+        
+
     """Trains the NB model on imported data"""
     def fit(self, data, features):
         X, y = data, features
@@ -30,7 +44,8 @@ class NaiveBayes():
     """Gets prediction for passed in data"""
     def predict(self, data_to_predict):
         return self.model.predict(data_to_predict)
-
+        
+    """Debug Function"""
     def test(self):
         dataset = datasets.load_iris()
         self.model.fit(dataset.data,dataset.target)
@@ -41,8 +56,11 @@ class NaiveBayes():
 
 if __name__ == "__main__":
     nb = NaiveBayes(0)
+    nb.saveModel()
     nb.test()
-    nb = NaiveBayes(1)
+    nb =NaiveBayes(1)
     nb.test()
     nb = NaiveBayes(2)
+    nb.test()
+    nb =nb.loadModel()
     nb.test()
