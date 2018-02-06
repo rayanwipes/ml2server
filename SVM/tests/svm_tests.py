@@ -1,6 +1,7 @@
 from sklearn import svm
 import unittest
 
+
 class SVMUnitTests(unittest.TestCase):
 
     #Tests testing is working.
@@ -23,6 +24,7 @@ class SVMUnitTests(unittest.TestCase):
         fittedData = clf.fit(trainingSamples, classLabels)
         prediction = clf.predict([[2., 2.]])
         self.assertTrue(prediction != None)
+
 
 if __name__ == "__main__":
     unittest.main()
