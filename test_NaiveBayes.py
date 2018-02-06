@@ -6,7 +6,7 @@ class MyTest(unittest.TestCase):
     def setUp(self):
         pass
 
-    
+
 # Run this one many times.
     def test1(self):
         nb = NaiveBayes()
@@ -42,5 +42,5 @@ class MyTest(unittest.TestCase):
         assertEqual(y_pred,y_pred2)
 
 
-if __name__ = '__main__':
+if __name__ == '__main__':
     unittest.main()
