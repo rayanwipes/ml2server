@@ -1,1 +1,4 @@
 *.pyc
+.nfs*
+test.txt
+
