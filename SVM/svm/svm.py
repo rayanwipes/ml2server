@@ -1,5 +1,6 @@
 from sklearn import svm
 from sklearn import datasets
+from sklearn.externals import joblib
 from numpy import array_equal
 
 import matplotlib.pyplot as plt
@@ -13,8 +14,20 @@ class SupportVectorMachine():
         return svm.SVC(gamma=gamma_value, C=c_value)
 
     """Build classifier for SVM"""
-    def __init__(self, gamma_value, c_value):
-        self.classifier = SupportVectorMachine._make_svm_classifier(gamma_value, c_value)
+    def __init__(self, gamma_value, c_value, classifier=None):
+        if classifier == None:
+            self.classifier = SupportVectorMachine._make_svm_classifier(gamma_value, c_value)
+        else:
+            self.classifier = SupportVectorMachine.load_classifier
+
+    """Saves model to file"""
+    def save_model(self):
+        joblib.dump(self.classifier, "svm.pkl")
+
+    """Loads model from file"""
+    def load_model(self):
+        self.classifier = joblib.load("svm.pkl")
+        return self
 
     """Trains the SVM on imported data"""
     def fit(self, data, features):
