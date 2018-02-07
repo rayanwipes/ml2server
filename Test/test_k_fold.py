@@ -32,7 +32,7 @@ class MyTest(unittest.TestCase):
         print(scores)
 
 
-    # Do the same thing with the cross val score except this time you can add a metric to score it on in this case it is macro averaged
+    # Do the same thing with the cross val score except this time you can add a metric to score it on. in this case it is macro averaged
     def test2(self):
         clf = svm.SVC( C=1)
         scores = cross_val_score(clf, self.iris.data, self.iris.target, cv=8, scoring='f1_macro')
