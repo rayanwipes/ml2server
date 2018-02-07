@@ -1,47 +1,70 @@
 import unittest
 import import_impl
 from naivebayes import *
+from sklearn import datasets
+from sklearn import metrics
+from sklearn.model_selection import train_test_split
 
 
 class MyTest(unittest.TestCase):
-    # To DO
-    def setUp(self):
-        pass
 
-    # Run this one many times.
-    def test1(self):
-        nb = NaiveBayes()
-        nb.fit(training[data], training[output])
-        self.assertEqual(nb.predict(test), expected)
+    # Tests that it basically runs.
+    def test_Functional_Gaussian(self):
+        nb = NaiveBayes(0)
+        dataset = datasets.load_breast_cancer()
+        nb.fit(dataset.data, dataset.target)
+        self.assertEqual(nb.predict([dataset.data[1]]), [dataset.target[1]])
 
     # Test that it is within a level of accuracy.
-    def test2(self):
-        nb = NaiveBayes()
-        nb.fit(training[data], training[output])
-        y_pred = nb.predict(dataset)
-        num_right = (dataset.target != y_pred).sum()
-        assertTrue(num_right > ((size / 100) * 90))
+    def test_Accuracy_Gaussian(self):
+        nb = NaiveBayes(0)
+        dataset = datasets.load_breast_cancer()
+        X_train, X_val, y_train, y_val = train_test_split(
+            dataset.data, dataset.target, test_size=0.2, random_state=1)
+        nb.fit(X_train, y_train)
+        y_predicted = nb.predict(X_val)
+        num_right = (y_val == y_predicted).sum()
+        self.assertTrue(num_right >= (len(X_val) * 0.90))
 
     # Test for consistency of results from previous.
-    def test3(self):
-        nb = NaiveBayes()
-        nb.fit(training[data], training[output])
-        y_pred = nb.predict(dataset)
-        nb2 = NaiveBayes()
-        nb2.fit(training[data], training[output])
-        y_pred2 = nb.predict(dataset)
-        assertEqual(y_pred, y_pred2)
+    def test_Consistency_Gaussian(self):
+        nb = NaiveBayes(0)
+        dataset = datasets.load_iris()
+        nb.fit(dataset.data, dataset.target)
+        nb2 = NaiveBayes(0)
+        nb2.fit(dataset.data, dataset.target)
+        result1 = nb.predict([dataset.data[1]])
+        result2 = nb2.predict([dataset.data[1]])
+        self.assertEqual(result1, result2)
 
-    # Test Predictable output for equal probabilities
-    def test4(self):
-        nb = NaiveBayes()
-        nb.fit(training_equal[data], training_equal[output])
-        y_pred = nb.predict(equal_data)
-        nb2 = NaiveBayes()
-        nb2.fit(training_equal[data], training_equal[output])
-        y_pred2 = nb2.predict(equal_data)
-        assertEqual(y_pred, y_pred2)
+    # Tests that it basically runs.
+    def test_Functional_Multinomial(self):
+        nb = NaiveBayes(1)
+        dataset = datasets.load_breast_cancer()
+        nb.fit(dataset.data, dataset.target)
+        self.assertEqual(nb.predict([dataset.data[1]]), [dataset.target[1]])
 
+    # Test that it is within a level of accuracy.
+    def test_Accuracy_Multinomial(self):
+        nb = NaiveBayes(1)
+        dataset = datasets.load_breast_cancer()
+        X_train, X_val, y_train, y_val = train_test_split(
+            dataset.data, dataset.target, test_size=0.2, random_state=1)
+        nb.fit(X_train, y_train)
+        y_predicted = nb.predict(X_val)
+        num_right = (y_val == y_predicted).sum()
+        self.assertTrue(num_right >= (len(X_val) * 0.85))
+
+    # Test for consistency of results from previous.
+    def test_Consistency_Multinomial(self):
+        nb = NaiveBayes(1)
+        dataset = datasets.load_iris()
+        nb.fit(dataset.data, dataset.target)
+        nb2 = NaiveBayes(1)
+        nb2.fit(dataset.data, dataset.target)
+        result1 = nb.predict([dataset.data[1]])
+        result2 = nb2.predict([dataset.data[1]])
+        self.assertEqual(result1, result2)
 
 if __name__ == '__main__':
     unittest.main()
