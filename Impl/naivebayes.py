@@ -3,8 +3,6 @@ from sklearn import datasets
 from sklearn import metrics
 from sklearn.externals import joblib
 
-# import matplotlib.pyplot as plt
-
 
 # Naive Bayes Classifier
 class NaiveBayes():
@@ -53,13 +51,3 @@ class NaiveBayes():
         print(metrics.confusion_matrix(expected, predicted))
 
 
-if __name__ == "__main__":
-    nb = NaiveBayes(0)
-    nb.saveModel()
-    nb.test()
-    nb = NaiveBayes(1)
-    nb.test()
-    nb = NaiveBayes(2)
-    nb.test()
-    nb = nb.loadModel()
-    nb.test()
