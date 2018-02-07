@@ -1,14 +1,15 @@
 import pandas as pd
 import csv
-# cursory removing all empty rows, in the future, more careful consideration will be used,
-def getData(request):
+
+OP_FIT,OP_SCORE,OP_PREDICT = range(4)
+MDL_NAIVE_BAYES_GAUSSIAN, MDL_NAIVE_BAYES_MULTINOMIAL,MDL_NAIVE_BAYES_BERNOULLI, MDL_RANDOM_FOREST, MDL_SVM = range(5)
+
+# cursory removing all empty rows, in the future, more careful data pruning will be used
+def cleanData(request):
     df = pd.DataFrame(request)
     df.dropna(axis=0,how="any")
     return df
     # print(df)
-
-OP_FIT,OP_SCORE,OP_PREDICT = range(4)
-MDL_NAIVE_BAYES_GAUSSIAN, MDL_NAIVE_BAYES_MULTINOMIAL,MDL_NAIVE_BAYES_BERNOULLI, MDL_RANDOM_FOREST, MDL_SVM = range(5)
 
 def create_model(model_type):
         if model_type = MDL_NAIVE_BAYES_GAUSSIAN:
@@ -22,7 +23,7 @@ def create_model(model_type):
         elif model_type = MDL_NAIVE_BAYES_SVM:
             model = SVM(model_type, existing_model)
         else:
-            raise Exception("Broken Model Type")
+            raise Exception("Non compatible model type")
 
         return model
 
@@ -31,10 +32,14 @@ def fit(data, model):
     return model
 
 def predict(x_data,model):
+    return model.predict(x_data)
 
+def score(model,k=None):
+    score = k
+    if k == None:
+        score = 5
 
-
-# Multiple arguments
+# Multiple arguments if needed for the future, it has all of the functionality
 def sort(**kwargs):
     operation = None
     model_type = None
@@ -61,6 +66,21 @@ def sort(**kwargs):
 
     model = None
     # getDataFromFile in the fit bit
+    if model_type = MDL_NAIVE_BAYES_GAUSSIAN:
+        model = NaiveBayes(NaiveBayes.TYPE_GAUSSIAN, model_type, existing_model)
+    elif model_type = MDL_NAIVE_BAYES_MULTINOMIAL:
+        model = NaiveBayes(NaiveBayes.TYPE_MULTINOMIAL, model_type, existing_model)
+    elif model_type = MDL_NAIVE_BAYES_BERNOULLI:
+        model = NaiveBayes(NaiveBayes.TYPE_BERNOULLI, model_type, existing_model)
+    elif model_type = MDL_NAIVE_BAYES_RANDOM_FOREST:
+        model = RandomForests(model_type, existing_model)
+    elif model_type = MDL_NAIVE_BAYES_SVM:
+        model = SVM(model_type, existing_model)
+    else:
+        raise Exception("Broken Model Type")
+
+    return model
+
 
     if operation == OP_FIT:
         data = getData(data_filename)
@@ -74,4 +94,4 @@ def sort(**kwargs):
             raise Exception("No X value given to predict from")
         model.predict(X)
     else:
-        raise Exception("GREAT SCOTT MARTY")
+        raise Exception("Operation not recognised")
