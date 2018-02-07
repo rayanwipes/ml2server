@@ -1,8 +1,8 @@
-import os
 import unittest
+import os
+import import_impl
 
 class BasicTests(unittest.TestCase):
-
     # executed prior to each test
     def setUp(self):
         app.config['TESTING'] = True

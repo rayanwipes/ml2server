@@ -2,13 +2,18 @@
 
 import unittest
 from operator import add
+from functools import reduce
 
-from randomforests import *
+import import_impl
+
+from randomforest import *
+
+
+def mean(a):
+    return float(reduce(add, a) / len(a))
 
 
 class RandomForestTest(unittest.TestCase):
-    def mean(a):
-        return float(reduce(add, a) / len(a))
 
     def test_scoring(self):
         rf = RandomForests()
@@ -24,7 +29,7 @@ class RandomForestTest(unittest.TestCase):
         print(len(a))
         print(sorted(a)[:10])
         fail_rate = float(len([x for x in a if x < .94999]))
-        print(str(100. * (1. - fail_rate) / len(a))) + "%")
+        print(str(100. * (1. - fail_rate) / len(a)) + "%")
         self.assertGreater(mean(a), .7999)
 
     def accuracy_check(self, name, data):
@@ -39,17 +44,17 @@ class RandomForestTest(unittest.TestCase):
 
     def test_iris(self):
         self.assertGreater(
-            accuracy_check("iris", load_iris(return_X_y=True)),
+            self.accuracy_check("iris", load_iris(return_X_y=True)),
             .94999)
 
     def test_diabetes(self):
         self.assertGreater(
-            accuracy_check("diabetes", load_diabetes(return_X_y=True)),
+            self.accuracy_check("diabetes", load_diabetes(return_X_y=True)),
             .94999)
 
     def test_breast_cancer(self):
         self.assertGreater(
-            accuracy_check(
+            self.accuracy_check(
                 "breast cancer",
                 load_breast_cancer(return_X_y=True)),
             .94999)

@@ -1,4 +1,7 @@
 *.pyc
 .nfs*
 test.txt
-
+Package
+__init__.py
+.cache
+__pycache__

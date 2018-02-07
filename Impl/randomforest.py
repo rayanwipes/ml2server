@@ -112,7 +112,7 @@ class RandomForests:
             n_repeated=nrep,
             n_classes=2,
             n_clusters_per_class=2,
-            flip_y=0.00, # default 0.01
+            flip_y=0.00,  # default 0.01
             class_sep=1.0,
             hypercube=False,
             shift=0.0,
