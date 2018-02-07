@@ -1,6 +1,6 @@
 import pandas as pd
 import csv
-
+# Things written for the future, if this has to be used
 OP_FIT,OP_SCORE,OP_PREDICT = range(4)
 MDL_NAIVE_BAYES_GAUSSIAN, MDL_NAIVE_BAYES_MULTINOMIAL,MDL_NAIVE_BAYES_BERNOULLI, MDL_RANDOM_FOREST, MDL_SVM = range(5)
 
@@ -34,12 +34,19 @@ def fit(data, model):
 def predict(x_data,model):
     return model.predict(x_data)
 
-def score(model,k=None):
+def cross_validate(model,x_Data,y_Data,k=None):
     score = k
     if k == None:
         score = 5
+    # Validation function and macros will change depending upon what type of data, classifier is being used
+    scores = cross_val_score(model,x_Data,y_Data, cv=score)
+    return scores
 
-# Multiple arguments if needed for the future, it has all of the functionality
+def score(model,X_data):
+    model.score(X_data)
+
+
+# Multiple arguments if needed for the future, it has all of the functionality of the above
 def sort(**kwargs):
     operation = None
     model_type = None
@@ -80,7 +87,6 @@ def sort(**kwargs):
         raise Exception("Broken Model Type")
 
     return model
-
 
     if operation == OP_FIT:
         data = getData(data_filename)
