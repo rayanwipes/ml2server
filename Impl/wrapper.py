@@ -12,15 +12,15 @@ def cleanData(request):
     # print(df)
 
 def create_model(model_type):
-        if model_type = MDL_NAIVE_BAYES_GAUSSIAN:
+        if model_type == MDL_NAIVE_BAYES_GAUSSIAN:
             model = NaiveBayes(NaiveBayes.TYPE_GAUSSIAN, model_type, existing_model)
-        elif model_type = MDL_NAIVE_BAYES_MULTINOMIAL:
+        elif model_type == MDL_NAIVE_BAYES_MULTINOMIAL:
             model = NaiveBayes(NaiveBayes.TYPE_MULTINOMIAL, model_type, existing_model)
-        elif model_type = MDL_NAIVE_BAYES_BERNOULLI:
+        elif model_type == MDL_NAIVE_BAYES_BERNOULLI:
             model = NaiveBayes(NaiveBayes.TYPE_BERNOULLI, model_type, existing_model)
-        elif model_type = MDL_NAIVE_BAYES_RANDOM_FOREST:
+        elif model_type == MDL_NAIVE_BAYES_RANDOM_FOREST:
             model = RandomForests(model_type, existing_model)
-        elif model_type = MDL_NAIVE_BAYES_SVM:
+        elif model_type == MDL_NAIVE_BAYES_SVM:
             model = SVM(model_type, existing_model)
         else:
             raise Exception("Non compatible model type")
@@ -73,15 +73,15 @@ def sort(**kwargs):
 
     model = None
     # getDataFromFile in the fit bit
-    if model_type = MDL_NAIVE_BAYES_GAUSSIAN:
+    if model_type == MDL_NAIVE_BAYES_GAUSSIAN:
         model = NaiveBayes(NaiveBayes.TYPE_GAUSSIAN, model_type, existing_model)
-    elif model_type = MDL_NAIVE_BAYES_MULTINOMIAL:
+    elif model_type == MDL_NAIVE_BAYES_MULTINOMIAL:
         model = NaiveBayes(NaiveBayes.TYPE_MULTINOMIAL, model_type, existing_model)
-    elif model_type = MDL_NAIVE_BAYES_BERNOULLI:
+    elif model_type == MDL_NAIVE_BAYES_BERNOULLI:
         model = NaiveBayes(NaiveBayes.TYPE_BERNOULLI, model_type, existing_model)
-    elif model_type = MDL_NAIVE_BAYES_RANDOM_FOREST:
+    elif model_type == MDL_NAIVE_BAYES_RANDOM_FOREST:
         model = RandomForests(model_type, existing_model)
-    elif model_type = MDL_NAIVE_BAYES_SVM:
+    elif model_type == MDL_NAIVE_BAYES_SVM:
         model = SVM(model_type, existing_model)
     else:
         raise Exception("Broken Model Type")
