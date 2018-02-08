@@ -1,8 +1,9 @@
 import unittest
 import os
 import import_impl
-from server import * 
+from server import *
 import json
+
 
 class BasicTests(unittest.TestCase):
     # executed prior to each test
@@ -33,7 +34,6 @@ class BasicTests(unittest.TestCase):
         print("Fetch status of a model traning")
         print("-----------------------------------------------")
 
-    
     def test_delete_model(self):
         response = self.app.delete('training/123212', data={})
         self.assertEqual(response.status_code, 200)
@@ -43,7 +43,8 @@ class BasicTests(unittest.TestCase):
 
     def test_model_prediction(self):
         params = {'input_data': '2132331232'}
-        response = self.app.get('/model/121321/prediction', data=json.dumps(params))
+        response = self.app.get(
+            '/model/121321/prediction', data=json.dumps(params))
         self.assertEqual(response.status_code, 200)
         print("-")
         print("Prediction route returns 200 status code")
@@ -56,7 +57,6 @@ class BasicTests(unittest.TestCase):
         print("-")
         print("Suggest model returns model selected")
         print("----------------------------------------------")
-        
 
 
 if __name__ == "__main__":

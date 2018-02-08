@@ -8,32 +8,37 @@ import algorithms
 
 app = Flask(__name__)
 
+
 @app.route("/")
 def main():
-	return "hello"
+    return "hello"
+
 
 @app.route('/training/<model_id>', methods=["POST"])
 def create_model(model_id):
-    data        = json.loads(request.data.decode('utf-8'))
-    algorithm   = data['algorithm']
+    data = json.loads(request.data.decode('utf-8'))
+    algorithm = data['algorithm']
     if (algorithm == "naive-bayes"):
         model = algorithms.naive(data)
     elif (algorithm == ""):
         model = algorithms.whatnot(data)
     else:
         return 401
-    #send to backend
+    # send to backend
     return jsonify("redirect")
+
 
 @app.route('/training/<model_id>')
 def get_status(model_id):
-    #fetch status
-    return jsonify({"data": { "percent_trained": 0}})
+    # fetch status
+    return jsonify({"data": {"percent_trained": 0}})
+
 
 @app.route('/training/<model_id>', methods=["DELETE"])
 def stop_model(model_id):
-    #stop it
+    # stop it
     return jsonify(200)
+
 
 @app.route('/model/<model_id>/prediction')
 def predict(model_id):
@@ -43,9 +48,9 @@ def predict(model_id):
     else:
         return jsonify("No input data parameter")
 
+
 @app.route('/suggest')
 def suggest():
     data = json.loads(request.data.decode('utf-8'))
     prediction = "naive"
     return jsonify(prediction)
-
