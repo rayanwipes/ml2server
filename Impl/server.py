@@ -1,9 +1,12 @@
+# coding=utf-8
+
 from flask import Flask
-app = Flask(__name__)
 from flask import request
 from flask import jsonify
 import json
 import algorithms
+
+app = Flask(__name__)
 
 @app.route("/")
 def main():
@@ -11,7 +14,7 @@ def main():
 
 @app.route('/training/<model_id>', methods=["POST"])
 def create_model(model_id):
-    data        = json.loads(request.data)
+    data        = json.loads(request.data.decode('utf-8'))
     algorithm   = data['algorithm']
     if (algorithm == "naive-bayes"):
         model = algorithms.naive(data)
@@ -34,15 +37,15 @@ def stop_model(model_id):
 
 @app.route('/model/<model_id>/prediction')
 def predict(model_id):
-    input_uuid = json.loads(request.data)['input_data']
+    input_uuid = json.loads(request.data.decode('utf-8'))['input_data']
     if (input_uuid):
         return jsonify(algorithms.whatever(model_id, input_uuid))
-    else: 
+    else:
         return jsonify("No input data parameter")
 
 @app.route('/suggest')
 def suggest():
-    data = json.loads(request.data)
+    data = json.loads(request.data.decode('utf-8'))
     prediction = "naive"
     return jsonify(prediction)
 

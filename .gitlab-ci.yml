@@ -8,6 +8,7 @@ before_script:
 run_test:
   script:
     - env python3 Test/test_naivebayes.py
+    - env python3 Test/test_server.py
     - env python3 Test/test_k_fold.py
     - env python3 Test/test_randomforest.py
     - env python3 Test/test_svm.py
