@@ -2,7 +2,7 @@ from flask import Flask
 app = Flask(__name__)
 from flask import request
 from flask import jsonify
-
+import json
 import algorithms
 
 @app.route("/")
@@ -11,15 +11,16 @@ def main():
 
 @app.route('/training/<model_id>', methods=["POST"])
 def create_model(model_id):
-    data = request.data
-    if (data.algorithm == "naive-bayes"):
+    data        = json.loads(request.data)
+    algorithm   = data['algorithm']
+    if (algorithm == "naive-bayes"):
         model = algorithms.naive(data)
-    elif (data.algorithm == ""):
+    elif (algorithm == ""):
         model = algorithms.whatnot(data)
     else:
         return 401
     #send to backend
-    return "redirect"
+    return jsonify("redirect")
 
 @app.route('/training/<model_id>')
 def get_status(model_id):
@@ -33,7 +34,7 @@ def stop_model(model_id):
 
 @app.route('/model/<model_id>/prediction')
 def predict(model_id):
-    input_uuid = request.data.input_data
+    input_uuid = json.loads(request.data)['input_data']
     if (input_uuid):
         return jsonify(algorithms.whatever(model_id, input_uuid))
     else: 
@@ -41,7 +42,7 @@ def predict(model_id):
 
 @app.route('/suggest')
 def suggest():
-    data = request.data
+    data = json.loads(request.data)
     prediction = "naive"
     return jsonify(prediction)
 
