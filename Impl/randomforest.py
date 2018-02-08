@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 from sklearn.datasets import *
 from sklearn.metrics import *
 from sklearn.ensemble import RandomForestClassifier
