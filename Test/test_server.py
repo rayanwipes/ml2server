@@ -1,6 +1,8 @@
 import unittest
 import os
 import import_impl
+from server import * 
+
 
 class BasicTests(unittest.TestCase):
     # executed prior to each test
