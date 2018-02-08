@@ -1,0 +1,6 @@
+pandas==0.19.*
+numpy==1.*
+matplotlib==2.*
+Flask==0.*
+scikit_learn==0.19.*
+scipy==0.19.*
