@@ -2,11 +2,18 @@ image: ubuntu
 
 before_script:
   - apt-get update -qy
-  - apt-get install -y python3-dev python3-pip python3-tk
-  - env python3 -m pip install -r requirements.txt
+  - apt-get install -y python3-dev python3-pip
+
+stylecheck:
+  script:
+    - apt-get install -y findutils
+    - env python3 -m pip install pycodestyle
+    - find . -type f -name "*.py" -print0 | xargs -0 -n 1 -I% env python3 -m pycodestyle %
 
 run_test:
   script:
+    - apt-get install -y python3-tk
+    - env python3 -m pip install -r requirements.txt
     - env python3 Test/test_naivebayes.py
     - env python3 Test/test_server.py
     - env python3 Test/test_k_fold.py

@@ -123,5 +123,6 @@ class MyTest(unittest.TestCase):
         result2 = nb2.predict([dataset.data[1]])
         self.assertEqual(result1, result2)
 
+
 if __name__ == '__main__':
     unittest.main()
