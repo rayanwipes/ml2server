@@ -14,22 +14,23 @@ def mean(a):
 
 
 class RandomForestTest(unittest.TestCase):
-
     def test_scoring(self):
-        rf = RandomForests()
         a = []
-        for i in range(10):
-            if i % 10 == 0:
-                print(i, "...")
+        no_tests = 10
+        for i in range(no_tests):
+            if i % 5 == 0:
+                print(str(i) + "/" + str(no_tests) + " ...")
+            rf = RandomForests()
             data = rf.gen_sample_problem()
             train, test = rf.train_test_split(data)
             rf.fit(train, True)
-            print("model size: ", len(rf.dump_model()))
+            # print("model size: ", len(rf.dump_model()))
             a += [rf.score(test)]
+            if i % 5 == 4:
+                print(a[-5:])
         print(len(a))
         print(sorted(a)[:10])
-        fail_rate = float(len([x for x in a if x < .94999]))
-        print(str(100. * (1. - fail_rate) / len(a)) + "%")
+        print("Mean: ", mean(a))
         self.assertGreater(mean(a), .7999)
 
     def accuracy_check(self, name, data):
