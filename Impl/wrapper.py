@@ -1,52 +1,67 @@
 import pandas as pd
 import csv
-# Things written for the future, if this has to be used
-OP_FIT,OP_SCORE,OP_PREDICT = range(4)
-MDL_NAIVE_BAYES_GAUSSIAN, MDL_NAIVE_BAYES_MULTINOMIAL,MDL_NAIVE_BAYES_BERNOULLI, MDL_RANDOM_FOREST, MDL_SVM = range(5)
 
-# cursory removing all empty rows, in the future, more careful data pruning will be used
+
+# Things written for the future, if this has to be used
+OP_FIT, OP_SCORE, OP_PREDICT = range(4)
+MDL_NAIVE_BAYES_GAUSSIAN, MDL_NAIVE_BAYES_MULTINOMIAL, \
+    MDL_NAIVE_BAYES_BERNOULLI, MDL_RANDOM_FOREST, MDL_SVM = range(5)
+
+
+# cursory removing all empty rows, in the future, more careful data pruning
+# will be used
 def cleanData(request):
     df = pd.DataFrame(request)
-    df.dropna(axis=0,how="any")
+    df.dropna(axis=0, how="any")
     return df
     # print(df)
 
-def create_model(model_type):
-        if model_type == MDL_NAIVE_BAYES_GAUSSIAN:
-            model = NaiveBayes(NaiveBayes.TYPE_GAUSSIAN, model_type, existing_model)
-        elif model_type == MDL_NAIVE_BAYES_MULTINOMIAL:
-            model = NaiveBayes(NaiveBayes.TYPE_MULTINOMIAL, model_type, existing_model)
-        elif model_type == MDL_NAIVE_BAYES_BERNOULLI:
-            model = NaiveBayes(NaiveBayes.TYPE_BERNOULLI, model_type, existing_model)
-        elif model_type == MDL_NAIVE_BAYES_RANDOM_FOREST:
-            model = RandomForests(model_type, existing_model)
-        elif model_type == MDL_NAIVE_BAYES_SVM:
-            model = SVM(model_type, existing_model)
-        else:
-            raise Exception("Non compatible model type")
 
-        return model
+def create_model(model_type):
+    if model_type == MDL_NAIVE_BAYES_GAUSSIAN:
+        model = NaiveBayes(NaiveBayes.TYPE_GAUSSIAN,
+                           model_type, existing_model)
+    elif model_type == MDL_NAIVE_BAYES_MULTINOMIAL:
+        model = NaiveBayes(NaiveBayes.TYPE_MULTINOMIAL,
+                           model_type, existing_model)
+    elif model_type == MDL_NAIVE_BAYES_BERNOULLI:
+        model = NaiveBayes(NaiveBayes.TYPE_BERNOULLI,
+                           model_type, existing_model)
+    elif model_type == MDL_NAIVE_BAYES_RANDOM_FOREST:
+        model = RandomForests(model_type, existing_model)
+    elif model_type == MDL_NAIVE_BAYES_SVM:
+        model = SVM(model_type, existing_model)
+    else:
+        raise Exception("Non compatible model type")
+
+    return model
+
 
 def fit(data, model):
     model.fit(data)
     return model
 
-def predict(x_data,model):
+
+def predict(x_data, model):
     return model.predict(x_data)
 
-def cross_validate(model,x_Data,y_Data,k=None):
+
+def cross_validate(model, x_Data, y_Data, k=None):
     score = k
-    if k == None:
+    if k is None:
         score = 5
-    # Validation function and macros will change depending upon what type of data, classifier is being used
-    scores = cross_val_score(model,x_Data,y_Data, cv=score)
+    # Validation function and macros will change depending upon what type of
+    # data, classifier is being used
+    scores = cross_val_score(model, x_Data, y_Data, cv=score)
     return scores
 
-def score(model,X_data):
+
+def score(model, X_data):
     model.score(X_data)
 
 
-# Multiple arguments if needed for the future, it has all of the functionality of the above
+# Multiple arguments if needed for the future, it has all of the
+# functionality of the above
 def sort(**kwargs):
     operation = None
     model_type = None
@@ -67,18 +82,20 @@ def sort(**kwargs):
         else:
             pass
 
-    if operation == None or model_type == None:
+    if operation is None or model_type is None:
         raise Exception("No model type provided")
-
 
     model = None
     # getDataFromFile in the fit bit
     if model_type == MDL_NAIVE_BAYES_GAUSSIAN:
-        model = NaiveBayes(NaiveBayes.TYPE_GAUSSIAN, model_type, existing_model)
+        model = NaiveBayes(NaiveBayes.TYPE_GAUSSIAN,
+                           model_type, existing_model)
     elif model_type == MDL_NAIVE_BAYES_MULTINOMIAL:
-        model = NaiveBayes(NaiveBayes.TYPE_MULTINOMIAL, model_type, existing_model)
+        model = NaiveBayes(NaiveBayes.TYPE_MULTINOMIAL,
+                           model_type, existing_model)
     elif model_type == MDL_NAIVE_BAYES_BERNOULLI:
-        model = NaiveBayes(NaiveBayes.TYPE_BERNOULLI, model_type, existing_model)
+        model = NaiveBayes(NaiveBayes.TYPE_BERNOULLI,
+                           model_type, existing_model)
     elif model_type == MDL_NAIVE_BAYES_RANDOM_FOREST:
         model = RandomForests(model_type, existing_model)
     elif model_type == MDL_NAIVE_BAYES_SVM:
@@ -96,7 +113,7 @@ def sort(**kwargs):
         data = getData(data_filename)
         model.score(data)
     elif operation == OP_PREDICT:
-        if X == None:
+        if X is None:
             raise Exception("No X value given to predict from")
         model.predict(X)
     else:
