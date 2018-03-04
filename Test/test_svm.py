@@ -1,9 +1,10 @@
-from sklearn import svm
+from numpy import array_equal
+from sklearn import metrics
 from sklearn import datasets
+from sklearn.model_selection import train_test_split
 
 import import_impl
 import unittest
-
 
 from svm import *
 
@@ -21,33 +22,43 @@ def analyse(testing_svm, digits):
 
 
 class SVMUnitTests(unittest.TestCase):
-    # Tests fitting data method doesn't return null value
-    def testFittingData(self):
-        trainingSamples = [[0, 0], [1, 1]]
-        classLabels = [0, 1]
-        clf = svm.SVC()
-        fittedData = clf.fit(trainingSamples, classLabels)
-        self.assertTrue(fittedData is not None)
 
-    # Tests predicting data doesn't return null.
-    def testPredictingData(self):
-        trainingSamples = [[0, 0], [1, 1]]
-        classLabels = [0, 1]
-        clf = svm.SVC()
-        fittedData = clf.fit(trainingSamples, classLabels)
-        prediction = clf.predict([[2., 2.]])
-        self.assertTrue(prediction is not None)
+    def test_SVM_Functionality(self):
+        print("Testing SVM functionality:")
+        digits = datasets.load_digits()
+        test_svm = SupportVectorMachine()
+        test_svm.fit(digits.data, digits.target)
+        predicted_values = test_svm.predict(digits.data)
+
+        print(metrics.classification_report(digits.target, predicted_values))
+        print("\nAccuracy: " + str(metrics.accuracy_score(digits.target, predicted_values)))
+        print("F-Score: " + str(metrics.f1_score(digits.target, predicted_values, average='macro')) + "\n")
+
+    def test_SVM_Accuracy(self):
+        print("Checking default SVM settings accuracy (Gamma value=0.001, C=10, and trained on 75% of the data):")
+        digits = datasets.load_digits()
+        test_svm = SupportVectorMachine()
+
+        X_train, X_val, y_train, y_val = train_test_split(
+            digits.data, digits.target, test_size=0.75, random_state=1)
+
+        test_svm.fit(X_train, y_train)
+        predicted_values = test_svm.predict(X_val)
+
+        print(metrics.classification_report(y_val, predicted_values))
+        print("\nAccuracy: " + str(metrics.accuracy_score(y_val, predicted_values)))
+        print("F-Score: " + str(metrics.f1_score(y_val, predicted_values, average='macro')) + "\n")
 
     def test_gamma_value(self):
         print("Analysis of altering SVM gamma value:")
         digits = datasets.load_digits()
         gamma_values = [1, 0.5, 0.25, 0.1, 0.05, 0.01, 0.001, 0.0001, 0.00001]
         for i in gamma_values:
-            svm_gamma1 = SupportVectorMachine(i, 100)
-            svm_gamma1.fit(digits.data[:-50], digits.target[:-50])
+            svm_gamma = SupportVectorMachine(i, 100)
+            svm_gamma.fit(digits.data[:-50], digits.target[:-50])
             print("With a gamma value of ",
                   i, " algorithm correctly predicts ",
-                  analyse(svm_gamma1, digits), "%")
+                  analyse(svm_gamma, digits), "%")
 
     def test_fit_size(self):
         print("Analysis of altering amount of training data:")
@@ -55,10 +66,10 @@ class SVMUnitTests(unittest.TestCase):
         # 1797
         fit_sizes = [-1500, -1250, -1000, -750, -500, -250, -100, -50]
         for i in fit_sizes:
-            svm_gamma1 = SupportVectorMachine(0.01, 100)
-            svm_gamma1.fit(digits.data[:i], digits.target[:i])
+            svm_fit = SupportVectorMachine(0.01, 100)
+            svm_fit.fit(digits.data[:i], digits.target[:i])
             print("Trained on ", i, ", algorithm correctly predicts ",
-                  analyse(svm_gamma1, digits), "%")
+                  analyse(svm_fit, digits), "%")
 
     def test_c_value(self):
         print("Analysis of altering C values:")

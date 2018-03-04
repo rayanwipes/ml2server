@@ -15,7 +15,7 @@ class SupportVectorMachine():
         return svm.SVC(gamma=gamma_value, C=c_value)
 
     # Build classifier for SVM
-    def __init__(self, gamma_value, c_value, classifier=None):
+    def __init__(self, gamma_value=0.001, c_value=10, classifier=None):
         SVM = SupportVectorMachine
         if classifier is None:
             self.classifier = SVM._make_svm_classifier(gamma_value, c_value)
