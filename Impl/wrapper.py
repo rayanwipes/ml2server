@@ -10,7 +10,7 @@ MDL_NAIVE_BAYES_GAUSSIAN, MDL_NAIVE_BAYES_MULTINOMIAL, \
 
 # cursory removing all empty rows, in the future, more careful data pruning
 # will be used
-def cleanData(request):
+def clean_data(request):
     df = pd.DataFrame(request)
     df.dropna(axis=0, how="any")
     return df
@@ -96,9 +96,9 @@ def sort(**kwargs):
     elif model_type == MDL_NAIVE_BAYES_BERNOULLI:
         model = NaiveBayes(NaiveBayes.TYPE_BERNOULLI,
                            model_type, existing_model)
-    elif model_type == MDL_NAIVE_BAYES_RANDOM_FOREST:
+    elif model_type == MDL_RANDOM_FOREST:
         model = RandomForests(model_type, existing_model)
-    elif model_type == MDL_NAIVE_BAYES_SVM:
+    elif model_type == MDL_SVM:
         model = SVM(model_type, existing_model)
     else:
         raise Exception("Broken Model Type")
