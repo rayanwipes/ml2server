@@ -19,6 +19,7 @@ class MyTest(unittest.TestCase):
         print(metrics.classification_report(y_val, y_predicted))
         print("\nAccuracy: " + str(metrics.accuracy_score(y_val, y_predicted)))
         print("F-Score: " + str(metrics.f1_score(y_val, y_predicted)))
+        print("Confusion Matrix:\n" + str(metrics.confusion_matrix(y_val, y_predicted)) + "\n")
         print("##############################################################")
 
     # Test that it is within a level of accuracy.
@@ -34,6 +35,7 @@ class MyTest(unittest.TestCase):
         print(metrics.classification_report(y_val, y_predicted))
         print("\nAccuracy: " + str(metrics.accuracy_score(y_val, y_predicted)))
         print("F-Score: " + str(metrics.f1_score(y_val, y_predicted)))
+        print("Confusion Matrix:\n" + str(metrics.confusion_matrix(y_val, y_predicted)) + "\n")
         print("##############################################################")
 
     # Test for consistency of results from previous.
@@ -58,6 +60,7 @@ class MyTest(unittest.TestCase):
         print(metrics.classification_report(y_val, y_predicted))
         print("\nAccuracy: " + str(metrics.accuracy_score(y_val, y_predicted)))
         print("F-Score: " + str(metrics.f1_score(y_val, y_predicted)))
+        print("Confusion Matrix:\n" + str(metrics.confusion_matrix(y_val, y_predicted)) + "\n")
         print("##############################################################")
 
     # Test that it is within a level of accuracy.
@@ -72,6 +75,7 @@ class MyTest(unittest.TestCase):
         print(metrics.classification_report(y_val, y_predicted))
         print("\nAccuracy: " + str(metrics.accuracy_score(y_val, y_predicted)))
         print("F-Score: " + str(metrics.f1_score(y_val, y_predicted)))
+        print("Confusion Matrix:\n" + str(metrics.confusion_matrix(y_val, y_predicted)) + "\n")
         print("##############################################################")
 
     # Test for consistency of results from previous.
@@ -96,6 +100,7 @@ class MyTest(unittest.TestCase):
         print(metrics.classification_report(y_val, y_predicted))
         print("\nAccuracy: " + str(metrics.accuracy_score(y_val, y_predicted)))
         print("F-Score: " + str(metrics.f1_score(y_val, y_predicted)))
+        print("Confusion Matrix:\n" + str(metrics.confusion_matrix(y_val, y_predicted)) + "\n")
         print("##############################################################")
 
     # Test that it is within a level of accuracy.
@@ -110,6 +115,7 @@ class MyTest(unittest.TestCase):
         print(metrics.classification_report(y_val, y_predicted))
         print("\nAccuracy: " + str(metrics.accuracy_score(y_val, y_predicted)))
         print("F-Score: " + str(metrics.f1_score(y_val, y_predicted)))
+        print("Confusion Matrix:\n" + str(metrics.confusion_matrix(y_val, y_predicted)) + "\n")
         print("##############################################################")
 
     # Test for consistency of results from previous.

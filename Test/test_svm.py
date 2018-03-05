@@ -24,6 +24,7 @@ def analyse(testing_svm, digits):
 class SVMUnitTests(unittest.TestCase):
 
     def test_SVM_Functionality(self):
+        print("===============================")
         print("Testing SVM functionality:")
         digits = datasets.load_digits()
         test_svm = SupportVectorMachine()
@@ -33,8 +34,10 @@ class SVMUnitTests(unittest.TestCase):
         print(metrics.classification_report(digits.target, predicted_values))
         print("\nAccuracy: " + str(metrics.accuracy_score(digits.target, predicted_values)))
         print("F-Score: " + str(metrics.f1_score(digits.target, predicted_values, average='macro')) + "\n")
+        print("Confusion Matrix:\n" + str(metrics.confusion_matrix(digits.target, predicted_values)) + "\n")
 
     def test_SVM_Accuracy(self):
+        print("===============================")
         print("Checking default SVM settings accuracy (Gamma value=0.001, C=10, and trained on 75% of the data):")
         digits = datasets.load_digits()
         test_svm = SupportVectorMachine()
@@ -48,8 +51,11 @@ class SVMUnitTests(unittest.TestCase):
         print(metrics.classification_report(y_val, predicted_values))
         print("\nAccuracy: " + str(metrics.accuracy_score(y_val, predicted_values)))
         print("F-Score: " + str(metrics.f1_score(y_val, predicted_values, average='macro')) + "\n")
+        print("Confusion Matrix:\n" + str(metrics.confusion_matrix(y_val, predicted_values)) + "\n")
+
 
     def test_gamma_value(self):
+        print("===============================")
         print("Analysis of altering SVM gamma value:")
         digits = datasets.load_digits()
         gamma_values = [1, 0.5, 0.25, 0.1, 0.05, 0.01, 0.001, 0.0001, 0.00001]
@@ -61,6 +67,7 @@ class SVMUnitTests(unittest.TestCase):
                   analyse(svm_gamma, digits), "%")
 
     def test_fit_size(self):
+        print("===============================")
         print("Analysis of altering amount of training data:")
         digits = datasets.load_digits()
         # 1797
@@ -72,6 +79,7 @@ class SVMUnitTests(unittest.TestCase):
                   analyse(svm_fit, digits), "%")
 
     def test_c_value(self):
+        print("===============================")
         print("Analysis of altering C values:")
         digits = datasets.load_digits()
         c_values = [0.001, 0.01, 0.1, 1, 10, 100, 1000]
@@ -84,6 +92,7 @@ class SVMUnitTests(unittest.TestCase):
                   analyse(svm_c, digits), "%")
 
     def test_combined(self):
+        print("===============================")
         print("Analysis of both tests combined:")
         digits = datasets.load_digits()
         gamma_values = [1, 0.5, 0.25, 0.1, 0.05, 0.01, 0.001, 0.0001, 0.00001]
