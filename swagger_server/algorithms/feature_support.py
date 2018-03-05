@@ -1,0 +1,1 @@
+jobs = [{ "job_id": "21982", "data_type": "tabular", "algorithm_name": "Random Forests", "partial_training_support": False, "job_description": "Algorithm that calculates conditional probs", "parameters": []}]

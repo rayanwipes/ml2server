@@ -1,0 +1,831 @@
+---
+swagger: "2.0"
+info:
+  description: "Machine learning API for 2017 JH Project."
+  version: "1.1"
+  title: "JHProject ML API"
+host: "localhost:8080"
+basePath: "/JH-Project/machine-learning-api/1.0"
+schemes:
+- "http"
+security:
+        - Bearer: ["eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"]
+paths:
+  /models:
+    post:
+      tags:
+      - "model"
+      summary: "Start training a machine-learning model with the given model_id."
+      operationId: "create_model"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "data"
+        description: "data"
+        required: true
+        schema:
+          $ref: "#/definitions/CreateModelData"
+      responses:
+        201:
+          description: "Model successfully in training"
+          schema:
+            $ref: "#/definitions/TrainingResponse"
+        400:
+          description: "If a non existing parameter is given or if a parameter is\
+            \ given an incorrect value."
+          schema:
+            $ref: "#/definitions/Error"
+        401:
+          description: "If the user does not have authorisation to access the training\
+            \ data."
+          schema:
+            $ref: "#/definitions/Error"
+        404:
+          description: "If any of the job_id, training_data, output_directory_path,\
+            \ input_columns, output_column or required parameters do not exist."
+          schema:
+            $ref: "#/definitions/404Error"
+      x-swagger-router-controller: "swagger_server.controllers.model_controller"
+  /models/{project_name}/{model_id}:
+    get:
+      tags:
+      - "model"
+      summary: "Get status of model training."
+      operationId: "status"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "model_id"
+        in: "path"
+        description: "Model UUID"
+        required: true
+        type: "string"
+      - name: "project_name"
+        in: "path"
+        description: "Name of project model is within"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Training status sent."
+          schema:
+            $ref: "#/definitions/Status"
+        401:
+          description: "If user does not have permission to view the project the model\
+            \ is in."
+          schema:
+            $ref: "#/definitions/Error"
+        404:
+          description: "If model_id does not exist."
+          schema:
+            $ref: "#/definitions/404Error"
+      x-swagger-router-controller: "swagger_server.controllers.model_controller"
+    delete:
+      tags:
+      - "model"
+      summary: "Forcefully stop training a model. If model has finished training,\
+        \ it deletes the model file in BE."
+      operationId: "delete_training"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "model_id"
+        in: "path"
+        description: "Model UUID"
+        required: true
+        type: "string"
+      - name: "project_name"
+        in: "path"
+        description: "Name of project model is within"
+        required: true
+        type: "string"
+      responses:
+        204:
+          description: "Model deleted."
+          schema:
+            $ref: "#/definitions/Empty"
+        401:
+          description: "If user does not have permission to view the model."
+          schema:
+            $ref: "#/definitions/Error"
+        404:
+          description: "If model provided does not exist."
+          schema:
+            $ref: "#/definitions/404Error"
+      x-swagger-router-controller: "swagger_server.controllers.model_controller"
+  /models/stop/{project_name}/{model_id}:
+    delete:
+      tags:
+      - "model"
+      summary: "Forcefully stop training an incrementally trained model. The partially\
+        \ trained model will be saved and can be used for predictions."
+      operationId: "stop_training"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "model_id"
+        in: "path"
+        description: "Model UUID"
+        required: true
+        type: "string"
+      - name: "project_name"
+        in: "path"
+        description: "Name of project model is within"
+        required: true
+        type: "string"
+      responses:
+        204:
+          description: "Model training successfully stopped, or had successfully finished\
+            \ before stop call was made."
+          schema:
+            $ref: "#/definitions/Empty"
+        401:
+          description: "If user does not have permission to view the model."
+          schema:
+            $ref: "#/definitions/Error"
+        404:
+          description: "If model provided does not exist."
+          schema:
+            $ref: "#/definitions/404Error"
+        405:
+          description: "If the model referenced is not partially-trainable."
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "swagger_server.controllers.model_controller"
+  /models/prediction/{project_name}/{model_id}:
+    post:
+      tags:
+      - "model"
+      summary: "Get a prediction given a model and input data."
+      operationId: "get_prediction"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "model_id"
+        in: "path"
+        description: "Model UUID"
+        required: true
+        type: "string"
+      - name: "project_name"
+        in: "path"
+        description: "Name of project model is within"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "data"
+        description: "The input data for the model"
+        required: true
+        schema:
+          $ref: "#/definitions/PredictionInput"
+      responses:
+        200:
+          description: "Prediction results were successfully calculated."
+          schema:
+            $ref: "#/definitions/GetPrediction"
+        404:
+          description: "If model or input_data does not exist."
+          schema:
+            $ref: "#/definitions/404Error"
+      x-swagger-router-controller: "swagger_server.controllers.model_controller"
+  /models/{project_name}:
+    get:
+      tags:
+      - "model"
+      summary: "Get a list of models inside a given project."
+      operationId: "get_list"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "project_name"
+        in: "path"
+        description: "Project name"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "A list of models inside a project"
+          schema:
+            $ref: "#/definitions/StatusArray"
+        401:
+          description: "If the user does not have permission to view the data file."
+          schema:
+            $ref: "#/definitions/Error"
+        404:
+          description: "The project does not exist"
+          schema:
+            $ref: "#/definitions/404Error"
+      x-swagger-router-controller: "swagger_server.controllers.model_controller"
+  /suggest:
+    post:
+      tags:
+      - "algorithms"
+      summary: "Suggest relevant ML algorithms for a given training set."
+      operationId: "suggest"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "data"
+        description: "data"
+        required: true
+        schema:
+          $ref: "#/definitions/RequestSuggestion"
+      responses:
+        200:
+          description: "List of suggested algorithms found. The returned algorithms\
+            \ each have a score associated for ranking purposes, but implementations\
+            \ are not required to provide accurate scores - in this case, all scores\
+            \ should be the same."
+          schema:
+            $ref: "#/definitions/Suggest"
+        401:
+          description: "If the user does not have permission to view the data file."
+          schema:
+            $ref: "#/definitions/Error"
+        404:
+          description: "If any of input_columns, output_columns, or data_file provided\
+            \ do not exist."
+          schema:
+            $ref: "#/definitions/404Error"
+      x-swagger-router-controller: "swagger_server.controllers.algorithms_controller"
+  /jobs:
+    get:
+      tags:
+      - "algorithms"
+      summary: "List all possible jobs ML supports."
+      operationId: "jobs"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "List of all possible jobs the ML server can perform with a\
+            \ description of what type of data the job is performed on."
+          schema:
+            $ref: "#/definitions/Jobs"
+      x-swagger-router-controller: "swagger_server.controllers.algorithms_controller"
+securityDefinitions:
+  Bearer:
+    type: "apiKey"
+    name: "Authorization"
+    in: "header"
+definitions:
+  Error:
+    type: "object"
+    properties:
+      error:
+        type: "string"
+        description: "An error code"
+      error_description:
+        type: "string"
+        description: "A human readable description of the error"
+      user_message:
+        type: "string"
+        description: "Optional message to display to user"
+  404Error:
+    type: "object"
+    properties:
+      error:
+        type: "string"
+        description: "An error code"
+      error_description:
+        type: "string"
+        description: "A human readable description of the error"
+      user_message:
+        type: "string"
+        description: "Optional message to display to user"
+      error_data:
+        $ref: "#/definitions/404Error_error_data"
+  DataInput:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        description: "File UUID"
+      project_name:
+        type: "string"
+        description: "Name of the project the data file belongs to"
+    example:
+      id: "id"
+      project_name: "project_name"
+  CreateModelData:
+    type: "object"
+    properties:
+      refresh_token:
+        type: "string"
+        example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+      job_id:
+        type: "string"
+        example: "nb83451"
+      training_data:
+        $ref: "#/definitions/DataInput"
+      output_directory_path:
+        type: "string"
+        example: "path/stuff/new_job"
+        description: "Filepath to the directory where the user wants output files\
+          \ to be saved."
+      input_columns:
+        type: "array"
+        items:
+          $ref: "#/definitions/Column"
+      output_columns:
+        type: "array"
+        items:
+          $ref: "#/definitions/Column"
+      parameters:
+        type: "object"
+        example:
+          k: 5
+        description: "An object of key value pairs where the key is the parameter\
+          \ id and the value is the parameter value. Parameters are as specified by\
+          \ the results of a /suggest or /jobs call."
+        properties: {}
+    example:
+      training_data:
+        id: "id"
+        project_name: "project_name"
+      refresh_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+      job_id: "nb83451"
+      input_columns:
+      - column_type: {}
+        column_index: 4
+      - column_type: {}
+        column_index: 4
+      output_columns:
+      - column_type: {}
+        column_index: 4
+      - column_type: {}
+        column_index: 4
+      parameters:
+        k: 5
+      output_directory_path: "path/stuff/new_job"
+  GetPrediction:
+    type: "object"
+    properties:
+      data:
+        $ref: "#/definitions/GetPredictionData"
+    example:
+      data:
+        result_type: {}
+        results:
+        - - "results"
+          - "results"
+        - - "results"
+          - "results"
+  GetPredictionData:
+    type: "object"
+    properties:
+      result_type:
+        $ref: "#/definitions/ParamType"
+      results:
+        type: "array"
+        items:
+          type: "array"
+          items:
+            type: "string"
+            description: "Data items - must be same data type as result_type but converted\
+              \ to string."
+    example:
+      result_type: {}
+      results:
+      - - "results"
+        - "results"
+      - - "results"
+        - "results"
+  PredictionInput:
+    type: "object"
+    properties:
+      data_file:
+        $ref: "#/definitions/PredictionInput_data_file"
+      input_columns:
+        type: "array"
+        items:
+          $ref: "#/definitions/Column"
+    example:
+      data_file:
+        id: "id"
+        project_name: "project_name"
+      input_columns:
+      - column_type: {}
+        column_index: 4
+      - column_type: {}
+        column_index: 4
+  Status:
+    type: "object"
+    properties:
+      data:
+        $ref: "#/definitions/StatusData"
+    example:
+      data:
+        start_time: "start_time"
+        percent_trained: 0.299999999999999988897769753748434595763683319091796875
+        description: "description"
+        id: "id"
+        started_by: "started_by"
+        status: {}
+  StatusArray:
+    type: "object"
+    properties:
+      data:
+        type: "array"
+        items:
+          $ref: "#/definitions/StatusData"
+    example:
+      data:
+      - start_time: "start_time"
+        percent_trained: 0.299999999999999988897769753748434595763683319091796875
+        description: "description"
+        id: "id"
+        started_by: "started_by"
+        status: {}
+      - start_time: "start_time"
+        percent_trained: 0.299999999999999988897769753748434595763683319091796875
+        description: "description"
+        id: "id"
+        started_by: "started_by"
+        status: {}
+  StatusData:
+    type: "object"
+    properties:
+      percent_trained:
+        type: "number"
+        example: 0.299999999999999988897769753748434595763683319091796875
+        minimum: 0
+        maximum: 1
+      status:
+        $ref: "#/definitions/JobStatusType"
+      description:
+        type: "string"
+        description: "Descriptive log of all that has occurred during the training\
+          \ of the model (accumulates over time)."
+      id:
+        type: "string"
+        description: "Model ID"
+      start_time:
+        type: "string"
+        description: "Time at which the model began training."
+      started_by:
+        type: "string"
+        description: "Username of the user who started the model training."
+    example:
+      start_time: "start_time"
+      percent_trained: 0.299999999999999988897769753748434595763683319091796875
+      description: "description"
+      id: "id"
+      started_by: "started_by"
+      status: {}
+  RequestSuggestion:
+    type: "object"
+    properties:
+      data_file:
+        $ref: "#/definitions/DataInput"
+      input_columns:
+        type: "array"
+        items:
+          $ref: "#/definitions/Column"
+      output_columns:
+        type: "array"
+        items:
+          $ref: "#/definitions/Column"
+    example:
+      data_file:
+        id: "id"
+        project_name: "project_name"
+      input_columns:
+      - column_type: {}
+        column_index: 4
+      - column_type: {}
+        column_index: 4
+      output_columns:
+      - column_type: {}
+        column_index: 4
+      - column_type: {}
+        column_index: 4
+  Suggest:
+    type: "object"
+    properties:
+      data:
+        $ref: "#/definitions/SuggestData"
+    example:
+      data:
+        jobs:
+        - score: 0.299999999999999988897769753748434595763683319091796875
+          job:
+            partial_training_support: true
+            job_description: "Algorithm that calculates conditional probabilities,\
+              \ and then uses them to predict likely results."
+            job_id: "83451"
+            data_type: "tabular"
+            algorithm_name: "Naive Bayes"
+            parameters:
+            - description: "cross validation parameter"
+              id: "k"
+              type: {}
+              required: true
+            - description: "cross validation parameter"
+              id: "k"
+              type: {}
+              required: true
+        - score: 0.299999999999999988897769753748434595763683319091796875
+          job:
+            partial_training_support: true
+            job_description: "Algorithm that calculates conditional probabilities,\
+              \ and then uses them to predict likely results."
+            job_id: "83451"
+            data_type: "tabular"
+            algorithm_name: "Naive Bayes"
+            parameters:
+            - description: "cross validation parameter"
+              id: "k"
+              type: {}
+              required: true
+            - description: "cross validation parameter"
+              id: "k"
+              type: {}
+              required: true
+  SuggestData:
+    type: "object"
+    properties:
+      jobs:
+        type: "array"
+        items:
+          $ref: "#/definitions/SuggestData_jobs"
+    example:
+      jobs:
+      - score: 0.299999999999999988897769753748434595763683319091796875
+        job:
+          partial_training_support: true
+          job_description: "Algorithm that calculates conditional probabilities, and\
+            \ then uses them to predict likely results."
+          job_id: "83451"
+          data_type: "tabular"
+          algorithm_name: "Naive Bayes"
+          parameters:
+          - description: "cross validation parameter"
+            id: "k"
+            type: {}
+            required: true
+          - description: "cross validation parameter"
+            id: "k"
+            type: {}
+            required: true
+      - score: 0.299999999999999988897769753748434595763683319091796875
+        job:
+          partial_training_support: true
+          job_description: "Algorithm that calculates conditional probabilities, and\
+            \ then uses them to predict likely results."
+          job_id: "83451"
+          data_type: "tabular"
+          algorithm_name: "Naive Bayes"
+          parameters:
+          - description: "cross validation parameter"
+            id: "k"
+            type: {}
+            required: true
+          - description: "cross validation parameter"
+            id: "k"
+            type: {}
+            required: true
+  Jobs:
+    type: "object"
+    properties:
+      data:
+        $ref: "#/definitions/JobsData"
+    example:
+      data:
+        jobs:
+        - partial_training_support: true
+          job_description: "Algorithm that calculates conditional probabilities, and\
+            \ then uses them to predict likely results."
+          job_id: "83451"
+          data_type: "tabular"
+          algorithm_name: "Naive Bayes"
+          parameters:
+          - description: "cross validation parameter"
+            id: "k"
+            type: {}
+            required: true
+          - description: "cross validation parameter"
+            id: "k"
+            type: {}
+            required: true
+        - partial_training_support: true
+          job_description: "Algorithm that calculates conditional probabilities, and\
+            \ then uses them to predict likely results."
+          job_id: "83451"
+          data_type: "tabular"
+          algorithm_name: "Naive Bayes"
+          parameters:
+          - description: "cross validation parameter"
+            id: "k"
+            type: {}
+            required: true
+          - description: "cross validation parameter"
+            id: "k"
+            type: {}
+            required: true
+  JobsData:
+    type: "object"
+    properties:
+      jobs:
+        type: "array"
+        items:
+          $ref: "#/definitions/JobInfo"
+    example:
+      jobs:
+      - partial_training_support: true
+        job_description: "Algorithm that calculates conditional probabilities, and\
+          \ then uses them to predict likely results."
+        job_id: "83451"
+        data_type: "tabular"
+        algorithm_name: "Naive Bayes"
+        parameters:
+        - description: "cross validation parameter"
+          id: "k"
+          type: {}
+          required: true
+        - description: "cross validation parameter"
+          id: "k"
+          type: {}
+          required: true
+      - partial_training_support: true
+        job_description: "Algorithm that calculates conditional probabilities, and\
+          \ then uses them to predict likely results."
+        job_id: "83451"
+        data_type: "tabular"
+        algorithm_name: "Naive Bayes"
+        parameters:
+        - description: "cross validation parameter"
+          id: "k"
+          type: {}
+          required: true
+        - description: "cross validation parameter"
+          id: "k"
+          type: {}
+          required: true
+  JobInfo:
+    type: "object"
+    properties:
+      job_id:
+        type: "string"
+        example: "83451"
+        description: "Unique ID of the ML job type, used to request the same job type\
+          \ again in a /training call."
+      data_type:
+        type: "string"
+        example: "tabular"
+      algorithm_name:
+        type: "string"
+        example: "Naive Bayes"
+      partial_training_support:
+        type: "boolean"
+      job_description:
+        type: "string"
+        example: "Algorithm that calculates conditional probabilities, and then uses\
+          \ them to predict likely results."
+        description: "User friendly description of the job."
+      parameters:
+        type: "array"
+        items:
+          $ref: "#/definitions/Parameter"
+    example:
+      partial_training_support: true
+      job_description: "Algorithm that calculates conditional probabilities, and then\
+        \ uses them to predict likely results."
+      job_id: "83451"
+      data_type: "tabular"
+      algorithm_name: "Naive Bayes"
+      parameters:
+      - description: "cross validation parameter"
+        id: "k"
+        type: {}
+        required: true
+      - description: "cross validation parameter"
+        id: "k"
+        type: {}
+        required: true
+  Parameter:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        example: "k"
+      required:
+        type: "boolean"
+        example: true
+      type:
+        $ref: "#/definitions/ParamType"
+      description:
+        type: "string"
+        example: "cross validation parameter"
+    example:
+      description: "cross validation parameter"
+      id: "k"
+      type: {}
+      required: true
+  Column:
+    type: "object"
+    properties:
+      column_index:
+        type: "integer"
+        example: 4
+      column_type:
+        $ref: "#/definitions/DataType"
+    example:
+      column_type: {}
+      column_index: 4
+  DataType:
+    type: "string"
+    enum:
+    - "discrete"
+    - "continuous"
+    - "infer"
+    - "imagefilepath"
+    - "date"
+  ParamType:
+    type: "string"
+    enum:
+    - "integer"
+    - "boolean"
+    - "string"
+    - "number"
+  JobStatusType:
+    type: "string"
+    description: "State of training of an ML model"
+    enum:
+    - "running"
+    - "complete"
+    - "failed"
+    - "cancelled"
+  Empty:
+    type: "object"
+    properties:
+      data:
+        type: "object"
+        properties: {}
+    example:
+      data: "{}"
+  TrainingResponse:
+    type: "object"
+    properties:
+      data:
+        $ref: "#/definitions/TrainingResponse_data"
+    example:
+      data:
+        model_id: "model_id"
+  404Error_error_data:
+    properties:
+      missing_fields:
+        type: "array"
+        items:
+          type: "string"
+          example: "input_data"
+  PredictionInput_data_file:
+    properties:
+      id:
+        type: "string"
+        description: "File UUID"
+      project_name:
+        type: "string"
+        description: "project name"
+    example:
+      id: "id"
+      project_name: "project_name"
+  SuggestData_jobs:
+    properties:
+      job:
+        $ref: "#/definitions/JobInfo"
+      score:
+        type: "number"
+        example: 0.299999999999999988897769753748434595763683319091796875
+        minimum: 0
+        maximum: 1
+    example:
+      score: 0.299999999999999988897769753748434595763683319091796875
+      job:
+        partial_training_support: true
+        job_description: "Algorithm that calculates conditional probabilities, and\
+          \ then uses them to predict likely results."
+        job_id: "83451"
+        data_type: "tabular"
+        algorithm_name: "Naive Bayes"
+        parameters:
+        - description: "cross validation parameter"
+          id: "k"
+          type: {}
+          required: true
+        - description: "cross validation parameter"
+          id: "k"
+          type: {}
+          required: true
+  TrainingResponse_data:
+    properties:
+      model_id:
+        type: "string"
+    example:
+      model_id: "model_id"

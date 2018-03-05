@@ -1,0 +1,10 @@
+pandas==0.19.*
+lifelines==0.13.*
+numpy==1.*
+matplotlib==2.*
+Flask==0.*
+scikit_learn==0.19.*
+scipy==0.19.*
+connexion == 1.1.15
+python_dateutil == 2.6.0
+setuptools >= 21.0.0
