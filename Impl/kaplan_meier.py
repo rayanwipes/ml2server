@@ -27,7 +27,7 @@ class kaplan_meier():
         self.event_col = 'Event'
         self.dur_col = 'Duration'
         # print("Ran the Kaplan Meier Fitter")
-        plt.title('Kaplan Meier - Death Observed')
+        plt.title('Kaplan Meier - Event Observed')
         plt.xlabel(self.dur_col)
         plt.ylabel(self.event_col)
         self.plots += [kplt]
