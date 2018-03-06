@@ -15,6 +15,7 @@ def mean(a):
 
 class RandomForestTest(unittest.TestCase):
     def test_scoring(self):
+        print("Random Forest functionality test:")
         a = []
         no_tests = 10
         for i in range(no_tests):
@@ -40,20 +41,29 @@ class RandomForestTest(unittest.TestCase):
         rf.fit([X, y])
         y_pred = rf.predict(X)
         print(classification_report(y, y_pred))
-        print(confusion_matrix(y, y_pred))
+        print("Accuracy: " + str(accuracy_score(y, y_pred)) + "\n")
+        print("F-Score: " + str(f1_score(y, y_pred, average='macro')) + "\n")
+        print("Confusion Matrix:\n" + str(confusion_matrix(y, y_pred)) + "\n")
+        print("############################################################")
         return accuracy_score(y, y_pred)
 
     def test_iris(self):
+        print("\n############################################################")
+        print("Testing model accuracy against Iris data set:")
         self.assertGreater(
             self.accuracy_check("iris", load_iris(return_X_y=True)),
             .94999)
 
     def test_diabetes(self):
+        print("\n############################################################")
+        print("Testing model accuracy against Diabetes data set:")
         self.assertGreater(
             self.accuracy_check("diabetes", load_diabetes(return_X_y=True)),
             .94999)
 
     def test_breast_cancer(self):
+        print("\n############################################################")
+        print("Testing model accuracy against Breast Cancer data set:")
         self.assertGreater(
             self.accuracy_check(
                 "breast cancer",

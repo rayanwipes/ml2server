@@ -16,11 +16,12 @@ class MyTest(unittest.TestCase):
         y_predicted = nb.predict(dataset.data)
         y_val = dataset.target
         print("\n############################################################")
+        print("Testing Gaussian Functionality:")
         print(metrics.classification_report(y_val, y_predicted))
         print("\nAccuracy: " + str(metrics.accuracy_score(y_val, y_predicted)))
         print("F-Score: " + str(metrics.f1_score(y_val, y_predicted)))
         print("Confusion Matrix:\n" + str(metrics.confusion_matrix(y_val, y_predicted)) + "\n")
-        print("##############################################################")
+        print("############################################################")
 
     # Test that it is within a level of accuracy.
     def test_Accuracy_Gaussian(self):
@@ -32,11 +33,12 @@ class MyTest(unittest.TestCase):
         y_predicted = nb.predict(X_val)
         num_right = (y_val == y_predicted).sum()
         print("\n############################################################")
+        print("Testing Gaussian prediction accuracy:")
         print(metrics.classification_report(y_val, y_predicted))
         print("\nAccuracy: " + str(metrics.accuracy_score(y_val, y_predicted)))
         print("F-Score: " + str(metrics.f1_score(y_val, y_predicted)))
         print("Confusion Matrix:\n" + str(metrics.confusion_matrix(y_val, y_predicted)) + "\n")
-        print("##############################################################")
+        print("############################################################")
 
     # Test for consistency of results from previous.
     def test_Consistency_Gaussian(self):
@@ -57,11 +59,12 @@ class MyTest(unittest.TestCase):
         y_predicted = nb.predict(dataset.data)
         y_val = dataset.target
         print("\n############################################################")
+        print("Testing Multinomial Functionality:")
         print(metrics.classification_report(y_val, y_predicted))
         print("\nAccuracy: " + str(metrics.accuracy_score(y_val, y_predicted)))
         print("F-Score: " + str(metrics.f1_score(y_val, y_predicted)))
         print("Confusion Matrix:\n" + str(metrics.confusion_matrix(y_val, y_predicted)) + "\n")
-        print("##############################################################")
+        print("############################################################")
 
     # Test that it is within a level of accuracy.
     def test_Accuracy_Multinomial(self):
@@ -72,11 +75,12 @@ class MyTest(unittest.TestCase):
         nb.fit(X_train, y_train)
         y_predicted = nb.predict(X_val)
         print("\n############################################################")
+        print("Testing Multinomial prediction accuracy:")
         print(metrics.classification_report(y_val, y_predicted))
         print("\nAccuracy: " + str(metrics.accuracy_score(y_val, y_predicted)))
         print("F-Score: " + str(metrics.f1_score(y_val, y_predicted)))
         print("Confusion Matrix:\n" + str(metrics.confusion_matrix(y_val, y_predicted)) + "\n")
-        print("##############################################################")
+        print("############################################################")
 
     # Test for consistency of results from previous.
     def test_Consistency_Multinomial(self):
@@ -97,11 +101,12 @@ class MyTest(unittest.TestCase):
         y_predicted = nb.predict(dataset.data)
         y_val = dataset.target
         print("\n############################################################")
+        print("Testing Bernoulli Functionality:")
         print(metrics.classification_report(y_val, y_predicted))
         print("\nAccuracy: " + str(metrics.accuracy_score(y_val, y_predicted)))
         print("F-Score: " + str(metrics.f1_score(y_val, y_predicted)))
         print("Confusion Matrix:\n" + str(metrics.confusion_matrix(y_val, y_predicted)) + "\n")
-        print("##############################################################")
+        print("############################################################")
 
     # Test that it is within a level of accuracy.
     def test_Accuracy_Bernoulli(self):
@@ -112,11 +117,12 @@ class MyTest(unittest.TestCase):
         nb.fit(X_train, y_train)
         y_predicted = nb.predict(X_val)
         print("\n############################################################")
+        print("Testing Bernoulli prediction accuracy:")
         print(metrics.classification_report(y_val, y_predicted))
         print("\nAccuracy: " + str(metrics.accuracy_score(y_val, y_predicted)))
         print("F-Score: " + str(metrics.f1_score(y_val, y_predicted)))
         print("Confusion Matrix:\n" + str(metrics.confusion_matrix(y_val, y_predicted)) + "\n")
-        print("##############################################################")
+        print("############################################################")
 
     # Test for consistency of results from previous.
     def test_Consistency_Bernoulli(self):
