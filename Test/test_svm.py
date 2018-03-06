@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from numpy import array_equal
 from sklearn import metrics
 from sklearn import datasets
@@ -32,11 +34,13 @@ class SVMUnitTests(unittest.TestCase):
         predicted_values = test_svm.predict(digits.data)
 
         print(metrics.classification_report(digits.target, predicted_values))
-        print("\nAccuracy: " + str(metrics.accuracy_score(digits.target, predicted_values)))
-        print("F-Score: " + str(metrics.f1_score(digits.target, predicted_values, average='macro')) + "\n")
-        print("Confusion Matrix:\n" + str(metrics.confusion_matrix(digits.target, predicted_values)) + "\n")
+        print("\nAccuracy: " +
+              str(metrics.accuracy_score(digits.target, predicted_values)))
+        print("F-Score: " + str(metrics.f1_score(digits.target,
+                                                 predicted_values, average='macro')) + "\n")
+        print("Confusion Matrix:\n" +
+              str(metrics.confusion_matrix(digits.target, predicted_values)) + "\n")
         print("############################################################")
-
 
     def test_SVM_Accuracy(self):
         print("\n############################################################")
@@ -52,10 +56,11 @@ class SVMUnitTests(unittest.TestCase):
 
         print(metrics.classification_report(y_val, predicted_values))
         print("\nAccuracy: " + str(metrics.accuracy_score(y_val, predicted_values)))
-        print("F-Score: " + str(metrics.f1_score(y_val, predicted_values, average='macro')) + "\n")
-        print("Confusion Matrix:\n" + str(metrics.confusion_matrix(y_val, predicted_values)) + "\n")
+        print("F-Score: " + str(metrics.f1_score(y_val,
+                                                 predicted_values, average='macro')) + "\n")
+        print("Confusion Matrix:\n" +
+              str(metrics.confusion_matrix(y_val, predicted_values)) + "\n")
         print("############################################################")
-
 
     def test_gamma_value(self):
         print("\n############################################################")
@@ -70,7 +75,6 @@ class SVMUnitTests(unittest.TestCase):
                   analyse(svm_gamma, digits), "%")
         print("############################################################")
 
-
     def test_fit_size(self):
         print("\n############################################################")
         print("Analysis of altering amount of training data:")
@@ -83,7 +87,6 @@ class SVMUnitTests(unittest.TestCase):
             print("Trained on ", i, ", algorithm correctly predicts ",
                   analyse(svm_fit, digits), "%")
         print("############################################################")
-
 
     def test_c_value(self):
         print("\n############################################################")
@@ -98,7 +101,6 @@ class SVMUnitTests(unittest.TestCase):
             print("With C value of ", i, " accuracy is ",
                   analyse(svm_c, digits), "%")
         print("############################################################")
-
 
     def test_combined(self):
         print("\n############################################################")

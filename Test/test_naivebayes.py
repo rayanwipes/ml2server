@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import unittest
 import import_impl
 from naivebayes import *
@@ -21,7 +23,8 @@ class MyTest(unittest.TestCase):
         print(metrics.classification_report(y_val, y_predicted))
         print("\nAccuracy: " + str(metrics.accuracy_score(y_val, y_predicted)))
         print("F-Score: " + str(metrics.f1_score(y_val, y_predicted)))
-        print("Confusion Matrix:\n" + str(metrics.confusion_matrix(y_val, y_predicted)) + "\n")
+        print("Confusion Matrix:\n" +
+              str(metrics.confusion_matrix(y_val, y_predicted)) + "\n")
 
         if len(set(y_predicted)) == 2:
             print("Receiver Operating Characteristics:")
@@ -37,7 +40,8 @@ class MyTest(unittest.TestCase):
             plt.ylim([0.0, 1.05])
             plt.xlabel('False Positive Rate')
             plt.ylabel('True Positive Rate')
-            plt.title('Receiver Operating Characteristics for Gaussian Functionality')
+            plt.title(
+                'Receiver Operating Characteristics for Gaussian Functionality')
             plt.legend(loc='lower right')
             plt.show()
 
@@ -57,7 +61,8 @@ class MyTest(unittest.TestCase):
         print(metrics.classification_report(y_val, y_predicted))
         print("\nAccuracy: " + str(metrics.accuracy_score(y_val, y_predicted)))
         print("F-Score: " + str(metrics.f1_score(y_val, y_predicted)))
-        print("Confusion Matrix:\n" + str(metrics.confusion_matrix(y_val, y_predicted)) + "\n")
+        print("Confusion Matrix:\n" +
+              str(metrics.confusion_matrix(y_val, y_predicted)) + "\n")
 
         if len(set(y_predicted)) == 2:
             print("Receiver Operating Characteristics:")
@@ -73,7 +78,8 @@ class MyTest(unittest.TestCase):
             plt.ylim([0.0, 1.05])
             plt.xlabel('False Positive Rate')
             plt.ylabel('True Positive Rate')
-            plt.title('Receiver Operating Characteristics for Gaussian Prediction Accuracy')
+            plt.title(
+                'Receiver Operating Characteristics for Gaussian Prediction Accuracy')
             plt.legend(loc='lower right')
             plt.show()
 
@@ -102,7 +108,8 @@ class MyTest(unittest.TestCase):
         print(metrics.classification_report(y_val, y_predicted))
         print("\nAccuracy: " + str(metrics.accuracy_score(y_val, y_predicted)))
         print("F-Score: " + str(metrics.f1_score(y_val, y_predicted)))
-        print("Confusion Matrix:\n" + str(metrics.confusion_matrix(y_val, y_predicted)) + "\n")
+        print("Confusion Matrix:\n" +
+              str(metrics.confusion_matrix(y_val, y_predicted)) + "\n")
 
         if len(set(y_predicted)) == 2:
             print("Receiver Operating Characteristics:")
@@ -118,7 +125,8 @@ class MyTest(unittest.TestCase):
             plt.ylim([0.0, 1.05])
             plt.xlabel('False Positive Rate')
             plt.ylabel('True Positive Rate')
-            plt.title('Receiver Operating Characteristics for Multinomial Functionality')
+            plt.title(
+                'Receiver Operating Characteristics for Multinomial Functionality')
             plt.legend(loc='lower right')
             plt.show()
 
@@ -137,7 +145,8 @@ class MyTest(unittest.TestCase):
         print(metrics.classification_report(y_val, y_predicted))
         print("\nAccuracy: " + str(metrics.accuracy_score(y_val, y_predicted)))
         print("F-Score: " + str(metrics.f1_score(y_val, y_predicted)))
-        print("Confusion Matrix:\n" + str(metrics.confusion_matrix(y_val, y_predicted)) + "\n")
+        print("Confusion Matrix:\n" +
+              str(metrics.confusion_matrix(y_val, y_predicted)) + "\n")
 
         if len(set(y_predicted)) == 2:
             print("Receiver Operating Characteristics:")
@@ -153,7 +162,8 @@ class MyTest(unittest.TestCase):
             plt.ylim([0.0, 1.05])
             plt.xlabel('False Positive Rate')
             plt.ylabel('True Positive Rate')
-            plt.title('Receiver Operating Characteristics for Multinomial Prediction Accuracy')
+            plt.title(
+                'Receiver Operating Characteristics for Multinomial Prediction Accuracy')
             plt.legend(loc='lower right')
             plt.show()
 
@@ -182,7 +192,8 @@ class MyTest(unittest.TestCase):
         print(metrics.classification_report(y_val, y_predicted))
         print("\nAccuracy: " + str(metrics.accuracy_score(y_val, y_predicted)))
         print("F-Score: " + str(metrics.f1_score(y_val, y_predicted)))
-        print("Confusion Matrix:\n" + str(metrics.confusion_matrix(y_val, y_predicted)) + "\n")
+        print("Confusion Matrix:\n" +
+              str(metrics.confusion_matrix(y_val, y_predicted)) + "\n")
         print(len(set(y_predicted)))
 
         if len(set(y_predicted)) == 2:
@@ -199,7 +210,8 @@ class MyTest(unittest.TestCase):
             plt.ylim([0.0, 1.05])
             plt.xlabel('False Positive Rate')
             plt.ylabel('True Positive Rate')
-            plt.title('Receiver Operating Characteristics for Bernoulli Functionality')
+            plt.title(
+                'Receiver Operating Characteristics for Bernoulli Functionality')
             plt.legend(loc='lower right')
             plt.show()
 
@@ -218,7 +230,8 @@ class MyTest(unittest.TestCase):
         print(metrics.classification_report(y_val, y_predicted))
         print("\nAccuracy: " + str(metrics.accuracy_score(y_val, y_predicted)))
         print("F-Score: " + str(metrics.f1_score(y_val, y_predicted)))
-        print("Confusion Matrix:\n" + str(metrics.confusion_matrix(y_val, y_predicted)) + "\n")
+        print("Confusion Matrix:\n" +
+              str(metrics.confusion_matrix(y_val, y_predicted)) + "\n")
 
         if len(set(y_predicted)) == 2:
             print("Receiver Operating Characteristics:")
@@ -234,7 +247,8 @@ class MyTest(unittest.TestCase):
             plt.ylim([0.0, 1.05])
             plt.xlabel('False Positive Rate')
             plt.ylabel('True Positive Rate')
-            plt.title('Receiver Operating Characteristics for Bernoulli Prediction Accuracy')
+            plt.title(
+                'Receiver Operating Characteristics for Bernoulli Prediction Accuracy')
             plt.legend(loc='lower right')
             plt.show()
 
