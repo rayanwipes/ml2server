@@ -1,9 +1,12 @@
+#!/usr/bin/env python3
+
 import unittest
 import import_impl
 from naivebayes import *
 from sklearn import datasets
 from sklearn import metrics
 from sklearn.model_selection import train_test_split
+import matplotlib.pyplot as plt
 
 
 class MyTest(unittest.TestCase):
@@ -16,10 +19,33 @@ class MyTest(unittest.TestCase):
         y_predicted = nb.predict(dataset.data)
         y_val = dataset.target
         print("\n############################################################")
+        print("Testing Gaussian Functionality:")
         print(metrics.classification_report(y_val, y_predicted))
         print("\nAccuracy: " + str(metrics.accuracy_score(y_val, y_predicted)))
         print("F-Score: " + str(metrics.f1_score(y_val, y_predicted)))
-        print("##############################################################")
+        print("Confusion Matrix:\n" +
+              str(metrics.confusion_matrix(y_val, y_predicted)) + "\n")
+
+        if len(set(y_predicted)) == 2:
+            print("Receiver Operating Characteristics:")
+            fpr, tpr, _ = metrics.roc_curve(y_val, y_predicted)
+            print(fpr)
+            print(tpr)
+
+            plt.figure()
+            lw = 2
+            plt.plot(fpr, tpr, color='orange', lw=lw, label='ROC curve')
+            plt.plot([0, 1], [0, 1], color='navy', lw=lw, linestyle='--')
+            plt.xlim([0.0, 1.0])
+            plt.ylim([0.0, 1.05])
+            plt.xlabel('False Positive Rate')
+            plt.ylabel('True Positive Rate')
+            plt.title('Receiver Operating Characteristics for Gaussian' +
+                      ' Functionality')
+            plt.legend(loc='lower right')
+            plt.show()
+
+        print("############################################################")
 
     # Test that it is within a level of accuracy.
     def test_Accuracy_Gaussian(self):
@@ -31,10 +57,33 @@ class MyTest(unittest.TestCase):
         y_predicted = nb.predict(X_val)
         num_right = (y_val == y_predicted).sum()
         print("\n############################################################")
+        print("Testing Gaussian prediction accuracy:")
         print(metrics.classification_report(y_val, y_predicted))
         print("\nAccuracy: " + str(metrics.accuracy_score(y_val, y_predicted)))
         print("F-Score: " + str(metrics.f1_score(y_val, y_predicted)))
-        print("##############################################################")
+        print("Confusion Matrix:\n" +
+              str(metrics.confusion_matrix(y_val, y_predicted)) + "\n")
+
+        if len(set(y_predicted)) == 2:
+            print("Receiver Operating Characteristics:")
+            fpr, tpr, _ = metrics.roc_curve(y_val, y_predicted)
+            print(fpr)
+            print(tpr)
+
+            plt.figure()
+            lw = 2
+            plt.plot(fpr, tpr, color='orange', lw=lw, label='ROC curve')
+            plt.plot([0, 1], [0, 1], color='navy', lw=lw, linestyle='--')
+            plt.xlim([0.0, 1.0])
+            plt.ylim([0.0, 1.05])
+            plt.xlabel('False Positive Rate')
+            plt.ylabel('True Positive Rate')
+            plt.title('Receiver Operating Characteristics for Gaussian' +
+                      ' Prediction Accuracy')
+            plt.legend(loc='lower right')
+            plt.show()
+
+        print("############################################################")
 
     # Test for consistency of results from previous.
     def test_Consistency_Gaussian(self):
@@ -55,10 +104,33 @@ class MyTest(unittest.TestCase):
         y_predicted = nb.predict(dataset.data)
         y_val = dataset.target
         print("\n############################################################")
+        print("Testing Multinomial Functionality:")
         print(metrics.classification_report(y_val, y_predicted))
         print("\nAccuracy: " + str(metrics.accuracy_score(y_val, y_predicted)))
         print("F-Score: " + str(metrics.f1_score(y_val, y_predicted)))
-        print("##############################################################")
+        print("Confusion Matrix:\n" +
+              str(metrics.confusion_matrix(y_val, y_predicted)) + "\n")
+
+        if len(set(y_predicted)) == 2:
+            print("Receiver Operating Characteristics:")
+            fpr, tpr, _ = metrics.roc_curve(y_val, y_predicted)
+            print(fpr)
+            print(tpr)
+
+            plt.figure()
+            lw = 2
+            plt.plot(fpr, tpr, color='orange', lw=lw, label='ROC curve')
+            plt.plot([0, 1], [0, 1], color='navy', lw=lw, linestyle='--')
+            plt.xlim([0.0, 1.0])
+            plt.ylim([0.0, 1.05])
+            plt.xlabel('False Positive Rate')
+            plt.ylabel('True Positive Rate')
+            plt.title('Receiver Operating Characteristics for Multinomial' +
+                      ' Functionality')
+            plt.legend(loc='lower right')
+            plt.show()
+
+        print("############################################################")
 
     # Test that it is within a level of accuracy.
     def test_Accuracy_Multinomial(self):
@@ -69,10 +141,33 @@ class MyTest(unittest.TestCase):
         nb.fit(X_train, y_train)
         y_predicted = nb.predict(X_val)
         print("\n############################################################")
+        print("Testing Multinomial prediction accuracy:")
         print(metrics.classification_report(y_val, y_predicted))
         print("\nAccuracy: " + str(metrics.accuracy_score(y_val, y_predicted)))
         print("F-Score: " + str(metrics.f1_score(y_val, y_predicted)))
-        print("##############################################################")
+        print("Confusion Matrix:\n" +
+              str(metrics.confusion_matrix(y_val, y_predicted)) + "\n")
+
+        if len(set(y_predicted)) == 2:
+            print("Receiver Operating Characteristics:")
+            fpr, tpr, _ = metrics.roc_curve(y_val, y_predicted)
+            print(fpr)
+            print(tpr)
+
+            plt.figure()
+            lw = 2
+            plt.plot(fpr, tpr, color='orange', lw=lw, label='ROC curve')
+            plt.plot([0, 1], [0, 1], color='navy', lw=lw, linestyle='--')
+            plt.xlim([0.0, 1.0])
+            plt.ylim([0.0, 1.05])
+            plt.xlabel('False Positive Rate')
+            plt.ylabel('True Positive Rate')
+            plt.title('Receiver Operating Characteristics for Multinomial' +
+                      ' Prediction Accuracy')
+            plt.legend(loc='lower right')
+            plt.show()
+
+        print("############################################################")
 
     # Test for consistency of results from previous.
     def test_Consistency_Multinomial(self):
@@ -93,10 +188,34 @@ class MyTest(unittest.TestCase):
         y_predicted = nb.predict(dataset.data)
         y_val = dataset.target
         print("\n############################################################")
+        print("Testing Bernoulli Functionality:")
         print(metrics.classification_report(y_val, y_predicted))
         print("\nAccuracy: " + str(metrics.accuracy_score(y_val, y_predicted)))
         print("F-Score: " + str(metrics.f1_score(y_val, y_predicted)))
-        print("##############################################################")
+        print("Confusion Matrix:\n" +
+              str(metrics.confusion_matrix(y_val, y_predicted)) + "\n")
+        print(len(set(y_predicted)))
+
+        if len(set(y_predicted)) == 2:
+            print("Receiver Operating Characteristics:")
+            fpr, tpr, _ = metrics.roc_curve(y_val, y_predicted)
+            print(fpr)
+            print(tpr)
+
+            plt.figure()
+            lw = 2
+            plt.plot(fpr, tpr, color='orange', lw=lw, label='ROC curve')
+            plt.plot([0, 1], [0, 1], color='navy', lw=lw, linestyle='--')
+            plt.xlim([0.0, 1.0])
+            plt.ylim([0.0, 1.05])
+            plt.xlabel('False Positive Rate')
+            plt.ylabel('True Positive Rate')
+            plt.title('Receiver Operating Characteristics for Bernoulli' +
+                      ' Functionality')
+            plt.legend(loc='lower right')
+            plt.show()
+
+        print("############################################################")
 
     # Test that it is within a level of accuracy.
     def test_Accuracy_Bernoulli(self):
@@ -107,10 +226,33 @@ class MyTest(unittest.TestCase):
         nb.fit(X_train, y_train)
         y_predicted = nb.predict(X_val)
         print("\n############################################################")
+        print("Testing Bernoulli prediction accuracy:")
         print(metrics.classification_report(y_val, y_predicted))
         print("\nAccuracy: " + str(metrics.accuracy_score(y_val, y_predicted)))
         print("F-Score: " + str(metrics.f1_score(y_val, y_predicted)))
-        print("##############################################################")
+        print("Confusion Matrix:\n" +
+              str(metrics.confusion_matrix(y_val, y_predicted)) + "\n")
+
+        if len(set(y_predicted)) == 2:
+            print("Receiver Operating Characteristics:")
+            fpr, tpr, _ = metrics.roc_curve(y_val, y_predicted)
+            print(fpr)
+            print(tpr)
+
+            plt.figure()
+            lw = 2
+            plt.plot(fpr, tpr, color='orange', lw=lw, label='ROC curve')
+            plt.plot([0, 1], [0, 1], color='navy', lw=lw, linestyle='--')
+            plt.xlim([0.0, 1.0])
+            plt.ylim([0.0, 1.05])
+            plt.xlabel('False Positive Rate')
+            plt.ylabel('True Positive Rate')
+            plt.title('Receiver Operating Characteristics for Bernoulli' +
+                      ' Prediction Accuracy')
+            plt.legend(loc='lower right')
+            plt.show()
+
+        print("############################################################")
 
     # Test for consistency of results from previous.
     def test_Consistency_Bernoulli(self):
@@ -125,4 +267,5 @@ class MyTest(unittest.TestCase):
 
 
 if __name__ == '__main__':
+    plt.switch_backend('agg')
     unittest.main()

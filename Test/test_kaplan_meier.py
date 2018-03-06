@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from lifelines.datasets import load_waltons
 from lifelines.datasets import load_dd
 import matplotlib.pyplot as plt
