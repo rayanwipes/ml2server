@@ -97,4 +97,5 @@ class RandomForestTest(unittest.TestCase):
 
 
 if __name__ == "__main__":
+    plt.switch_backend('agg')
     unittest.main()
