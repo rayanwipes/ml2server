@@ -40,8 +40,8 @@ class MyTest(unittest.TestCase):
             plt.ylim([0.0, 1.05])
             plt.xlabel('False Positive Rate')
             plt.ylabel('True Positive Rate')
-            plt.title(
-                'Receiver Operating Characteristics for Gaussian Functionality')
+            plt.title('Receiver Operating Characteristics for Gaussian' +
+                      ' Functionality')
             plt.legend(loc='lower right')
             plt.show()
 
@@ -78,8 +78,8 @@ class MyTest(unittest.TestCase):
             plt.ylim([0.0, 1.05])
             plt.xlabel('False Positive Rate')
             plt.ylabel('True Positive Rate')
-            plt.title(
-                'Receiver Operating Characteristics for Gaussian Prediction Accuracy')
+            plt.title('Receiver Operating Characteristics for Gaussian' +
+                      ' Prediction Accuracy')
             plt.legend(loc='lower right')
             plt.show()
 
@@ -125,8 +125,8 @@ class MyTest(unittest.TestCase):
             plt.ylim([0.0, 1.05])
             plt.xlabel('False Positive Rate')
             plt.ylabel('True Positive Rate')
-            plt.title(
-                'Receiver Operating Characteristics for Multinomial Functionality')
+            plt.title('Receiver Operating Characteristics for Multinomial' +
+                      ' Functionality')
             plt.legend(loc='lower right')
             plt.show()
 
@@ -162,8 +162,8 @@ class MyTest(unittest.TestCase):
             plt.ylim([0.0, 1.05])
             plt.xlabel('False Positive Rate')
             plt.ylabel('True Positive Rate')
-            plt.title(
-                'Receiver Operating Characteristics for Multinomial Prediction Accuracy')
+            plt.title('Receiver Operating Characteristics for Multinomial' +
+                      ' Prediction Accuracy')
             plt.legend(loc='lower right')
             plt.show()
 
@@ -210,8 +210,8 @@ class MyTest(unittest.TestCase):
             plt.ylim([0.0, 1.05])
             plt.xlabel('False Positive Rate')
             plt.ylabel('True Positive Rate')
-            plt.title(
-                'Receiver Operating Characteristics for Bernoulli Functionality')
+            plt.title('Receiver Operating Characteristics for Bernoulli' +
+                      ' Functionality')
             plt.legend(loc='lower right')
             plt.show()
 
@@ -247,8 +247,8 @@ class MyTest(unittest.TestCase):
             plt.ylim([0.0, 1.05])
             plt.xlabel('False Positive Rate')
             plt.ylabel('True Positive Rate')
-            plt.title(
-                'Receiver Operating Characteristics for Bernoulli Prediction Accuracy')
+            plt.title('Receiver Operating Characteristics for Bernoulli' +
+                      ' Prediction Accuracy')
             plt.legend(loc='lower right')
             plt.show()
 

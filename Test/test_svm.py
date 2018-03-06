@@ -37,14 +37,17 @@ class SVMUnitTests(unittest.TestCase):
         print("\nAccuracy: " +
               str(metrics.accuracy_score(digits.target, predicted_values)))
         print("F-Score: " + str(metrics.f1_score(digits.target,
-                                                 predicted_values, average='macro')) + "\n")
+                                                 predicted_values,
+                                                 average='macro')) + "\n")
         print("Confusion Matrix:\n" +
-              str(metrics.confusion_matrix(digits.target, predicted_values)) + "\n")
+              str(metrics.confusion_matrix(digits.target, predicted_values)) +
+              "\n")
         print("############################################################")
 
     def test_SVM_Accuracy(self):
         print("\n############################################################")
-        print("Checking default SVM settings accuracy (Gamma value=0.001, C=10, and trained on 75% of the data):")
+        print("Checking default SVM settings accuracy (Gamma value=0.001," +
+              " C=10, and trained on 75% of the data):")
         digits = datasets.load_digits()
         test_svm = SupportVectorMachine()
 
@@ -55,9 +58,12 @@ class SVMUnitTests(unittest.TestCase):
         predicted_values = test_svm.predict(X_val)
 
         print(metrics.classification_report(y_val, predicted_values))
-        print("\nAccuracy: " + str(metrics.accuracy_score(y_val, predicted_values)))
+        print("\nAccuracy: " + str(metrics.accuracy_score(
+                                                          y_val,
+                                                          predicted_values)))
         print("F-Score: " + str(metrics.f1_score(y_val,
-                                                 predicted_values, average='macro')) + "\n")
+                                                 predicted_values,
+                                                 average='macro')) + "\n")
         print("Confusion Matrix:\n" +
               str(metrics.confusion_matrix(y_val, predicted_values)) + "\n")
         print("############################################################")
