@@ -20,3 +20,4 @@ run_test:
     - env python3 Test/test_randomforest.py
     - env python3 Test/test_svm.py
     - env python3 Test/test_cox_regression.py
+    - env python3 Test/test_kaplan_meier.py
