@@ -39,40 +39,21 @@ class RandomForests:
             random_state=0,
             n_jobs=no_threads)
 
-    @staticmethod
-    def _load_model_from_file(filename):
-        return joblib.load(filename)
-
-    @staticmethod
-    def _load_model(model):
-        return pickle.loads(model)
-
-    @staticmethod
-    def initialize():
-        return RandomForests(RandomForests.INITIALIZE)
-
-    @staticmethod
-    def initialize_from_model(model):
-        return RandomForests(RandomForests.INITIALIZE_FROM_STRING, model)
-
-    @staticmethod
-    def initialize_from_file(filename):
-        return RandomForests(RandomForests.INITIALIZE_FROM_FILE, filename)
-
-    def __init__(self, modeltype=0, model=None):
-        if modeltype == RandomForests.INITIALIZE:
+    def __init__(self, **kwargs):
+        self.clf = None
+        for k in kwargs:
+            v = kwargs[k]
+            if k == 'filename':
+                self.clf = joblib.load(v)
+            elif k == 'binary':
+                self.clf = pickle.loads(v)
+        if self.clf is None:
             self.clf = RandomForests._make_rfclassifier()
-        elif modeltype == RandomForests.INITIALIZE_FROM_STRING:
-            self.clf = RandomForests._load_model(model)
-        elif modeltype == RandomForests.INITIALIZE_FROM_FILE:
-            self.clf = RandomForests._load_model_from_file(model)
-        else:
-            raise Exception("invalid model initializer flag")
 
     def dump_model(self):
         return pickle.dumps(self.clf)
 
-    def dump_model_into_file(self, filename):
+    def save_model(self, filename):
         joblib.dump(self.clf, filename)
 
     def train_test_split(self, data, ratio=.4):

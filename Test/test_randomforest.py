@@ -15,10 +15,9 @@ def mean(a):
 
 
 class RandomForestTest(unittest.TestCase):
-    def not_test_scoring(self):
+    def test_scoring(self):
         print("Random Forest functionality test:")
-        a = []
-        b = []
+        a, b = [], []
         no_tests = 10
         for i in range(no_tests):
             if i % 5 == 0:

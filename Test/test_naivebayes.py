@@ -13,7 +13,7 @@ class MyTest(unittest.TestCase):
 
     # Tests that it basically runs.
     def test_Functional_Gaussian(self):
-        nb = NaiveBayes(0)
+        nb = NaiveBayes(modeltype=NaiveBayes.GAUSSIAN)
         dataset = datasets.load_breast_cancer()
         nb.fit(dataset.data, dataset.target)
         y_predicted = nb.predict(dataset.data)
@@ -49,7 +49,7 @@ class MyTest(unittest.TestCase):
 
     # Test that it is within a level of accuracy.
     def test_Accuracy_Gaussian(self):
-        nb = NaiveBayes(0)
+        nb = NaiveBayes(modeltype=NaiveBayes.GAUSSIAN)
         dataset = datasets.load_breast_cancer()
         X_train, X_val, y_train, y_val = train_test_split(
             dataset.data, dataset.target, test_size=0.2, random_state=1)
@@ -87,10 +87,10 @@ class MyTest(unittest.TestCase):
 
     # Test for consistency of results from previous.
     def test_Consistency_Gaussian(self):
-        nb = NaiveBayes(0)
+        nb = NaiveBayes(modeltype=NaiveBayes.GAUSSIAN)
         dataset = datasets.load_iris()
         nb.fit(dataset.data, dataset.target)
-        nb2 = NaiveBayes(0)
+        nb2 = NaiveBayes(modeltype=NaiveBayes.GAUSSIAN)
         nb2.fit(dataset.data, dataset.target)
         result1 = nb.predict([dataset.data[1]])
         result2 = nb2.predict([dataset.data[1]])
@@ -98,7 +98,7 @@ class MyTest(unittest.TestCase):
 
     # Tests that it basically runs.
     def test_Functional_Multinomial(self):
-        nb = NaiveBayes(1)
+        nb = NaiveBayes(modeltype=NaiveBayes.MULTINOMIAL)
         dataset = datasets.load_breast_cancer()
         nb.fit(dataset.data, dataset.target)
         y_predicted = nb.predict(dataset.data)
@@ -134,7 +134,7 @@ class MyTest(unittest.TestCase):
 
     # Test that it is within a level of accuracy.
     def test_Accuracy_Multinomial(self):
-        nb = NaiveBayes(1)
+        nb = NaiveBayes(modeltype=NaiveBayes.MULTINOMIAL)
         dataset = datasets.load_breast_cancer()
         X_train, X_val, y_train, y_val = train_test_split(
             dataset.data, dataset.target, test_size=0.2, random_state=1)
@@ -171,10 +171,10 @@ class MyTest(unittest.TestCase):
 
     # Test for consistency of results from previous.
     def test_Consistency_Multinomial(self):
-        nb = NaiveBayes(1)
+        nb = NaiveBayes(modeltype=NaiveBayes.MULTINOMIAL)
         dataset = datasets.load_iris()
         nb.fit(dataset.data, dataset.target)
-        nb2 = NaiveBayes(1)
+        nb2 = NaiveBayes(modeltype=NaiveBayes.MULTINOMIAL)
         nb2.fit(dataset.data, dataset.target)
         result1 = nb.predict([dataset.data[1]])
         result2 = nb2.predict([dataset.data[1]])
@@ -182,7 +182,7 @@ class MyTest(unittest.TestCase):
 
     # Tests that it basically runs.
     def test_Functional_Bernoulli(self):
-        nb = NaiveBayes(2)
+        nb = NaiveBayes(modeltype=NaiveBayes.BERNOULLI)
         dataset = datasets.load_breast_cancer()
         nb.fit(dataset.data, dataset.target)
         y_predicted = nb.predict(dataset.data)
@@ -219,7 +219,7 @@ class MyTest(unittest.TestCase):
 
     # Test that it is within a level of accuracy.
     def test_Accuracy_Bernoulli(self):
-        nb = NaiveBayes(2)
+        nb = NaiveBayes(modeltype=NaiveBayes.BERNOULLI)
         dataset = datasets.load_breast_cancer()
         X_train, X_val, y_train, y_val = train_test_split(
             dataset.data, dataset.target, test_size=0.2, random_state=1)
@@ -256,10 +256,10 @@ class MyTest(unittest.TestCase):
 
     # Test for consistency of results from previous.
     def test_Consistency_Bernoulli(self):
-        nb = NaiveBayes(2)
+        nb = NaiveBayes(modeltype=NaiveBayes.BERNOULLI)
         dataset = datasets.load_iris()
         nb.fit(dataset.data, dataset.target)
-        nb2 = NaiveBayes(2)
+        nb2 = NaiveBayes(modeltype=NaiveBayes.BERNOULLI)
         nb2.fit(dataset.data, dataset.target)
         result1 = nb.predict([dataset.data[1]])
         result2 = nb2.predict([dataset.data[1]])
