@@ -24,13 +24,12 @@ def analyse(testing_svm, digits):
 
 
 class SVMUnitTests(unittest.TestCase):
-
     def test_SVM_Functionality(self):
         print("\n############################################################")
         print("Testing SVM functionality:")
         digits = datasets.load_digits()
         test_svm = SupportVectorMachine()
-        test_svm.fit(digits.data, digits.target)
+        test_svm.fit([digits.data, digits.target])
         predicted_values = test_svm.predict(digits.data)
 
         print(metrics.classification_report(digits.target, predicted_values))
@@ -54,7 +53,7 @@ class SVMUnitTests(unittest.TestCase):
         X_train, X_val, y_train, y_val = train_test_split(
             digits.data, digits.target, test_size=0.75, random_state=1)
 
-        test_svm.fit(X_train, y_train)
+        test_svm.fit([X_train, y_train])
         predicted_values = test_svm.predict(X_val)
 
         print(metrics.classification_report(y_val, predicted_values))
@@ -75,7 +74,7 @@ class SVMUnitTests(unittest.TestCase):
         gamma_values = [1, 0.5, 0.25, 0.1, 0.05, 0.01, 0.001, 0.0001, 0.00001]
         for i in gamma_values:
             svm_gamma = SupportVectorMachine(i, 100)
-            svm_gamma.fit(digits.data[:-50], digits.target[:-50])
+            svm_gamma.fit([digits.data[:-50], digits.target[:-50]])
             print("With a gamma value of ",
                   i, " algorithm correctly predicts ",
                   analyse(svm_gamma, digits), "%")
@@ -89,7 +88,7 @@ class SVMUnitTests(unittest.TestCase):
         fit_sizes = [-1500, -1250, -1000, -750, -500, -250, -100, -50]
         for i in fit_sizes:
             svm_fit = SupportVectorMachine(0.01, 100)
-            svm_fit.fit(digits.data[:i], digits.target[:i])
+            svm_fit.fit([digits.data[:i], digits.target[:i]])
             print("Trained on ", i, ", algorithm correctly predicts ",
                   analyse(svm_fit, digits), "%")
         print("############################################################")
@@ -102,7 +101,7 @@ class SVMUnitTests(unittest.TestCase):
 
         for i in c_values:
             svm_c = SupportVectorMachine(0.001, i)
-            svm_c.fit(digits.data[:-50], digits.target[:-50])
+            svm_c.fit([digits.data[:-50], digits.target[:-50]])
 
             print("With C value of ", i, " accuracy is ",
                   analyse(svm_c, digits), "%")
@@ -120,7 +119,7 @@ class SVMUnitTests(unittest.TestCase):
             for j in c_values:
                 for k in fit_sizes:
                     svm_combined = SupportVectorMachine(i, j)
-                    svm_combined.fit(digits.data[:k], digits.target[:k])
+                    svm_combined.fit([digits.data[:k], digits.target[:k]])
 
                     print("With gamma value of ", i, "and C value of ", j,
                           " and training size of ", k,

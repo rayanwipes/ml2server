@@ -15,26 +15,46 @@ class SupportVectorMachine():
         return svm.SVC(gamma=gamma_value, C=c_value)
 
     # Build classifier for SVM
-    def __init__(self, gamma_value=0.001, c_value=10, classifier=None):
+    def __init__(self, gamma_value=0.001, c_value=10, **kwargs):
         SVM = SupportVectorMachine
-        if classifier is None:
+        self.classifier = None
+        for k in kwargs:
+            v = kwargs[k]
+            if k == 'filename':
+                self.classifier = joblib.load(v)
+        if self.classifier is None:
             self.classifier = SVM._make_svm_classifier(gamma_value, c_value)
-        else:
-            self.classifier = SVM.load_classifier
+
+    # Serialize model into a string
+    def dump_model(self):
+        return pickle.dumps(self.clf)
 
     # Saves model to file
-    def save_model(self):
-        joblib.dump(self.classifier, "svm.pkl")
+    def save_model(self, filename):
+        joblib.dump(self.classifier, filename)
 
-    # Loads model from file
-    def load_model(self):
-        self.classifier = joblib.load("svm.pkl")
-        return self
+    # Split train and test data
+    def train_test_split(self, data, ratio=.4):
+        X, y = data
+        x1, x2, y1, y2 = train_test_split(
+            X, y,
+            test_size=ratio,
+            random_state=0)
+        return [[x1, y1], [x2, y2]]
 
     # Trains the SVM on imported data"""
-    def fit(self, data, features):
-        X, y = data, features
+    def fit(self, train_data):
+        X, y = train_data
         return self.classifier.fit(X, y)
+
+    # Get feature importances
+    def feature_importances(self):
+        return self.clf.feature_importances_
+
+    # Obtain score on the given test data
+    def score(self, test_data):
+        X, y = test_data
+        return self.clf.score(X, y)
 
     # Predicts value of specified data point
     def predict(self, data_to_predict):
@@ -48,9 +68,3 @@ class SupportVectorMachine():
         plt.imshow(digits.images[-2], cmap=plt.cm.gray_r,
                    interpolation="nearest")
         plt.show()
-
-# if __name__ == "__main__":
-#     gamma_value_tests()
-#     fit_size_tests()
-#     c_value_tests()
-#     combined_test()
