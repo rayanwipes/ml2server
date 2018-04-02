@@ -3,7 +3,7 @@ import csv
 
 
 # Things written for the future, if this has to be used
-OP_FIT, OP_SCORE, OP_PREDICT = range(4)
+OP_FIT, OP_SCORE, OP_PREDICT = range(3)
 MDL_NAIVE_BAYES_GAUSSIAN, MDL_NAIVE_BAYES_MULTINOMIAL, \
     MDL_NAIVE_BAYES_BERNOULLI, MDL_RANDOM_FOREST, MDL_SVM = range(5)
 
