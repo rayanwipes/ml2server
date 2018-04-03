@@ -64,13 +64,12 @@ class RandomForests:
             random_state=0)
         return [[x1, y1], [x2, y2]]
 
-    def fit(self, train_data, make_new_model=False):
+    def fit(self, train_data):
         X, y = train_data
-        if make_new_model:
-            self.clf = RandomForests._make_rfclassifier(
-                n_estimators=100,
-                verbose=0,
-                threads=-1)
+        self.clf = RandomForests._make_rfclassifier(
+            n_estimators=100,
+            verbose=0,
+            threads=-1)
         return self.clf.fit(X, y)
 
     def feature_importances(self):
