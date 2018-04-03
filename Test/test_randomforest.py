@@ -25,7 +25,7 @@ class RandomForestTest(unittest.TestCase):
             rf = RandomForests()
             X, y = rf.gen_sample_problem()
             train, test = rf.train_test_split([X, y])
-            rf.fit(train, True)
+            rf.fit(train)
             y_pred = rf.predict(X)
             # print("model size: ", len(rf.dump_model()))
             a += [rf.score(test)]
