@@ -3,10 +3,10 @@
 
 import sys
 
-from swagger_server.algorithms.classifier import *
-from swagger_server.algorithms.cox_regression import *
-from swagger_server.algorithms.kaplan_meier import *
-from swagger_server.algorithms.csv_loader import *
+from classifier import *
+from cox_regression import *
+from kaplan_meier import *
+from csv_loader import *
 
 
 NBG, NBM, NBB, SVM, RF, KX, COX, KMF = [
@@ -56,8 +56,10 @@ def touch(fname, mode=0o666, dir_fd=None, **kwargs):
 
 
 if __name__ == "__main__":
+    print('ARGS: ', sys.argv)
     successfile, alg, datafile, output = sys.argv[1:5]
     args = sys.argv[5:]
+    print(successfile, alg, datafile, output)
     if is_classifier(alg):
         c = None
         clftype = get_classifier_type(alg)
@@ -77,7 +79,6 @@ if __name__ == "__main__":
         ycolumn = int(args[0])
         args = args[1:]
         data = load_csv_xy(datafile, ycolumn, [int(x) for x in args] if len(args) else None)
-        print(data)
         c.fit(data)
         c.save_model(output)
     elif is_kcross(alg):

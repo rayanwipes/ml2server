@@ -2,6 +2,7 @@ import os
 import signal
 import subprocess
 import time
+import pipes
 
 
 class Process:
@@ -13,11 +14,12 @@ class Process:
             os.remove(self.successfile)
 
     def start(self, args):
-        print(args)
         # subprocess.Popen(args, shell=True)
         self.running = True
-        args = [self.successfile] + args
-        self.process = subprocess.Popen(args, shell=True)
+        args = [args[0]] + [self.successfile] + args[1:]
+        args = [pipes.quote(arg) for arg in args]
+        print(args)
+        self.process = subprocess.Popen(args)
 
     def is_finished(self):
         return self.running and os.path.exists(self.successfile)
