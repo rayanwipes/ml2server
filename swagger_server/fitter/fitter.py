@@ -43,6 +43,35 @@ class ClassifierFitter:
         self.process.finalize()
 
 
+class CoxRegressionFitter:
+    def __init__(self, dcolumn, ecolumn, ycolumn, xcolumns=None **kwargs):
+        self.functor = COX
+        self.D = dcolumn
+        self.E = ecolumn
+        self.datafile = kwargs['datafile']
+        self.columns = [ycolumn] + xcolumns
+        self.process = Process('tmp_success_' + str(self.id))
+
+    def start(self, output, report_output):
+        self.process.start([
+                           './ml_execut_fit.py',
+                           self.functor,
+                           self.datafile,
+                           output,
+                           report_output,
+                           self.D,
+                           self.E] + self.columns)
+
+    def is_finished(self):
+        return self.process.is_finished()
+
+    def stop(self):
+        self.process.kill()
+
+    def finalize(self):
+        self.process.finalize()
+
+
 if __name__ == "__main__":
     cf = ClassifierFitter(NaiveBayes, datafile='file.csv',
                           modeltype=NaiveBayes.GAUSSIAN,
