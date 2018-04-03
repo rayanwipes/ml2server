@@ -1,3 +1,4 @@
+import csv
 import pandas
 from sklearn.datasets import *
 
@@ -7,8 +8,15 @@ def load_csv(filename, columns=None):
 
 
 def load_csv_xy(filename, ycolumn, xcolumns=None):
-    return load_iris(return_X_y=True)
-    return [
-        load_csv(xcolumns),  # X
-        load_csv(ycolumn)  # y
-    ]
+    f = open(filename, 'r')
+    no_cols = len(next(csv.reader(f, delimiter=',')))
+    f.close()
+    if xcolumns is None:
+        xcolumns = [i for i in range(no_cols) if i != ycolumn]
+    X = load_csv(filename, xcolumns).T
+    y = load_csv(filename, [ycolumn]).T
+    return [X, y]
+
+
+if __name__ == "__main__":
+    print(load_csv_xy('file.csv', 0))
