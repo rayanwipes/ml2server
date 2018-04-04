@@ -9,8 +9,6 @@ from random import randint
 
 
 class RandomForests:
-    INITIALIZE, INITIALIZE_FROM_STRING, INITIALIZE_FROM_FILE = range(3)
-
     @staticmethod
     def _make_rfclassifier(**kwargs):
         no_estim = 100
