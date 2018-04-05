@@ -50,7 +50,6 @@ class NaiveBayes():
 
     # Trains the NB model on imported data
     def fit(self, train_data):
-        print(train_data)
         X, y = train_data
         return self.model.fit(X, y)
 
