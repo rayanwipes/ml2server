@@ -1,5 +1,6 @@
 from sklearn import cross_val_score
 
+
 class CrossValidation:
     def __init__(self, model=None):
         self.model = model

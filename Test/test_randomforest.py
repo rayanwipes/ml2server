@@ -4,10 +4,12 @@ import unittest
 from operator import add
 from functools import reduce
 import matplotlib.pyplot as plt
+from random import randint
 
 import import_impl
 
 from randomforest import *
+from problem_generator import *
 
 
 def mean(a):
@@ -23,16 +25,20 @@ class RandomForestTest(unittest.TestCase):
             if i % 5 == 0:
                 print(str(i) + "/" + str(no_tests) + " ...")
             rf = RandomForests()
-            X, y = rf.gen_sample_problem()
+            problem_type = [
+                PROBLEM_CLASSIFICATION, PROBLEM_REGRESSION
+            ][randint(0, 1)]
+            X, y = gen_sample_problem(problem_type)
             train, test = rf.train_test_split([X, y])
             rf.fit(train)
             y_pred = rf.predict(X)
             # print("model size: ", len(rf.dump_model()))
             a += [rf.score(test)]
-            b += [f1_score(y, y_pred)]
+            if type_of_target(y) != 'continuous':
+                b += [f1_score(y, y_pred)]
             if i % 5 == 4:
                 print(a[-5:])
-                print(b[-5:])
+                # print(b[-5:])
         print(len(a))
         print(sorted(a)[:10])
         print("Mean: ", mean(a))
@@ -46,7 +52,9 @@ class RandomForestTest(unittest.TestCase):
         y_pred = rf.predict(X)
         print(classification_report(y, y_pred))
         print("Accuracy: " + str(accuracy_score(y, y_pred)) + "\n")
-        print("F-Score: " + str(f1_score(y, y_pred, average='macro')) + "\n")
+        if type_of_target(y_pred) == 'continuous':
+            print("F-Score: " + str(f1_score(y, y_pred, average='macro')) +
+                  "\n")
         print("Confusion Matrix:\n" + str(confusion_matrix(y, y_pred)) + "\n")
 
         if len(set(y_pred)) == 2:
