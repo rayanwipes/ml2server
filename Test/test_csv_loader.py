@@ -15,21 +15,21 @@ from randomforest import *
 
 class CsvLoaderTest(unittest.TestCase):
     def test_int_in_target(self):
-        data = load_csv_xy('Test/dataset/ints.csv', 0)
+        data = load_csv_xy('Test/dataset/ints.csv', [0])
         print(data)
         X, y = data
         for e in [(X[0][i], type(X[0][i])) for i in range(len(X[0]))]:
             print(e)
 
     def test_dataset_format(self):
-        data = load_csv_xy('Test/dataset/file.csv', 15)
+        data = load_csv_xy('Test/dataset/file.csv', [15])
         test_svm = SupportVectorMachine()
         test_svm.fit(data)
         rf = RandomForests()
         rf.fit(data)
 
     def test_csv_data_confusion(self):
-        data = load_csv_xy('Test/dataset/file.csv', 15)
+        data = load_csv_xy('Test/dataset/file.csv', [15])
         print(data)
         X, y = data
         for e in [(X[0][i], type(X[0][i])) for i in range(len(X[0]))]:
