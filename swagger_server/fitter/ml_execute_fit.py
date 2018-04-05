@@ -48,6 +48,7 @@ def is_kmf(alg):
     return alg == MKF
 
 
+# https://stackoverflow.com/questions/1158076/implement-touch-using-python
 def touch(fname, mode=0o666, dir_fd=None, **kwargs):
     flags = os.O_CREAT | os.O_APPEND
     with os.fdopen(os.open(fname, flags=flags, mode=mode, dir_fd=dir_fd)) as f:
@@ -78,7 +79,7 @@ if __name__ == "__main__":
             c = Classifier(classifier=clftype)
         ycolumn = int(args[0])
         args = args[1:]
-        data = load_csv_xy(datafile, ycolumn, [int(x) for x in args] if len(args) else None)
+        data = load_csv_xy(datafile, [ycolumn], [int(x) for x in args] if len(args) else None)
         c.fit(data)
         c.save_model(output)
     elif is_kcross(alg):
