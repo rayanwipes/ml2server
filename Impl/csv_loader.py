@@ -6,10 +6,13 @@ from sklearn import preprocessing
 from randomforest import *
 from svm import *
 
+
 lab_enc = preprocessing.LabelEncoder()
+
 
 def load_csv(filename, columns=None):
     return pandas.read_csv(filepath_or_buffer=filename, usecols=columns)
+
 
 def load_csv_xy(filename, ycolumn, xcolumns=None):
     f = open(filename, 'r')

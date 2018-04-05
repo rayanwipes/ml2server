@@ -18,9 +18,8 @@ class CsvLoaderTest(unittest.TestCase):
         data = load_csv_xy('Test/dataset/ints.csv', 0)
         print(data)
         X, y = data
-        a = [(X[0][i], type(X[0][i])) for i in range(len(X[0]))]
-        for e in a:print(e)
-
+        for e in [(X[0][i], type(X[0][i])) for i in range(len(X[0]))]:
+            print(e)
 
     def test_dataset_format(self):
         data = load_csv_xy('Test/dataset/file.csv', 15)
