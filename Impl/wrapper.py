@@ -46,16 +46,6 @@ def predict(x_data, model):
     return model.predict(x_data)
 
 
-def cross_validate(model, x_Data, y_Data, k=None):
-    score = k
-    if k is None:
-        score = 5
-    # Validation function and macros will change depending upon what type of
-    # data, classifier is being used
-    scores = cross_val_score(model, x_Data, y_Data, cv=score)
-    return scores
-
-
 def score(model, X_data):
     model.score(X_data)
 
