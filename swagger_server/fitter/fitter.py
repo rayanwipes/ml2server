@@ -77,9 +77,9 @@ class CoxRegressionFitter:
 
 
 if __name__ == "__main__":
-    cf = ClassifierFitter(NaiveBayes, datafile='file.csv',
+    cf = ClassifierFitter(NaiveBayes, modeltype=NaiveBayes.GAUSSIAN,
+                          datafile='file.csv',
                           ycolumn=0,
-                          modeltype=NaiveBayes.GAUSSIAN,
                           id='1843')
     print(cf.functor)
     cf.start('model_out')
