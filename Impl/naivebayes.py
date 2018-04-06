@@ -53,6 +53,11 @@ class NaiveBayes():
         X, y = train_data
         return self.model.fit(X, y)
 
+    # Trains the NB model incrementally on imported data
+    def partial_fit(self, train_data):
+        X, y = train_data
+        return self.model.partial_fit(X, y)
+
     # Get feature importances
     def feature_importances(self):
         return self.clf.feature_importances_
