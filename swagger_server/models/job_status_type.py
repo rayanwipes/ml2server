@@ -21,7 +21,6 @@ class JobStatusType(Model):
     RUNNING = "running"
     COMPLETE = "complete"
     FAILED = "failed"
-    CANCELLED = "cancelled"
 
     def __init__(self):  # noqa: E501
         """JobStatusType - a model defined in Swagger

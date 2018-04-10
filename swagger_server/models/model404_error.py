@@ -6,7 +6,7 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
-from swagger_server.models.model404_error_error_data import Model404ErrorErrorData  # noqa: F401,E501
+from swagger_server.models.model404_error_data import Model404ErrorData  # noqa: F401,E501
 from swagger_server import util
 
 
@@ -16,7 +16,7 @@ class Model404Error(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, error: str=None, error_description: str=None, user_message: str=None, error_data: Model404ErrorErrorData=None):  # noqa: E501
+    def __init__(self, error: str=None, error_description: str=None, user_message: str=None, error_data: Model404ErrorData=None):  # noqa: E501
         """Model404Error - a model defined in Swagger
 
         :param error: The error of this Model404Error.  # noqa: E501
@@ -26,13 +26,13 @@ class Model404Error(Model):
         :param user_message: The user_message of this Model404Error.  # noqa: E501
         :type user_message: str
         :param error_data: The error_data of this Model404Error.  # noqa: E501
-        :type error_data: Model404ErrorErrorData
+        :type error_data: Model404ErrorData
         """
         self.swagger_types = {
             'error': str,
             'error_description': str,
             'user_message': str,
-            'error_data': Model404ErrorErrorData
+            'error_data': Model404ErrorData
         }
 
         self.attribute_map = {
@@ -128,22 +128,22 @@ class Model404Error(Model):
         self._user_message = user_message
 
     @property
-    def error_data(self) -> Model404ErrorErrorData:
+    def error_data(self) -> Model404ErrorData:
         """Gets the error_data of this Model404Error.
 
 
         :return: The error_data of this Model404Error.
-        :rtype: Model404ErrorErrorData
+        :rtype: Model404ErrorData
         """
         return self._error_data
 
     @error_data.setter
-    def error_data(self, error_data: Model404ErrorErrorData):
+    def error_data(self, error_data: Model404ErrorData):
         """Sets the error_data of this Model404Error.
 
 
         :param error_data: The error_data of this Model404Error.
-        :type error_data: Model404ErrorErrorData
+        :type error_data: Model404ErrorData
         """
 
         self._error_data = error_data
