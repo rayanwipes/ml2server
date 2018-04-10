@@ -3,10 +3,10 @@
 
 import sys
 
-from classifier import *
-from cox_regression import *
-from kaplan_meier import *
-from csv_loader import *
+from swagger_server.algorithms.classifier import *
+from swagger_server.algorithms.cox_regression import *
+from swagger_server.algorithms.kaplan_meier import *
+from swagger_server.algorithms.csv_loader import *
 
 
 NBG, NBM, NBB, SVM, RF, KX, COX, KMF = [

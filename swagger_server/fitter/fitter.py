@@ -1,6 +1,6 @@
-from classifier import *
-from process import *
-from ml_execute_fit import *
+from swagger_server.algorithms.classifier import *
+from swagger_server.fitter.process import *
+from swagger_server.fitter.ml_execute_fit import *
 
 
 class ClassifierFitter:

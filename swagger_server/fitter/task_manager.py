@@ -6,6 +6,10 @@ class TaskManager:
         self.tasks += [task]
 
     def remove_finished(self):
-        for t in self.tasks:
-            if t.is_finished():
-                t.finalize()
+        i = 0
+        while i < len(self.tasks):
+            if self.tasks[i].is_finished():
+                del self.tasks[i]
+                self.tasks[i].finalize()
+            else:
+                i += 1
