@@ -9,6 +9,7 @@ import import_impl
 import unittest
 
 from svm import *
+from problem_generator import *
 
 
 def analyse(testing_svm, digits):
@@ -65,6 +66,18 @@ class SVMUnitTests(unittest.TestCase):
                                                  average='macro')) + "\n")
         print("Confusion Matrix:\n" +
               str(metrics.confusion_matrix(y_val, predicted_values)) + "\n")
+        print("############################################################")
+
+    def test_SVM_Regressor(self):
+        print("\n############################################################")
+        print("Testing SVM regressor:")
+        X, y = gen_sample_problem(PROBLEM_REGRESSION)
+        test_svm = SupportVectorMachine()
+        train, test = test_svm.train_test_split([X, y])
+        test_svm.fit(train)
+        predicted_values = test_svm.predict(X)
+
+        print("\nAccuracy: ", test_svm.score(test))
         print("############################################################")
 
     def test_gamma_value(self):
