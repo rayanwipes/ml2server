@@ -21,3 +21,4 @@ run_test:
     - env python3 Test/test_svm.py
     - env python3 Test/test_cox_regression.py
     - env python3 Test/test_kaplan_meier.py
+    - env python3 Test/test_csv_loader.py

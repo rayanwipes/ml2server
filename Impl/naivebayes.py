@@ -49,8 +49,8 @@ class NaiveBayes():
         return [[x1, y1], [x2, y2]]
 
     # Trains the NB model on imported data
-    def fit(self, data, features):
-        X, y = data, features
+    def fit(self, train_data):
+        X, y = train_data
         return self.model.fit(X, y)
 
     # Get feature importances

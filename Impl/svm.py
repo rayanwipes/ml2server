@@ -1,5 +1,7 @@
 from sklearn import svm
 from sklearn import datasets
+from sklearn.utils.multiclass import type_of_target
+from sklearn.model_selection import train_test_split
 from sklearn.externals import joblib
 from numpy import array_equal
 
@@ -14,16 +16,23 @@ class SupportVectorMachine():
     def _make_svm_classifier(gamma_value, c_value):
         return svm.SVC(gamma=gamma_value, C=c_value)
 
+    # Create regressor for SVM
+    @staticmethod
+    def _make_svm_regressor(gamma_value, c_value):
+        return svm.SVR(gamma=gamma_value, C=c_value)
+
     # Build classifier for SVM
     def __init__(self, gamma_value=0.001, c_value=10, **kwargs):
         SVM = SupportVectorMachine
-        self.classifier = None
+        self.clf = None
         for k in kwargs:
             v = kwargs[k]
             if k == 'filename':
-                self.classifier = joblib.load(v)
-        if self.classifier is None:
-            self.classifier = SVM._make_svm_classifier(gamma_value, c_value)
+                self.clf = joblib.load(v)
+        self.gamma_value = gamma_value
+        self.c_value = c_value
+        if self.clf is None:
+            self.clf = SVM._make_svm_classifier(self.gamma_value, self.c_value)
 
     # Serialize model into a string
     def dump_model(self):
@@ -31,7 +40,7 @@ class SupportVectorMachine():
 
     # Saves model to file
     def save_model(self, filename):
-        joblib.dump(self.classifier, filename)
+        joblib.dump(self.clf, filename)
 
     # Split train and test data
     def train_test_split(self, data, ratio=.4):
@@ -44,8 +53,13 @@ class SupportVectorMachine():
 
     # Trains the SVM on imported data"""
     def fit(self, train_data):
+        SVM = SupportVectorMachine
         X, y = train_data
-        return self.classifier.fit(X, y)
+        if type_of_target(y) in ['continuous', 'continuous-multioutput']:
+            self.clf = SVM._make_svm_regressor(self.gamma_value, self.c_value)
+        else:
+            self.clf = SVM._make_svm_classifier(self.gamma_value, self.c_value)
+        return self.clf.fit(X, y)
 
     # Get feature importances
     def feature_importances(self):
@@ -58,7 +72,7 @@ class SupportVectorMachine():
 
     # Predicts value of specified data point
     def predict(self, data_to_predict):
-        return self.classifier.predict(data_to_predict)
+        return self.clf.predict(data_to_predict)
 
     def test(self):
         digits = datasets.load_digits()
