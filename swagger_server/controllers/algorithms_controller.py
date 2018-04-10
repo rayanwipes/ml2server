@@ -48,7 +48,8 @@ def suggest(data):  # noqa: E501
         the column individual values can be reached by iterating through the input_column and doing
         input_column[0].column_index
         or
-        inpuht_column[0].column_type
+        input_column[0].column_type
+        remember to pass in authorisation
         '''
         c = Client()
         (filename,response_code) = c.request_data(input_column)
@@ -59,8 +60,11 @@ def suggest(data):  # noqa: E501
             ret = Model404Error("Things broken","File invalid","Invalid file data")
             return ret,404
 
-        csv = CSVLoader()
-        csv_data = csv.load_csv(filename)
+        csv_data = load_csv_xy(filename, [
+            c.column_index for c in data.output_columns
+        ], [
+            c.column_index for c in data.input_columns
+        ])
 
         sug = SuggestAlgorithm()
         '''
@@ -71,7 +75,7 @@ def suggest(data):  # noqa: E501
         Random Forests
         Support Vector Machine
         '''
-        ret_list = sug.fit_percentage(csv_data)
+        ret_list = sug.suggest_algorithms(csv_data, no_rows)
         nb_g_score = SuggestDataJobs(nb_g,ret_list[0])
         nb_m_score = SuggestDataJobs(nb_m,ret_list[1])
         nb_b_score = SuggestDataJobs(nb_b,ret_list[2])

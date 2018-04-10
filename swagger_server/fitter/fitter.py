@@ -27,7 +27,7 @@ class ClassifierFitter:
         self.columns += xcolumns if xcolumns else []
         self.process = Process('tmp_success_' + str(self.id))
 
-    def start(self, model_out):
+    def start(self, model_out, report_out=None):
         self.process.start([
                             './ml_execute_fit.py',
                             self.functor,

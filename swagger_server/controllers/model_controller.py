@@ -17,10 +17,13 @@ from swagger_server.algorithms import wrapper
 from swagger_server.controllers.check_auth import *
 from swagger_server.algorithms.client import *
 from swagger_server.algorithms.csv_loader import *
+from swagger_server.fitter.fitter import *
 import uuid
+
 
 def create_model(data):  # noqa: E501
     """send model to backend """
+    global task_manager
     if connexion.request.is_json:
         data = CreateModelData.from_dict(connexion.request.get_json())  # noqa: E50
         (auth_header_value,author_token) = check_auth(connexion.request)
@@ -37,14 +40,16 @@ def create_model(data):  # noqa: E501
             return "Error Unauthorised Usage", 401
         elif response_code is 404:
             ret = Model404Error("Things broken","File invalid","Invalid file data")
-            return ret,404
+            return ret, 404
 
         # potentially not here, might just pass the filename, need to train
         # and call the write function at some point
         # also need to add stuff to write the metadata when the model is written
-
-        csv = CSVLoader()
-        csv_data = csv.load_csv(filename)
+        csv_data = load_csv_xy(filename, [
+            c.column_index for c in data.output_columns
+        ], [
+            c.column_index for c in data.input_columns
+        ])
         #
         # data
         # ->request to the backend
@@ -84,7 +89,8 @@ def delete_training(model_id, project_name):  # noqa: E501
         return "User is not authorised",401
 
     if check_user_authorisation is not 404:
-        # check if the user exists in the
+        global task_manager
+        task_manager.kill_task_uuid(model_id)
         c.delete_model(model_id,project_name)
         c.remove_from_metadata(model_id,project_name)
     else:

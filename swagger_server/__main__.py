@@ -3,6 +3,10 @@
 import connexion
 
 from swagger_server import encoder
+from swagger_server.fitter.task_manager import *
+
+
+task_manager = TaskManager()
 
 
 def main():
