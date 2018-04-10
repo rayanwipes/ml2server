@@ -6,6 +6,8 @@ from swagger_server import encoder
 
 
 def main():
+    # start the subshell here
+    print("Running the app")
     app = connexion.App(__name__, specification_dir='./swagger/')
     app.app.json_encoder = encoder.JSONEncoder
     app.add_api('swagger.yaml', arguments={'title': 'JHProject ML API'})

@@ -16,7 +16,7 @@ from swagger_server.models.job_status_type import JobStatusType
 from swagger_server.models.jobs import Jobs
 from swagger_server.models.jobs_data import JobsData
 from swagger_server.models.model404_error import Model404Error
-from swagger_server.models.model404_error_error_data import Model404ErrorErrorData
+from swagger_server.models.model404_error_data import Model404ErrorData
 from swagger_server.models.param_type import ParamType
 from swagger_server.models.parameter import Parameter
 from swagger_server.models.prediction_input import PredictionInput
