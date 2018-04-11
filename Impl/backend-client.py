@@ -3,6 +3,7 @@ import json
 
 
 class Client:
+    
 
     fileMeta = json.dumps({
         "file_path": "",
@@ -23,15 +24,21 @@ class Client:
         }
     })
 
-    def requestData(self, path):
-        r = requests.get(path)
+    def requestData(self, projectName, filename):
+        r = requests.get(projectName+"/"+filename)
         if r.status_code is not 200:
-            return r.status_code
+            return None, r.status_code
+        else:
+            return r.data, r.status_code
 
-    def requestModel(self, path):
+    def requestModel(self, path, filename):
         r = requests.get(path)
         if r.status_code is not 200:
             return r.status_code
+        else:
+            fileTemp = open(filename)
+            fileTemp.write(r.data)
+            return filename, r.status_code
 
     # This is a post
     def sendMetadata(self, path):
@@ -45,20 +52,25 @@ class Client:
             if r.status_code is not 200:
                 return r.status_code
 
-    def createModel(self, path):
+    def createModel(self, path, id):
         r = requests.post(path+"?action=create")
         if r.status_code is not 200:
             return r.status_code
 
-    def updateModel(self, path, modelData):
+    def updateModel(self, path, modelData, id):
         r = requests.post(path)
         if r.status_code is not 200:
             return r.status_code
         else:
-            sendMetadata(path)
+            self.sendMetadata(path)
 
-    def deleteModel(self, path):
+    def deleteModel(self, path, id):
         r = requests.post(path+"?action=delete")
         if r.status_code is not 200:
             return r.status_code
         return "success"
+
+cli = Client()
+lisat = [1]
+nice, stuff = cli.requestData("https://138.251.29.186:8080","")
+print(nice + stuff)
