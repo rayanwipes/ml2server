@@ -360,14 +360,14 @@ definitions:
       refresh_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
       job_id: "nb83451"
       input_columns:
-      - column_type: "discrete"
+      - column_type: {}
         column_index: 4
-      - column_type: "discrete"
+      - column_type: {}
         column_index: 4
       output_columns:
-      - column_type: "discrete"
+      - column_type: {}
         column_index: 4
-      - column_type: "discrete"
+      - column_type: {}
         column_index: 4
       parameters:
         k: 5
@@ -419,9 +419,9 @@ definitions:
         id: "id"
         project_name: "project_name"
       input_columns:
-      - column_type: "discrete"
+      - column_type: {}
         column_index: 4
-      - column_type: "discrete"
+      - column_type: {}
         column_index: 4
   Status:
     type: "object"
@@ -505,14 +505,14 @@ definitions:
         id: "id"
         project_name: "project_name"
       input_columns:
-      - column_type: "discrete"
+      - column_type: {}
         column_index: 4
-      - column_type: "discrete"
+      - column_type: {}
         column_index: 4
       output_columns:
-      - column_type: "discrete"
+      - column_type: {}
         column_index: 4
-      - column_type: "discrete"
+      - column_type: {}
         column_index: 4
   Suggest:
     type: "object"
@@ -745,7 +745,7 @@ definitions:
       column_type:
         $ref: "#/definitions/DataType"
     example:
-      column_type: "discrete"
+      column_type: {}
       column_index: 4
   DataType:
     type: "string"

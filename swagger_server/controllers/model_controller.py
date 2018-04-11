@@ -18,7 +18,10 @@ from swagger_server.controllers.check_auth import *
 from swagger_server.algorithms.client import *
 from swagger_server.algorithms.csv_loader import *
 from swagger_server.fitter.fitter import *
+from swagger_server.controllers.utils import *
+from swagger_server.fitter.fitter import *
 import uuid
+import datetime
 
 
 def create_model(data):  # noqa: E501
@@ -29,27 +32,26 @@ def create_model(data):  # noqa: E501
         (auth_header_value,author_token) = check_auth(connexion.request)
         if not author_token :
             return auth_header_value, 401
+        if not is_in_jobs_list(data.job_id):
+            ret = Model404Error("Invalid Job ID","invalid data","Invalid data")
+            return ret, 404
 
         c = Client()
+        # Some things here potentially to be able to do things
         input_column = data.input_columns
         val = input_column[0].column_type
         train_data = data.training_data
-        (filename,response_code) = c.request_data(input_column)
+        response_code = c.request_data(input_column)
 
         if response_code is 401:
             return "Error Unauthorised Usage", 401
         elif response_code is 404:
-            ret = Model404Error("Things broken","File invalid","Invalid file data")
+            ret = Model404Error("Invalid file data","File invalid","Invalid file data")
             return ret, 404
 
         # potentially not here, might just pass the filename, need to train
         # and call the write function at some point
         # also need to add stuff to write the metadata when the model is written
-        csv_data = load_csv_xy(filename, [
-            c.column_index for c in data.output_columns
-        ], [
-            c.column_index for c in data.input_columns
-        ])
         #
         # data
         # ->request to the backend
@@ -60,9 +62,27 @@ def create_model(data):  # noqa: E501
         # model = wrapper.create_model(wrapper.MDL_RANDOM_FOREST)
         # wrapper.fit(data, model)
         # return jsonify("happy ending coming")
+        test = {
+                "data": {
+                        "description": "sample test data",
+                        "id": "id",
+                        "percent_trained": "NA",
+                        "start_time": str(datetime.datetime.now()),
+                        "started_by": "",
+                        "status": "RUNNING"
+                        }
+                }
         UUID = uuid.uuid1()
         (message,response_code) = c.create_model(str(UUID),"some project name")
         response = TrainingResponseData(str(UUID))
+
+        md = MetaData(json,end_client_things)
+        id_to_set = str(datetime.datetime.now()) + str(data.job_id)
+        fname = str(datetime.datetime.now()) + str(data.job_id)
+        column_names = [c['column_index'] for c in data['output_columns']]
+        column_names += [c['column_index'] for c in data['input_columns']]
+        fit = ClassifierFitter(args)
+        # await task_manager.add(fit,data['training_data'])
 
         return TrainingResponse(response),200
 

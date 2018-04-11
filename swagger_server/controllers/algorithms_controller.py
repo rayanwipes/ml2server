@@ -36,9 +36,9 @@ def suggest(data):  # noqa: E501
 
     if connexion.request.is_json:
         data = RequestSuggestion.from_dict(connexion.request.get_json())  # noqa: E501
-        input_column = data.input_columns
-        val = input_column[0].column_type
-        train_data = data.training_data
+        # input_column = data.input_columns
+        # val = input_column[0].column_type
+        # train_data = data.training_data
         '''
         ID and the project name can be fetched by doing
         train_data.id
@@ -52,7 +52,14 @@ def suggest(data):  # noqa: E501
         remember to pass in authorisation
         '''
         c = Client()
-        (filename,response_code) = c.request_data(input_column)
+        # things to pass to Client, not passed yet obvs
+        train_data = data.training_data["project_name"]
+        file_id = data.training_data["id"]
+        filename = "suggest_" + str(train_data) + "_"+ str(id) + ".csv"
+        # idk if this works but it might
+        column_names = [c['column_index'] for c in data['output_columns']]
+        column_names += [c['column_index'] for c in data['input_columns']]
+        (something_not_really_sure_what,response_code) = c.request_data(input_column)
 
         if response_code is 401:
             return "Error Unauthorised Usage", 401
@@ -75,6 +82,7 @@ def suggest(data):  # noqa: E501
         Random Forests
         Support Vector Machine
         '''
+        no_rows = n
         ret_list = sug.suggest_algorithms(csv_data, no_rows)
         nb_g_score = SuggestDataJobs(nb_g,ret_list[0])
         nb_m_score = SuggestDataJobs(nb_m,ret_list[1])
