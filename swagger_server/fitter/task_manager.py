@@ -3,6 +3,10 @@ class TaskManager:
         self.tasks = []
         self.metadata = {}
         self.project_name_taskref = {}
+        self.final = 0
+
+    def set_final(self):
+        self.final =1
 
     def add(self, task, project_name, uuid, mdata):
         id = len(self.tasks)
@@ -66,8 +70,11 @@ class TaskManager:
         while i < len(self.tasks):
             if self.tasks[i].is_finished():
                 self.tasks[i].finalize()
-                mdata = await self.get_metadata(i)
-                mdata.visit_finished_task()
+                # mdata = await self.get_metadata(i)
+                # mdata.visit_finished_task()
                 self._remove_task_ref(i)
             else:
                 i += 1
+
+    def is_done(self):
+        return self.final ==1

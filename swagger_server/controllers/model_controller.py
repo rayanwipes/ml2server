@@ -62,7 +62,7 @@ def create_model(data):  # noqa: E501
         # model = wrapper.create_model(wrapper.MDL_RANDOM_FOREST)
         # wrapper.fit(data, model)
         # return jsonify("happy ending coming")
-        test = {
+        metadata = {
                 "data": {
                         "description": "sample test data",
                         "id": "id",
@@ -76,7 +76,7 @@ def create_model(data):  # noqa: E501
         (message,response_code) = c.create_model(str(UUID),"some project name")
         response = TrainingResponseData(str(UUID))
 
-        md = MetaData(json,end_client_things)
+        # md = MetaData(json,end_client_things)
         id_to_set = str(datetime.datetime.now()) + str(data.job_id)
         fname = str(datetime.datetime.now()) + str(data.job_id)
         column_names = [c['column_index'] for c in data['output_columns']]
