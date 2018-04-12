@@ -20,13 +20,22 @@ from swagger_server.algorithms.csv_loader import *
 from swagger_server.fitter.fitter import *
 from swagger_server.controllers.utils import *
 from swagger_server.fitter.fitter import *
+from swagger_server.controllers.global_variables import *
 import uuid
 import datetime
 
 
+def task_manager_action(f):
+    global lock
+    global task_manager
+    lock.acquire()
+    task_manager.remove_finished()
+    f(task_manager)
+    lock.release()
+
+
 def create_model(data):  # noqa: E501
     """send model to backend """
-    global task_manager
     if connexion.request.is_json:
         data = CreateModelData.from_dict(connexion.request.get_json())  # noqa: E50
         (auth_header_value,author_token) = check_auth(connexion.request)
@@ -49,30 +58,6 @@ def create_model(data):  # noqa: E501
             ret = Model404Error("Invalid file data","File invalid","Invalid file data")
             return ret, 404
 
-        # potentially not here, might just pass the filename, need to train
-        # and call the write function at some point
-        # also need to add stuff to write the metadata when the model is written
-        #
-        # data
-        # ->request to the backend
-        #
-        # -> return 200 "model started training"
-        #
-        # ->start training
-        # model = wrapper.create_model(wrapper.MDL_RANDOM_FOREST)
-        # wrapper.fit(data, model)
-        # return jsonify("happy ending coming")
-        metadata = {
-                "data": {
-                        "description": "sample test data",
-                        "id": "id",
-                        "percent_trained": "NA",
-                        "start_time": str(datetime.datetime.now()),
-                        "started_by": "",
-                        "status": "RUNNING"
-                        }
-                }
-        UUID = uuid.uuid1()
         (message,response_code) = c.create_model(str(UUID),"some project name")
         response = TrainingResponseData(str(UUID))
 
@@ -81,9 +66,29 @@ def create_model(data):  # noqa: E501
         fname = str(datetime.datetime.now()) + str(data.job_id)
         column_names = [c['column_index'] for c in data['output_columns']]
         column_names += [c['column_index'] for c in data['input_columns']]
+        outfile = str(id_to_set) + "_model"
+        successfile = str(id_to_set) + "_model"
         fit = ClassifierFitter(args)
-        # await task_manager.add(fit,data['training_data'])
 
+        metadata = {
+        "data": {
+            "description": "sample test data",
+            "id": id_to_set,
+            "percent_trained": "NA",
+            "start_time": str(datetime.datetime.now()),
+            "started_by": "",
+            "status": "RUNNING"
+            }
+        }
+        # global lock
+        # global task_manager
+        # lock.acquire()
+        # task_manager.remove_finished()
+        # # task_manager.add()
+        # task_manager.add(fit,data['training_data'])
+        # lock.release()
+        task_manager_action(lambda tm:
+                            tm.add(fit, data['training data']))
         return TrainingResponse(response),200
 
 def delete_training(model_id, project_name):  # noqa: E501
@@ -106,19 +111,22 @@ def delete_training(model_id, project_name):  # noqa: E501
     c = Client()
     metadata,check_user_authorisation = c.request_model(model_id,project_name)
     if check_user_authorisation is 401:
-        return "User is not authorised",401
+        return "User is not authorised", 401
 
     if check_user_authorisation is not 404:
         global task_manager
-        task_manager.kill_task_uuid(model_id)
+        print("runs")
+        task_manager_action(lambda tm:
+                            tm.kill_task(
+                                tm.get_task_id(
+                                               project_name,
+                                               model_id)))
         c.delete_model(model_id,project_name)
         c.remove_from_metadata(model_id,project_name)
     else:
         return "model doesn't exists",
     # Check in the subshell if the model is there, if so stop the process, and then get the data
-
-
-    return "Model deleted.",204
+    return "Model deleted.", 204
 
 def get_list(project_name):  # noqa: E501
     """Get a list of models inside a given project.

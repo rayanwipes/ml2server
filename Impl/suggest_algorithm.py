@@ -2,9 +2,11 @@ from . import *
 from random import *
 from swagger_server.algorithms.classifier import *
 
+
 def get_provisional_score(model, sdata, tdata):
     model.fit(sdata)
     return model.score(tdata)
+
 
 class SuggestAlgorithm():
     def __init__(self):
@@ -27,7 +29,6 @@ class SuggestAlgorithm():
         X_t = [X[i] for i in test_rows]
         y_t = [y[i] for i in test_rows]
 
-        ret_list = []
         # now training on the algorithms
 
         nb_g = NaiveBayes(modeltype=NaiveBayes.GAUSSIAN)

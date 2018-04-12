@@ -17,6 +17,7 @@ from swagger_server.algorithms.client import *
 from swagger_server.algorithms.suggest_algorithm import *
 from swagger_server.algorithms.csv_loader import *
 from swagger_server.controllers.check_auth import *
+from swagger_server.controllers.global_variables import *
 
 
 

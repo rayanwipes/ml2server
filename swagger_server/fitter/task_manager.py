@@ -40,6 +40,11 @@ class TaskManager:
             return -1
         return self.tasks[self.project_name_taskref[project_name][uuid]].is_finished()
 
+    def get_project_ids(self, project_name):
+        if project_name not in self.project_name_taskref:
+            return []
+        return self.project_name_taskref.values()
+
     def set_metadata(self, task_id, metadata):
         self.metadata[task_id] = metadata
 
@@ -47,15 +52,15 @@ class TaskManager:
         if task_id not in self.metadata:
             raise Exception("unable to retreive metadata")
         return self.metadata[task_id]
-    i_do_something = 0
 
     def is_finished(self, id):
         if id == -1:
             return False
         return self.tasks[id].is_finished()
 
-    def kill_task(self, project_name, uuid):
-        task_id = get_task_id(project_name, uuid)
+    def kill_task(self, task_id):
+        if task_id == -1:
+            return
         self.tasks[task_id].stop()
         self._remove_task_ref(task_id)
 
