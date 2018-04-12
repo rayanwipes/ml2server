@@ -17,29 +17,29 @@ class RequestSuggestion(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, data_file: DataInput=None, input_columns: List[Column]=None, output_columns: List[Column]=None):  # noqa: E501
+    def __init__(self, training_data: DataInput=None, input_columns: List[Column]=None, output_columns: List[Column]=None):  # noqa: E501
         """RequestSuggestion - a model defined in Swagger
 
-        :param data_file: The data_file of this RequestSuggestion.  # noqa: E501
-        :type data_file: DataInput
+        :param training_data: The training_data of this RequestSuggestion.  # noqa: E501
+        :type training_data: DataInput
         :param input_columns: The input_columns of this RequestSuggestion.  # noqa: E501
         :type input_columns: List[Column]
         :param output_columns: The output_columns of this RequestSuggestion.  # noqa: E501
         :type output_columns: List[Column]
         """
         self.swagger_types = {
-            'data_file': DataInput,
+            'training_data': DataInput,
             'input_columns': List[Column],
             'output_columns': List[Column]
         }
 
         self.attribute_map = {
-            'data_file': 'data_file',
+            'training_data': 'training_data',
             'input_columns': 'input_columns',
             'output_columns': 'output_columns'
         }
 
-        self._data_file = data_file
+        self._training_data = training_data
         self._input_columns = input_columns
         self._output_columns = output_columns
 
@@ -55,25 +55,25 @@ class RequestSuggestion(Model):
         return util.deserialize_model(dikt, cls)
 
     @property
-    def data_file(self) -> DataInput:
-        """Gets the data_file of this RequestSuggestion.
+    def training_data(self) -> DataInput:
+        """Gets the training_data of this RequestSuggestion.
 
 
-        :return: The data_file of this RequestSuggestion.
+        :return: The training_data of this RequestSuggestion.
         :rtype: DataInput
         """
-        return self._data_file
+        return self._training_data
 
-    @data_file.setter
-    def data_file(self, data_file: DataInput):
-        """Sets the data_file of this RequestSuggestion.
+    @training_data.setter
+    def training_data(self, training_data: DataInput):
+        """Sets the training_data of this RequestSuggestion.
 
 
-        :param data_file: The data_file of this RequestSuggestion.
-        :type data_file: DataInput
+        :param training_data: The training_data of this RequestSuggestion.
+        :type training_data: DataInput
         """
 
-        self._data_file = data_file
+        self._training_data = training_data
 
     @property
     def input_columns(self) -> List[Column]:

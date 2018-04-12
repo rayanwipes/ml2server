@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# delete a model
+curl -X DELETE --header 'Accept: application/json' --header 'Authorization: ertgrge' 'http://localhost:8080/JH-Project/machine-learning-api/1.0/models/erfref/3rf'
+

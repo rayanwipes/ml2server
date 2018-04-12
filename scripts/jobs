@@ -1,0 +1,3 @@
+#!/bin/bash 
+
+curl -X GET --header 'Accept: application/json' --header 'Authorization: ertgrge' 'http://localhost:8080/JH-Project/machine-learning-api/1.0/jobs'

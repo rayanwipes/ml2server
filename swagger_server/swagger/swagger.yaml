@@ -9,7 +9,7 @@ basePath: "/JH-Project/machine-learning-api/1.0"
 schemes:
 - "http"
 security:
-        - Bearer: ["eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"]
+- Bearer: []
 paths:
   /models:
     post:
@@ -248,8 +248,8 @@ paths:
           schema:
             $ref: "#/definitions/Error"
         404:
-          description: "If any of input_columns, output_columns, or data_file provided\
-            \ do not exist."
+          description: "If any of input_columns, output_columns, or training_data\
+            \ provided do not exist."
           schema:
             $ref: "#/definitions/404Error"
       x-swagger-router-controller: "swagger_server.controllers.algorithms_controller"
@@ -300,7 +300,15 @@ definitions:
         type: "string"
         description: "Optional message to display to user"
       error_data:
-        $ref: "#/definitions/404Error_error_data"
+        $ref: "#/definitions/404ErrorData"
+  404ErrorData:
+    type: "object"
+    properties:
+      missing_fields:
+        type: "array"
+        items:
+          type: "string"
+          example: "input_data"
   DataInput:
     type: "object"
     properties:
@@ -423,7 +431,7 @@ definitions:
     example:
       data:
         start_time: "start_time"
-        percent_trained: 0.299999999999999988897769753748434595763683319091796875
+        percent_trained: 0.3
         description: "description"
         id: "id"
         started_by: "started_by"
@@ -438,13 +446,13 @@ definitions:
     example:
       data:
       - start_time: "start_time"
-        percent_trained: 0.299999999999999988897769753748434595763683319091796875
+        percent_trained: 0.3
         description: "description"
         id: "id"
         started_by: "started_by"
         status: {}
       - start_time: "start_time"
-        percent_trained: 0.299999999999999988897769753748434595763683319091796875
+        percent_trained: 0.3
         description: "description"
         id: "id"
         started_by: "started_by"
@@ -454,7 +462,7 @@ definitions:
     properties:
       percent_trained:
         type: "number"
-        example: 0.299999999999999988897769753748434595763683319091796875
+        example: 0.3
         minimum: 0
         maximum: 1
       status:
@@ -474,7 +482,7 @@ definitions:
         description: "Username of the user who started the model training."
     example:
       start_time: "start_time"
-      percent_trained: 0.299999999999999988897769753748434595763683319091796875
+      percent_trained: 0.3
       description: "description"
       id: "id"
       started_by: "started_by"
@@ -482,7 +490,7 @@ definitions:
   RequestSuggestion:
     type: "object"
     properties:
-      data_file:
+      training_data:
         $ref: "#/definitions/DataInput"
       input_columns:
         type: "array"
@@ -493,7 +501,7 @@ definitions:
         items:
           $ref: "#/definitions/Column"
     example:
-      data_file:
+      training_data:
         id: "id"
         project_name: "project_name"
       input_columns:
@@ -514,7 +522,7 @@ definitions:
     example:
       data:
         jobs:
-        - score: 0.299999999999999988897769753748434595763683319091796875
+        - score: 0.3
           job:
             partial_training_support: true
             job_description: "Algorithm that calculates conditional probabilities,\
@@ -531,7 +539,7 @@ definitions:
               id: "k"
               type: {}
               required: true
-        - score: 0.299999999999999988897769753748434595763683319091796875
+        - score: 0.3
           job:
             partial_training_support: true
             job_description: "Algorithm that calculates conditional probabilities,\
@@ -557,7 +565,7 @@ definitions:
           $ref: "#/definitions/SuggestData_jobs"
     example:
       jobs:
-      - score: 0.299999999999999988897769753748434595763683319091796875
+      - score: 0.3
         job:
           partial_training_support: true
           job_description: "Algorithm that calculates conditional probabilities, and\
@@ -574,7 +582,7 @@ definitions:
             id: "k"
             type: {}
             required: true
-      - score: 0.299999999999999988897769753748434595763683319091796875
+      - score: 0.3
         job:
           partial_training_support: true
           job_description: "Algorithm that calculates conditional probabilities, and\
@@ -761,7 +769,6 @@ definitions:
     - "running"
     - "complete"
     - "failed"
-    - "cancelled"
   Empty:
     type: "object"
     properties:
@@ -778,13 +785,6 @@ definitions:
     example:
       data:
         model_id: "model_id"
-  404Error_error_data:
-    properties:
-      missing_fields:
-        type: "array"
-        items:
-          type: "string"
-          example: "input_data"
   PredictionInput_data_file:
     properties:
       id:
@@ -802,11 +802,11 @@ definitions:
         $ref: "#/definitions/JobInfo"
       score:
         type: "number"
-        example: 0.299999999999999988897769753748434595763683319091796875
+        example: 0.3
         minimum: 0
         maximum: 1
     example:
-      score: 0.299999999999999988897769753748434595763683319091796875
+      score: 0.3
       job:
         partial_training_support: true
         job_description: "Algorithm that calculates conditional probabilities, and\

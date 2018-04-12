@@ -3,8 +3,6 @@ import pandas
 from sklearn.datasets import *
 from sklearn import metrics
 from sklearn import preprocessing
-from randomforest import *
-from svm import *
 
 
 lab_enc = preprocessing.LabelEncoder()
