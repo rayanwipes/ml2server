@@ -1,0 +1,28 @@
+#!/bin/bash
+
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/problem+json' --header 'Authorization: ertgrge' -d '{ \ 
+   "input_columns": [ \ 
+     { \ 
+       "column_index": 4, \ 
+       "column_type": "discrete" \ 
+     }, \ 
+     { \ 
+       "column_index": 4, \ 
+       "column_type": "discrete" \ 
+     } \ 
+   ], \ 
+   "output_columns": [ \ 
+     { \ 
+       "column_index": 4, \ 
+       "column_type": "discrete" \ 
+     }, \ 
+     { \ 
+       "column_index": 4, \ 
+       "column_type": "discrete" \ 
+     } \ 
+   ], \ 
+   "training_data": { \ 
+     "id": "id", \ 
+     "project_name": "project_name" \ 
+   } \ 
+ }' 'http://localhost:8080/JH-Project/machine-learning-api/1.0/suggest'

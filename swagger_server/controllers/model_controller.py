@@ -273,7 +273,7 @@ def stop_training(model_id, project_name):  # noqa: E501
         c.upload_model(model_id,project_name,data_to_upload)
         c.remove_from_metadata(model_id,project_name)
     else:
-        return "model doesn't exist",404
+        return "model doesn't exist", 404
     # Check in the subshell if the model is there, if so stop the process, and then get the data
 
 

@@ -5,10 +5,8 @@ class TaskManager:
         self.project_name_taskref = {}
         self.final = 0
 
-    def set_final(self):
-        self.final =1
-
     def add(self, task, project_name, uuid, mdata):
+        print("add task", project_name, uuid, mdata)
         id = len(self.tasks)
         self.tasks += [task]
         self.set_metadata(id, mdata)
@@ -59,19 +57,25 @@ class TaskManager:
         return self.tasks[id].is_finished()
 
     def kill_task(self, task_id):
+        print("kill task", task_id)
         if task_id == -1:
             return
         self.tasks[task_id].stop()
         self._remove_task_ref(task_id)
 
+    def is_done(self):
+        return self.final ==1
     def kill_project(self, project_name):
+        print("kill project", project_name)
         p = self.project_name_taskref[project_name]
         self.remove_finished()
         for u, i in p.items():
             self.kill_task(project_name, u)
+        print("task manager", self.project_name_taskref)
 
     def remove_finished(self):
         i = 0
+        print("remove finished tasks")
         while i < len(self.tasks):
             if self.tasks[i].is_finished():
                 self.tasks[i].finalize()
@@ -80,6 +84,4 @@ class TaskManager:
                 self._remove_task_ref(i)
             else:
                 i += 1
-
-    def is_done(self):
-        return self.final ==1
+        print("task_manager", self.project_name_taskref)

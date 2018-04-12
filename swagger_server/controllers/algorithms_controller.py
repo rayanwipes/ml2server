@@ -54,13 +54,13 @@ def suggest(data):  # noqa: E501
         '''
         c = Client()
         # things to pass to Client, not passed yet obvs
-        train_data = data.training_data["project_name"]
-        file_id = data.training_data["id"]
+        train_data = data.training_data.project_name
+        file_id = data.training_data.id
         filename = "suggest_" + str(train_data) + "_"+ str(id) + ".csv"
         # idk if this works but it might
-        column_names = [c['column_index'] for c in data['output_columns']]
-        column_names += [c['column_index'] for c in data['input_columns']]
-        (something_not_really_sure_what,response_code) = c.request_data(input_column)
+        column_names = [c.column_index for c in data.output_columns]
+        column_names += [c.column_index for c in data.input_columns]
+        (something_not_really_sure_what,response_code) = c.request_data(column_names)
 
         if response_code is 401:
             return "Error Unauthorised Usage", 401
