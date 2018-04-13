@@ -25,12 +25,12 @@ import uuid
 import datetime
 
 
-def task_manager_action(f):
+def task_manager_action(function_to_run):
     global lock
     global task_manager
     lock.acquire()
     task_manager.remove_finished()
-    f(task_manager)
+    function_to_run(task_manager)
     lock.release()
 
 
@@ -199,8 +199,6 @@ def get_prediction(model_id, project_name, data):  # noqa: E501
         # and call the write function at some point
         # also need to add stuff to write the metadata when the model is written
 
-        csv = CSVLoader()
-        csv_data = csv.load_csv(filename)
         # wrapper stuff, this doesn't go in the subshell
         return "the data is things",200
     return 'do some magic!'
