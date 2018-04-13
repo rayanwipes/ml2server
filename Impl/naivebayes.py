@@ -1,6 +1,8 @@
 from sklearn import naive_bayes
 from sklearn import datasets
 from sklearn import metrics
+from sklearn.utils.multiclass import type_of_target
+from sklearn.model_selection import train_test_split
 from sklearn.externals import joblib
 
 
