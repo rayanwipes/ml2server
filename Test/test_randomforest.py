@@ -11,6 +11,7 @@ import import_impl
 from randomforest import *
 from problem_generator import *
 from roc_curve import *
+from precision_recall import *
 
 
 def mean(a):
@@ -60,6 +61,7 @@ class RandomForestTest(unittest.TestCase):
 
         if len(set(y_pred)) == 2:
             generate_roc_graph(y, y_pred, 'Receiver Operating Characteristics for ' + name + ' data')
+            generate_recall_graph(y, y_pred, 'Precision Recall for ' + name + ' data')
 
         print("############################################################")
         return accuracy_score(y, y_pred)
@@ -89,5 +91,5 @@ class RandomForestTest(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    plt.switch_backend('agg')
+    # plt.switch_backend('agg')
     unittest.main()

@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 
 
 def generate_roc_graph(y_val, y_predicted, title):
+    plt.switch_backend('agg')
     print("Receiver Operating Characteristics:")
     fpr, tpr, _ = metrics.roc_curve(y_val, y_predicted)
     print(fpr)

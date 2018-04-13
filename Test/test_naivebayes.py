@@ -4,6 +4,7 @@ import unittest
 import import_impl
 from naivebayes import *
 from roc_curve import *
+from precision_recall import *
 from sklearn import datasets
 from sklearn import metrics
 from sklearn.model_selection import train_test_split
@@ -29,6 +30,7 @@ class MyTest(unittest.TestCase):
 
         if len(set(y_predicted)) == 2:
             generate_roc_graph(y_val, y_predicted, 'Receiver Operating Characteristics for Gaussian Functionality')
+            generate_recall_graph(y_val, y_predicted, 'Precision Recall for Gaussian Functionality')
 
         print("############################################################")
 
@@ -51,6 +53,7 @@ class MyTest(unittest.TestCase):
 
         if len(set(y_predicted)) == 2:
             generate_roc_graph(y_val, y_predicted, 'Receiver Operating Characteristics for Gaussian Prediction Accuracy')
+            generate_recall_graph(y_val, y_predicted, 'Precision Recall for Gaussian Prediction Accuracy')
 
         print("############################################################")
 
@@ -82,6 +85,8 @@ class MyTest(unittest.TestCase):
 
         if len(set(y_predicted)) == 2:
             generate_roc_graph(y_val, y_predicted, 'Receiver Operating Characteristics for Multinomial Functionality')
+            generate_recall_graph(y_val, y_predicted, 'Precision Recall for Multinomial Functionality')
+
 
         print("############################################################")
 
@@ -103,6 +108,7 @@ class MyTest(unittest.TestCase):
 
         if len(set(y_predicted)) == 2:
             generate_roc_graph(y_val, y_predicted, 'Receiver Operating Characteristics for Multinomial Prediction Accuracy')
+            generate_recall_graph(y_val, y_predicted, 'Precision Recall for Multinomial Prediction Accuracy')
 
         print("############################################################")
 
@@ -135,6 +141,7 @@ class MyTest(unittest.TestCase):
 
         if len(set(y_predicted)) == 2:
             generate_roc_graph(y_val, y_predicted, 'Receiver Operating Characteristics for Bernoulli Functionality')
+            generate_recall_graph(y_val, y_predicted, 'Precision Recall for Bernoulli Functionality')
 
         print("############################################################")
 
@@ -156,6 +163,7 @@ class MyTest(unittest.TestCase):
 
         if len(set(y_predicted)) == 2:
             generate_roc_graph(y_val, y_predicted, 'Receiver Operating Characteristics for Bernoulli Prediction Accuracy')
+            generate_recall_graph(y_val, y_predicted, 'Precision Recall for Bernoulli Accuracy')
 
         print("############################################################")
 
