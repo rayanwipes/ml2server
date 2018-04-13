@@ -27,12 +27,12 @@ import os
 import json
 
 
-def task_manager_action(f):
+def task_manager_action(function_to_run):
     global lock
     global task_manager
     lock.acquire()
     task_manager.remove_finished()
-    f(task_manager)
+    function_to_run(task_manager)
     lock.release()
 
 

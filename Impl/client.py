@@ -25,6 +25,3 @@ class Client():
 
     def get_metadata(self,project_name):
         return "you're authorised",200
-
-
-stuff = "potato"
