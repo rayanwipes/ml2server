@@ -1,6 +1,8 @@
 from lifelines import KaplanMeierFitter
 import matplotlib.pyplot as plt
+import pandas as pd
 import os
+import csv
 
 
 class kaplan_meier():
@@ -26,6 +28,7 @@ class kaplan_meier():
             kplt = self.kmf.plot(ax=self.subplots[-1])
         self.event_col = 'Event'
         self.dur_col = 'Duration'
+        self.lines = kplt
         # print("Ran the Kaplan Meier Fitter")
         plt.title('Kaplan Meier - Event Observed')
         plt.xlabel(self.dur_col)
@@ -40,3 +43,17 @@ class kaplan_meier():
         plt.cla()
         self.subplots = []
         self.plots = []
+
+    def save_csv(self, filename, plots=None):
+        if os.path.isfile(filename):
+            os.remove(filename)
+        ax = plt.gca()
+        line = ax.lines[0]
+
+        x_data = line.get_xdata()
+        y_data = line.get_ydata()
+
+        d = {'x': x_data, 'y': y_data}
+        df = pd.DataFrame(data=d)
+        df.to_csv(filename, index=False)
+

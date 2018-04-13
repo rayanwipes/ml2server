@@ -19,6 +19,7 @@ class kaplan_tests(unittest.TestCase):
         death_binary = df['E']
         kmf = kaplan_meier()
         kmf.fit(duration_array, death_binary)
+        kmf.save_csv('waltons.csv')
         kmf.save_fig('waltons.png')
 
     def test_dd(self):
@@ -29,6 +30,7 @@ class kaplan_tests(unittest.TestCase):
         death_binary = df['observed']
         kmf = kaplan_meier()
         kmf.fit(duration_array, death_binary)
+        kmf.save_csv('dd.csv')
         kmf.save_fig('dd.png')
 
     def test_regimes(self):
@@ -42,6 +44,7 @@ class kaplan_tests(unittest.TestCase):
         kmf.add_subplot()
         kmf.fit(duration_array[dem], death_binary[dem])
         kmf.fit(duration_array[~dem], death_binary[~dem])
+        kmf.save_csv('combined.csv')
         kmf.save_fig("combined.png")
 
 
