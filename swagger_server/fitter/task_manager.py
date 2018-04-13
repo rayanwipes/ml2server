@@ -12,9 +12,9 @@ class TaskManager:
         self.set_metadata(id, mdata)
         if project_name not in self.project_name_taskref:
             self.project_name_taskref[project_name] = {}
-        self.project_name_taskref[uuid] = id
+        self.project_name_taskref[project_name][uuid] = id
         # output file is in the metadata NEED TO SPECIFY
-        self.tasks[-1].start(mdata.output, mdata.report_output)
+        self.tasks[-1].start(mdata['jsonfile'])
 
     def _remove_task_ref(self, i):
         del self.tasks[i]

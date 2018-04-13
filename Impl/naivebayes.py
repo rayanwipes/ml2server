@@ -1,6 +1,8 @@
 from sklearn import naive_bayes
 from sklearn import datasets
 from sklearn import metrics
+from sklearn.utils.multiclass import type_of_target
+from sklearn.model_selection import train_test_split
 from sklearn.externals import joblib
 
 
@@ -52,6 +54,11 @@ class NaiveBayes():
     def fit(self, train_data):
         X, y = train_data
         return self.model.fit(X, y)
+
+    # Trains the NB model incrementally on imported data
+    def partial_fit(self, train_data):
+        X, y = train_data
+        return self.model.partial_fit(X, y)
 
     # Get feature importances
     def feature_importances(self):

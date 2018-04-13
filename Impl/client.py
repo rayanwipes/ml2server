@@ -6,7 +6,7 @@ class Client():
         pass
 
     def request_data(self,input_columns):
-        return "hello",200
+        return "hello",404
 
     def request_model(self,model_id,project_name):
         return "data stuff",200

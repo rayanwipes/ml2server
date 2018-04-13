@@ -62,10 +62,10 @@ def suggest(data):  # noqa: E501
         column_names += [c.column_index for c in data.input_columns]
         (something_not_really_sure_what,response_code) = c.request_data(column_names)
 
-        if response_code is 401:
+        if response_code == 401:
             return "Error Unauthorised Usage", 401
-        elif response_code is 404:
-            ret = Model404Error("Things broken","File invalid","Invalid file data")
+        elif response_code == 404:
+            ret = Model404Error("The file does not exist","File invalid","Invalid file data")
             return ret,404
 
         csv_data = load_csv_xy(filename, [

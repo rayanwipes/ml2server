@@ -1,6 +1,6 @@
 from swagger_server.algorithms.classifier import *
 from swagger_server.fitter.process import *
-from swagger_server.fitter.ml_execute_fit import *
+from swagger_server.controllers.ml_execute_fit import *
 
 
 class TaskLauncher:
@@ -10,8 +10,7 @@ class TaskLauncher:
 
     def start(self, jsonfile):
         self.process.start([
-            './ml_execute_fit.py',
-            self.successfile,
+            './swagger_server/controllers/ml_execute_fit.py',
             jsonfile])
 
     def is_finished(self):
@@ -20,7 +19,7 @@ class TaskLauncher:
     def stop(self):
         return self.process.kill()
 
-    def finalize():
+    def finalize(self):
         self.process.finalize()
 
 

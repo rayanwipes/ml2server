@@ -3,6 +3,8 @@ import pandas
 from sklearn.datasets import *
 from sklearn import metrics
 from sklearn import preprocessing
+from swagger_server.algorithms.randomforest import *
+from swagger_server.algorithms.svm import *
 
 
 lab_enc = preprocessing.LabelEncoder()

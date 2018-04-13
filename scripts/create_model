@@ -1,0 +1,34 @@
+#!/bin/bash
+
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/problem+json' --header 'Authorization: asd' -d '{ \ 
+   "input_columns": [ \ 
+     { \ 
+       "column_index": 4, \ 
+       "column_type": "discrete" \ 
+     }, \ 
+     { \ 
+       "column_index": 4, \ 
+       "column_type": "discrete" \ 
+     } \ 
+   ], \ 
+   "job_id": "NaiveBayesGaussian", \ 
+   "output_columns": [ \ 
+     { \ 
+       "column_index": 4, \ 
+       "column_type": "discrete" \ 
+     }, \ 
+     { \ 
+       "column_index": 4, \ 
+       "column_type": "discrete" \ 
+     } \ 
+   ], \ 
+   "output_directory_path": "path/stuff/new_job", \ 
+   "parameters": { \ 
+     "k": 5 \ 
+   }, \ 
+   "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9", \ 
+   "training_data": { \ 
+     "id": "id", \ 
+     "project_name": "project_name" \ 
+   } \ 
+ }' 'http://localhost:8080/JH-Project/machine-learning-api/1.0/models'

@@ -1,14 +1,21 @@
 #!/usr/bin/env python3
 
+# from __future__ import absolute_import
 
 import sys
 import json
+import os
+import logging
 
+
+sys.path += [os.getcwd()]
+
+
+import swagger_server.controllers.feature_support as feature_support
 from swagger_server.algorithms.classifier import *
 from swagger_server.algorithms.cox_regression import *
 from swagger_server.algorithms.kaplan_meier import *
 from swagger_server.algorithms.csv_loader import *
-import swagger_server.controllers.feature_support as feature_support
 
 
 NBG, NBM, NBB, RF, SVM, COX, KMF, KX = feature_support.jobs_list
@@ -100,6 +107,8 @@ if __name__ == "__main__":
     #     kmf.fit(data)
     #     pass  # dump plot/table into output and report output
     successfile, jsonfile = sys.argv[1:3]
+    logging.basicConfig(level=logging.DEBUG)
+    logger = logging.getLogger(__name__)
     try:
         with open(jsonfile) as fp:
             par = json.load(fp)
@@ -145,9 +154,10 @@ if __name__ == "__main__":
                 datafile = par['datafile']
                 D = par['dur_column'] # duration column
                 E = par['event_column'] # event column
+                output_file = par['output_file']
                 k = kaplan_meier()
                 k.fit(load_csv(datafile, D), load_csv(datafile, E))
-                # generate a plot/table
+                k.save_csv(output_file)
                 # generate report file
                 remove_file(datafile)
             elif is_kcross(alg):
@@ -179,9 +189,9 @@ if __name__ == "__main__":
             remove_file(datafile)
         else:
             raise Exception('failed to identify operation')
-    except Exception:
-        pass
+    except Exception as error:
+        logger.exception(error)
     finally:
-        # eval("%s(%s)" % (par['function_name'], jsonfile))
-        remove_file(jsonfile1)
+        # eval("%s(%s)" % (par['function_name'], 'jsonfile'))
+        remove_file(jsonfile)
         touch(successfile)
