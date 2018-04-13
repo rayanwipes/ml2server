@@ -5,7 +5,7 @@ import os
 import csv
 
 
-class kaplan_meier():
+class KaplanMeier():
     def __init__(self):
         plt.switch_backend('agg')
         self.kmf = KaplanMeierFitter()
@@ -56,4 +56,3 @@ class kaplan_meier():
         d = {'x': x_data, 'y': y_data}
         df = pd.DataFrame(data=d)
         df.to_csv(filename, index=False)
-

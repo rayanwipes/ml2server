@@ -17,7 +17,7 @@ class kaplan_tests(unittest.TestCase):
         # print(df)
         duration_array = df['T']
         death_binary = df['E']
-        kmf = kaplan_meier()
+        kmf = KaplanMeier()
         kmf.fit(duration_array, death_binary)
         kmf.save_csv('waltons.csv')
         kmf.save_fig('waltons.png')
@@ -28,7 +28,7 @@ class kaplan_tests(unittest.TestCase):
         # print(df)
         duration_array = df['duration']
         death_binary = df['observed']
-        kmf = kaplan_meier()
+        kmf = KaplanMeier()
         kmf.fit(duration_array, death_binary)
         kmf.save_csv('dd.csv')
         kmf.save_fig('dd.png')
@@ -38,7 +38,7 @@ class kaplan_tests(unittest.TestCase):
         # print("The data being analysed is as follows:")
         # print(df)
         dem = (df["democracy"] == "Democracy")
-        kmf = kaplan_meier()
+        kmf = KaplanMeier()
         duration_array = df['duration']
         death_binary = df['observed']
         kmf.add_subplot()

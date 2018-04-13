@@ -1,6 +1,7 @@
 from sklearn import metrics
 import matplotlib.pyplot as plt
 
+
 def generate_recall_graph(y_val, y_predicted, title):
     plt.switch_backend('agg')
     precision, recall, _ = metrics.precision_recall_curve(y_val, y_predicted)

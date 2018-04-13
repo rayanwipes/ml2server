@@ -60,8 +60,10 @@ class RandomForestTest(unittest.TestCase):
         print("Confusion Matrix:\n" + str(confusion_matrix(y, y_pred)) + "\n")
 
         if len(set(y_pred)) == 2:
-            generate_roc_graph(y, y_pred, 'Receiver Operating Characteristics for ' + name + ' data')
-            generate_recall_graph(y, y_pred, 'Precision Recall for ' + name + ' data')
+            generate_roc_graph(y, y_pred, 'Receiver Operating' +
+                               ' Characteristics for ' + name + ' data')
+            generate_recall_graph(y, y_pred, 'Precision Recall for ' + name
+                                  + ' data')
 
         print("############################################################")
         return accuracy_score(y, y_pred)
