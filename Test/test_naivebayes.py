@@ -3,6 +3,7 @@
 import unittest
 import import_impl
 from naivebayes import *
+from roc_curve import *
 from sklearn import datasets
 from sklearn import metrics
 from sklearn.model_selection import train_test_split
@@ -27,23 +28,7 @@ class MyTest(unittest.TestCase):
               str(metrics.confusion_matrix(y_val, y_predicted)) + "\n")
 
         if len(set(y_predicted)) == 2:
-            print("Receiver Operating Characteristics:")
-            fpr, tpr, _ = metrics.roc_curve(y_val, y_predicted)
-            print(fpr)
-            print(tpr)
-
-            plt.figure()
-            lw = 2
-            plt.plot(fpr, tpr, color='orange', lw=lw, label='ROC curve')
-            plt.plot([0, 1], [0, 1], color='navy', lw=lw, linestyle='--')
-            plt.xlim([0.0, 1.0])
-            plt.ylim([0.0, 1.05])
-            plt.xlabel('False Positive Rate')
-            plt.ylabel('True Positive Rate')
-            plt.title('Receiver Operating Characteristics for Gaussian' +
-                      ' Functionality')
-            plt.legend(loc='lower right')
-            plt.show()
+            generate_roc_graph(y_val, y_predicted, 'Receiver Operating Characteristics for Gaussian Functionality')
 
         print("############################################################")
 
@@ -65,23 +50,7 @@ class MyTest(unittest.TestCase):
               str(metrics.confusion_matrix(y_val, y_predicted)) + "\n")
 
         if len(set(y_predicted)) == 2:
-            print("Receiver Operating Characteristics:")
-            fpr, tpr, _ = metrics.roc_curve(y_val, y_predicted)
-            print(fpr)
-            print(tpr)
-
-            plt.figure()
-            lw = 2
-            plt.plot(fpr, tpr, color='orange', lw=lw, label='ROC curve')
-            plt.plot([0, 1], [0, 1], color='navy', lw=lw, linestyle='--')
-            plt.xlim([0.0, 1.0])
-            plt.ylim([0.0, 1.05])
-            plt.xlabel('False Positive Rate')
-            plt.ylabel('True Positive Rate')
-            plt.title('Receiver Operating Characteristics for Gaussian' +
-                      ' Prediction Accuracy')
-            plt.legend(loc='lower right')
-            plt.show()
+            generate_roc_graph(y_val, y_predicted, 'Receiver Operating Characteristics for Gaussian Prediction Accuracy')
 
         print("############################################################")
 
@@ -112,23 +81,7 @@ class MyTest(unittest.TestCase):
               str(metrics.confusion_matrix(y_val, y_predicted)) + "\n")
 
         if len(set(y_predicted)) == 2:
-            print("Receiver Operating Characteristics:")
-            fpr, tpr, _ = metrics.roc_curve(y_val, y_predicted)
-            print(fpr)
-            print(tpr)
-
-            plt.figure()
-            lw = 2
-            plt.plot(fpr, tpr, color='orange', lw=lw, label='ROC curve')
-            plt.plot([0, 1], [0, 1], color='navy', lw=lw, linestyle='--')
-            plt.xlim([0.0, 1.0])
-            plt.ylim([0.0, 1.05])
-            plt.xlabel('False Positive Rate')
-            plt.ylabel('True Positive Rate')
-            plt.title('Receiver Operating Characteristics for Multinomial' +
-                      ' Functionality')
-            plt.legend(loc='lower right')
-            plt.show()
+            generate_roc_graph(y_val, y_predicted, 'Receiver Operating Characteristics for Multinomial Functionality')
 
         print("############################################################")
 
@@ -149,23 +102,7 @@ class MyTest(unittest.TestCase):
               str(metrics.confusion_matrix(y_val, y_predicted)) + "\n")
 
         if len(set(y_predicted)) == 2:
-            print("Receiver Operating Characteristics:")
-            fpr, tpr, _ = metrics.roc_curve(y_val, y_predicted)
-            print(fpr)
-            print(tpr)
-
-            plt.figure()
-            lw = 2
-            plt.plot(fpr, tpr, color='orange', lw=lw, label='ROC curve')
-            plt.plot([0, 1], [0, 1], color='navy', lw=lw, linestyle='--')
-            plt.xlim([0.0, 1.0])
-            plt.ylim([0.0, 1.05])
-            plt.xlabel('False Positive Rate')
-            plt.ylabel('True Positive Rate')
-            plt.title('Receiver Operating Characteristics for Multinomial' +
-                      ' Prediction Accuracy')
-            plt.legend(loc='lower right')
-            plt.show()
+            generate_roc_graph(y_val, y_predicted, 'Receiver Operating Characteristics for Multinomial Prediction Accuracy')
 
         print("############################################################")
 
@@ -197,23 +134,7 @@ class MyTest(unittest.TestCase):
         print(len(set(y_predicted)))
 
         if len(set(y_predicted)) == 2:
-            print("Receiver Operating Characteristics:")
-            fpr, tpr, _ = metrics.roc_curve(y_val, y_predicted)
-            print(fpr)
-            print(tpr)
-
-            plt.figure()
-            lw = 2
-            plt.plot(fpr, tpr, color='orange', lw=lw, label='ROC curve')
-            plt.plot([0, 1], [0, 1], color='navy', lw=lw, linestyle='--')
-            plt.xlim([0.0, 1.0])
-            plt.ylim([0.0, 1.05])
-            plt.xlabel('False Positive Rate')
-            plt.ylabel('True Positive Rate')
-            plt.title('Receiver Operating Characteristics for Bernoulli' +
-                      ' Functionality')
-            plt.legend(loc='lower right')
-            plt.show()
+            generate_roc_graph(y_val, y_predicted, 'Receiver Operating Characteristics for Bernoulli Functionality')
 
         print("############################################################")
 
@@ -234,23 +155,7 @@ class MyTest(unittest.TestCase):
               str(metrics.confusion_matrix(y_val, y_predicted)) + "\n")
 
         if len(set(y_predicted)) == 2:
-            print("Receiver Operating Characteristics:")
-            fpr, tpr, _ = metrics.roc_curve(y_val, y_predicted)
-            print(fpr)
-            print(tpr)
-
-            plt.figure()
-            lw = 2
-            plt.plot(fpr, tpr, color='orange', lw=lw, label='ROC curve')
-            plt.plot([0, 1], [0, 1], color='navy', lw=lw, linestyle='--')
-            plt.xlim([0.0, 1.0])
-            plt.ylim([0.0, 1.05])
-            plt.xlabel('False Positive Rate')
-            plt.ylabel('True Positive Rate')
-            plt.title('Receiver Operating Characteristics for Bernoulli' +
-                      ' Prediction Accuracy')
-            plt.legend(loc='lower right')
-            plt.show()
+            generate_roc_graph(y_val, y_predicted, 'Receiver Operating Characteristics for Bernoulli Prediction Accuracy')
 
         print("############################################################")
 
