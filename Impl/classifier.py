@@ -1,6 +1,6 @@
-from svm import *
-from randomforest import *
-from naivebayes import *
+from swagger_server.algorithms.svm import *
+from swagger_server.algorithms.randomforest import *
+from swagger_server.algorithms.naivebayes import *
 
 
 class Classifier:

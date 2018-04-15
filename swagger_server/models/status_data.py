@@ -16,7 +16,7 @@ class StatusData(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, percent_trained: float=None, status: JobStatusType=None, description: str=None, id: str=None, start_time: str=None, started_by: str=None):  # noqa: E501
+    def __init__(self, percent_trained: float=None, status: JobStatusType=None, description: str=None, job_id: str=None, model_id: str=None, start_time: str=None, started_by: str=None):  # noqa: E501
         """StatusData - a model defined in Swagger
 
         :param percent_trained: The percent_trained of this StatusData.  # noqa: E501
@@ -25,8 +25,10 @@ class StatusData(Model):
         :type status: JobStatusType
         :param description: The description of this StatusData.  # noqa: E501
         :type description: str
-        :param id: The id of this StatusData.  # noqa: E501
-        :type id: str
+        :param job_id: The job_id of this StatusData.  # noqa: E501
+        :type job_id: str
+        :param model_id: The model_id of this StatusData.  # noqa: E501
+        :type model_id: str
         :param start_time: The start_time of this StatusData.  # noqa: E501
         :type start_time: str
         :param started_by: The started_by of this StatusData.  # noqa: E501
@@ -36,7 +38,8 @@ class StatusData(Model):
             'percent_trained': float,
             'status': JobStatusType,
             'description': str,
-            'id': str,
+            'job_id': str,
+            'model_id': str,
             'start_time': str,
             'started_by': str
         }
@@ -45,7 +48,8 @@ class StatusData(Model):
             'percent_trained': 'percent_trained',
             'status': 'status',
             'description': 'description',
-            'id': 'id',
+            'job_id': 'job_id',
+            'model_id': 'model_id',
             'start_time': 'start_time',
             'started_by': 'started_by'
         }
@@ -53,7 +57,8 @@ class StatusData(Model):
         self._percent_trained = percent_trained
         self._status = status
         self._description = description
-        self._id = id
+        self._job_id = job_id
+        self._model_id = model_id
         self._start_time = start_time
         self._started_by = started_by
 
@@ -138,27 +143,50 @@ class StatusData(Model):
         self._description = description
 
     @property
-    def id(self) -> str:
-        """Gets the id of this StatusData.
+    def job_id(self) -> str:
+        """Gets the job_id of this StatusData.
 
-        Model ID  # noqa: E501
+        Model job type  # noqa: E501
 
-        :return: The id of this StatusData.
+        :return: The job_id of this StatusData.
         :rtype: str
         """
-        return self._id
+        return self._job_id
 
-    @id.setter
-    def id(self, id: str):
-        """Sets the id of this StatusData.
+    @job_id.setter
+    def job_id(self, job_id: str):
+        """Sets the job_id of this StatusData.
+
+        Model job type  # noqa: E501
+
+        :param job_id: The job_id of this StatusData.
+        :type job_id: str
+        """
+
+        self._job_id = job_id
+
+    @property
+    def model_id(self) -> str:
+        """Gets the model_id of this StatusData.
 
         Model ID  # noqa: E501
 
-        :param id: The id of this StatusData.
-        :type id: str
+        :return: The model_id of this StatusData.
+        :rtype: str
+        """
+        return self._model_id
+
+    @model_id.setter
+    def model_id(self, model_id: str):
+        """Sets the model_id of this StatusData.
+
+        Model ID  # noqa: E501
+
+        :param model_id: The model_id of this StatusData.
+        :type model_id: str
         """
 
-        self._id = id
+        self._model_id = model_id
 
     @property
     def start_time(self) -> str:

@@ -2,7 +2,6 @@ import os
 import signal
 import subprocess
 import time
-import pipes
 
 
 class Process:
@@ -17,7 +16,6 @@ class Process:
         # subprocess.Popen(args, shell=True)
         self.running = True
         args = [args[0]] + [self.successfile] + args[1:]
-        args = [pipes.quote(arg) for arg in args]
         print(args)
         self.process = subprocess.Popen(args)
 

@@ -10,6 +10,8 @@ import import_impl
 
 from randomforest import *
 from problem_generator import *
+from roc_curve import *
+from precision_recall import *
 
 
 def mean(a):
@@ -58,24 +60,10 @@ class RandomForestTest(unittest.TestCase):
         print("Confusion Matrix:\n" + str(confusion_matrix(y, y_pred)) + "\n")
 
         if len(set(y_pred)) == 2:
-            print("Receiver Operating Characteristics:")
-            fpr, tpr, thresholds = roc_curve(y, y_pred)
-            print(fpr)
-            print(tpr)
-            print(thresholds)
-
-            plt.figure()
-            lw = 2
-            plt.plot(fpr, tpr, color='orange', lw=lw, label='ROC curve')
-            plt.plot([0, 1], [0, 1], color='navy', lw=lw, linestyle='--')
-            plt.xlim([0.0, 1.0])
-            plt.ylim([0.0, 1.05])
-            plt.xlabel('False Positive Rate')
-            plt.ylabel('True Positive Rate')
-            plt.title('Receiver Operating Characteristics for ' + name
-                      + ' data')
-            plt.legend(loc='lower right')
-            plt.show()
+            generate_roc_graph(y, y_pred, 'Receiver Operating' +
+                               ' Characteristics for ' + name + ' data')
+            generate_recall_graph(y, y_pred, 'Precision Recall for ' + name
+                                  + ' data')
 
         print("############################################################")
         return accuracy_score(y, y_pred)
@@ -105,5 +93,5 @@ class RandomForestTest(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    plt.switch_backend('agg')
+    # plt.switch_backend('agg')
     unittest.main()
