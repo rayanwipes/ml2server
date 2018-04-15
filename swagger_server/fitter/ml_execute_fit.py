@@ -8,6 +8,7 @@ from swagger_server.algorithms.classifier import *
 from swagger_server.algorithms.cox_regression import *
 from swagger_server.algorithms.kaplan_meier import *
 from swagger_server.algorithms.csv_loader import *
+from swagger_server.fitter.report_files import *
 import swagger_server.controllers.feature_support as feature_support
 
 
@@ -128,8 +129,16 @@ if __name__ == "__main__":
                 data = load_csv_xy(datafile, ycolumns, xcolumns)
                 c.fit(data)
                 output_file = par['model_out'] # model output
+                report_file = par['report_out'] # report output
                 c.save_model(output_file) # dumps the model into model file
-                # generate report file
+                # fill in the report
+                report = make_report(
+                    title='title',
+                    desription='description',
+                    created='created',
+                    blocks=[
+                    ])
+                json.dump(report, report_file)
                 remove_file(datafile)
             elif is_cox(alg):
                 D = par['dur_column'] # duration column
@@ -139,7 +148,15 @@ if __name__ == "__main__":
                 c = CoxRegression()
                 c.fit(data, 0, 1)
                 # generate a table
-                # generate report file
+                report_file = par['report_out'] # report output
+                # fill in the report
+                report = make_report(
+                    title='title',
+                    desription='description',
+                    created='created',
+                    blocks=[
+                    ])
+                json.dump(report, report_file)
                 remove_file(datafile)
             elif is_kmf(alg):
                 datafile = par['datafile']
@@ -147,8 +164,25 @@ if __name__ == "__main__":
                 E = par['event_column'] # event column
                 k = kaplan_meier()
                 k.fit(load_csv(datafile, D), load_csv(datafile, E))
-                # generate a plot/table
-                # generate report file
+                output_file = par['table_out'] # csv output
+                k.save_csv(output_file)
+                report_file = par['report_out'] # report output
+                report = make_report(
+                    title='title',
+                    desription='description',
+                    created='created',
+                    blocks=[
+                        make_plot_block(title='title',
+                                        sub_title='sub title'
+                                        caption='Caption',
+                                        plot_infos=[
+                                            PlotInformation(type=PlotInformation.LINE,
+                                                            x_col=D,
+                                                            y_col=E,
+                                                            file=FileRef(path=output_file))
+                                        ])
+                    ])
+                json.dump(report, report_file)
                 remove_file(datafile)
             elif is_kcross(alg):
                 datafile = par['datafile']
@@ -161,22 +195,31 @@ if __name__ == "__main__":
                 data = load_csv_xy(datafile, ycolumns, xcolumns)
                 cv.score(data)
                 # generate output
-                # generate report output
+                report_file = par['report_out'] # report_output
+                # fill in the report
+                report = make_report(
+                    title='title',
+                    desription='description',
+                    created='created',
+                    blocks=[
+                    ])
+                json.dump(report, report_file)
                 remove_file(model_file)
                 remove_file(datafile)
             else:
                 raise Exception('failed to identify fitter algorithm')
         elif opr == 'predict':
-            model_file = par['model_file'] # model file
-            m = [] # load_model(model_file)
-            datafile = par['datafile'] # csv filename
-            xcolumns = par['xcolumns'] # array(int)
-            X = load_csv(datafile, xcolumns)
-            y_pred = m.predict(X)
-            # dump y_pred into file
-            # generate report file
-            remove_file(model_file)
-            remove_file(datafile)
+            raise Exception('prediction was moved to the server')
+            # model_file = par['model_file'] # model file
+            # m = [] # load_model(model_file)
+            # datafile = par['datafile'] # csv filename
+            # xcolumns = par['xcolumns'] # array(int)
+            # X = load_csv(datafile, xcolumns)
+            # y_pred = m.predict(X)
+            # # dump y_pred into file
+            # # generate report file
+            # remove_file(model_file)
+            # remove_file(datafile)
         else:
             raise Exception('failed to identify operation')
     except Exception:
