@@ -35,7 +35,7 @@ def task_manager_action(function_to_run):
     function_to_run(task_manager)
     lock.release()
 
-
+# CLIENT INTEGRATION NEEDED
 def create_model(data):  # noqa: E501
     """send model to backend """
     if connexion.request.is_json:
@@ -70,8 +70,9 @@ def create_model(data):  # noqa: E501
         ycolumns = [int(c.column_index) for c in data.output_columns]
         xcolumns = [int(c.column_index) for c in data.input_columns]
         outfile = str(id_to_set) + "_model_" + str(datetime.datetime.now())
-        successfile = base_path_to_files + str(id_to_set) + "_succesfile_" + str(datetime.datetime.now())
+        reportfile = str(id_to_set) + "_report_" + str(datetime.datetime.now())
         jsonfile = base_path_to_files + str(id_to_set) + "_json_file_" + str(datetime.datetime.now())
+        successfile = base_path_to_files + str(id_to_set) + "_succesfile_" + str(datetime.datetime.now())
 
         # fit = ClassifierFitter(successfile)
         fit = TaskLauncher(successfile)
@@ -80,8 +81,9 @@ def create_model(data):  # noqa: E501
             "description": "sample test data",
             "id": id_to_set,
             "percent_trained": "NA",
+            "algorithm_type": str(data.job_id),
             "start_time": str(datetime.datetime.now()),
-            "started_by": "easter bunny",
+            "started_by": "NA",
             "status": "RUNNING"
             }
         }
@@ -98,6 +100,7 @@ def create_model(data):  # noqa: E501
         metadata['id_to_set'] = str(id_to_set)
         metadata['task_type'] = "fit"
         metadata['algorithm'] = str(data.job_id)
+        metadata['report_out'] = str(reportfile)
         if not os.path.exists(base_path_to_files):
             os.makedirs(base_path_to_files)
 
@@ -110,6 +113,7 @@ def create_model(data):  # noqa: E501
         response = TrainingResponseData(str(UUID))
         return TrainingResponse(response),200
 
+# CLIENT INTEGRATION
 def delete_training(model_id, project_name):  # noqa: E501
     """Forcefully stop training a model. If model has finished training, it deletes the model file in BE.
 
@@ -147,6 +151,7 @@ def delete_training(model_id, project_name):  # noqa: E501
     # Check in the subshell if the model is there, if so stop the process, and then get the data
     return "Model deleted.", 204
 
+# CLIENT INTEGRATION
 def get_list(project_name):  # noqa: E501
     """Get a list of models inside a given project.
 
@@ -197,6 +202,7 @@ def make_classifier(model_fname):
     else:
         raise Exception("unable to make classifier from model of type " + str(tp))
 
+# CLIENT INTEGRATION
 def get_prediction(model_id, project_name, data):  # noqa: E501
     """Get a prediction given a model and input data.
 
@@ -249,6 +255,7 @@ def get_prediction(model_id, project_name, data):  # noqa: E501
         return predict_data,200
     return 'do some magic!'
 
+# CLIENT INTEGRATION
 def status(model_id, project_name):  # noqa: E501
     """Get status of model training.
 
@@ -273,19 +280,21 @@ def status(model_id, project_name):  # noqa: E501
         ret = Model404Error("This Model Does Not Exist","This Model Does Not Exist","This Model Does Not Exist")
         return ret
     # gotta access the subshell here somehow
+    global lock
+    global task_manager
     lock.aquire()
     task_manager.remove_finished()
     task_id  = task_manager.get_task_id(project_name,model_id)
+    metadata = get_metadata(task_id)
+    lock.release()
     if task_id is not -1:
         # need to use the metadata here when getting a task id
-        lock.release()
-        return "helloworld",200
+        return metadata['data'],200
     else:
         status = "COMPLETED"
         algorithm_type="NaiveBayesGaussian"
         start_time = "well its a time"
         status_data = StatusData(100,status,"some description stuff",algorithm_type,model_id,start_time,"some person")
-        lock.release()
         return Status(status_data),200
     # data = 5
     # # data = subshell.getStuff()
@@ -305,6 +314,7 @@ def status(model_id, project_name):  # noqa: E501
     #     status_data = StatusData(33,status,"some description stuff",algorithm_type,model_id,start_time,"some person")
     #     return Status(status_data),200
 
+# CLIENT INTEGRATION
 def stop_training(model_id, project_name):  # noqa: E501
     """Forcefully stop training an incrementally trained model. The partially trained model will be saved and can be used for predictions.
 

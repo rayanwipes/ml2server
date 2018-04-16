@@ -20,7 +20,7 @@ from swagger_server.controllers.check_auth import *
 from swagger_server.controllers.global_variables import *
 
 
-
+# FULLY WORKING
 def jobs():  # noqa: E501
     (auth_header_value,is_authorised) = check_auth(connexion.request)
     if not is_authorised:
@@ -29,6 +29,7 @@ def jobs():  # noqa: E501
     job = Jobs(listData)
     return job,200
 
+# NEEDS FILES FROM CLIENTS
 def suggest(data):  # noqa: E501
     # deal with header values
     (auth_header_value,is_authorised) = check_auth(connexion.request)

@@ -183,7 +183,7 @@ if __name__ == "__main__":
                     created='created',
                     blocks=[
                         make_plot_block(title='title',
-                                        sub_title='sub title'
+                                        sub_title='sub title',
                                         caption='Caption',
                                         plot_infos=[
                                             PlotInformation(type=PlotInformation.LINE,
