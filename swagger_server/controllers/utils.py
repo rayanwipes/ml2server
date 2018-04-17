@@ -1,4 +1,5 @@
-
+from swagger_server.controllers.global_variables import *
+from swagger_server.algorithms.backend-client import *
 
 def end_client_things(client,json):
     # need to add the thing where the final file gets updated
@@ -6,12 +7,10 @@ def end_client_things(client,json):
     c.update_model(files)
     c.update_metadata(project_name)
 
-
-class Metadata:
-    def __init__(self,json,visitor,client):
-        self.json = json
-        self.visitor = visitor
-        self.client = client
-
-    def visit_finished_task(self):
-        self.visitor(self.client,self.json)
+def get_ip():
+    global ip_lock
+    global ip
+    ip_lock.aquire()
+    var = yield ip
+    ip_lock.release()
+    return var
