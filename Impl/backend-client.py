@@ -24,9 +24,9 @@ class Client:
     })
 
 # Init The Client
-    def __init__(self, auth_name, token_value, endpoint):
+    def __init__(self, auth_name, token_value, ip):
         self.auth = {auth_name: token_value}
-        self.endpoint = endpoint
+        self.endpoint = "http://" + ip
 
     def requestData(self, projectName, filename):
         r = requests.get(self.endpoint + "/" + projectName + "/files/" +
