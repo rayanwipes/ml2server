@@ -15,7 +15,7 @@ from swagger_server.models.training_response_data import TrainingResponseData  #
 from swagger_server import util
 from swagger_server.algorithms import wrapper
 from swagger_server.controllers.check_auth import *
-from swagger_server.algorithms.client import *
+from swagger_server.algorithms.backend-client import *
 from swagger_server.algorithms.csv_loader import *
 from swagger_server.fitter.fitter import *
 from swagger_server.controllers.utils import *
@@ -42,7 +42,7 @@ def create_model(data):  # noqa: E501
         data = CreateModelData.from_dict(connexion.request.get_json())  # noqa: E50
         (auth_header_value,author_token) = check_auth(connexion.request)
 
-        UUID = uuid.uuid1()
+        UUID = "File_name"
 
         if not author_token :
             return auth_header_value, 401
@@ -50,10 +50,11 @@ def create_model(data):  # noqa: E501
         if not is_in_jobs_list(data.job_id):
             return ret, 404
 
-        data_fname = str(datetime.datetime.now()) + str(data.job_id)
-
+        data_fname = "data_" + str(datetime.datetime.now()) + "_" + str(data.job_id)
+        UUID = "My_file_name"
         project_name = data.training_data.project_name
-        c = Client()
+        curr_ip = get_ip()
+        c = Client(auth_header_value,connexion.headers[authHeaderValue],curr_ip)
         response_code = c.request_data(data_fname)
 
         if response_code == 401:
@@ -62,7 +63,7 @@ def create_model(data):  # noqa: E501
             ret = Model404Error("Invalid file data","File invalid","Invalid file data")
             return ret, 404
 
-        (message,response_code) = c.create_model(str(UUID),"some project name")
+        (VALID_UUID,response_code) = c.create_model(str(UUID),project_name)
 
 
         # md = MetaData(json,end_client_things)
@@ -131,8 +132,9 @@ def delete_training(model_id, project_name):  # noqa: E501
     if not author_token :
         return auth_header_value, 401
 
-    c = Client()
-    metadata,check_user_authorisation = c.request_model(model_id,project_name,view="Meta")
+    ip = get_ip()
+    c = Client(auth_header_value,connexion.headers[auth_header_value],ip)
+    metadata,check_user_authorisation = c.get_metadata(model_id,project_name)
     if check_user_authorisation == 401:
         return "User is not authorised", 401
 
@@ -144,12 +146,13 @@ def delete_training(model_id, project_name):  # noqa: E501
                                 tm.get_task_id(
                                                project_name,
                                                model_id)))
-        c.delete_model(model_id,project_name)
+        code,data = c.delete_model(project_name,model_id)
+        if code != 200:
+            return "it broke", code
+        metadata_json,response_code = c.get_metadata
         c.remove_from_metadata(model_id,project_name)
     else:
         return "model doesn't exist", 404
-    # Check in the subshell if the model is there, if so stop the process, and then get the data
-    return "Model deleted.", 204
 
 # CLIENT INTEGRATION
 def get_list(project_name):  # noqa: E501

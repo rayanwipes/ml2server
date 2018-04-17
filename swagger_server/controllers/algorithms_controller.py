@@ -13,7 +13,7 @@ from swagger_server.models.suggest_data import SuggestData  # noqa: E501
 from swagger_server.models.suggest_data_jobs import SuggestDataJobs  # noqa: E501
 from swagger_server.controllers.feature_support import *
 from swagger_server import util
-from swagger_server.algorithms.client import *
+from swagger_server.algorithms.backend-client import *
 from swagger_server.algorithms.suggest_algorithm import *
 from swagger_server.algorithms.csv_loader import *
 from swagger_server.controllers.check_auth import *
@@ -38,30 +38,15 @@ def suggest(data):  # noqa: E501
 
     if connexion.request.is_json:
         data = RequestSuggestion.from_dict(connexion.request.get_json())  # noqa: E501
-        # input_column = data.input_columns
-        # val = input_column[0].column_type
-        # train_data = data.training_data
-        '''
-        ID and the project name can be fetched by doing
-        train_data.id
-        or
-        train_data.project_name
+        ip = get_ip()
+        c = Client(authHeaderValue,connexion.headers[authHeaderValue],ip)
 
-        the column individual values can be reached by iterating through the input_column and doing
-        input_column[0].column_index
-        or
-        input_column[0].column_type
-        remember to pass in authorisation
-        '''
-        c = Client()
         # things to pass to Client, not passed yet obvs
-        train_data = data.training_data.project_name
+        project_name = data.training_data.project_name
         file_id = data.training_data.id
         filename = "suggest_" + str(train_data) + "_"+ str(id) + ".csv"
         # idk if this works but it might
-        column_names = [c.column_index for c in data.output_columns]
-        column_names += [c.column_index for c in data.input_columns]
-        (something_not_really_sure_what,response_code) = c.request_data(column_names)
+        (response_code,message) = c.requestDataByID(project_name,file_id,filename)
 
         if response_code == 401:
             return "Error Unauthorised Usage", 401
