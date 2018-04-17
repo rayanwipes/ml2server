@@ -16,7 +16,7 @@ run_test:
     - env python3 -m pip install -r requirements.txt
     - env python3 Test/test_naivebayes.py
     - env python3 Test/test_server.py
-    - env python3 Test/test_k_fold.py
+    - env python3 Test/test_crossvalidation.py
     - env python3 Test/test_randomforest.py
     - env python3 Test/test_svm.py
     - env python3 Test/test_cox_regression.py
