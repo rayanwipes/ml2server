@@ -1,4 +1,4 @@
-from sklearn import cross_val_score
+from sklearn.model_selection import cross_val_score
 
 
 class CrossValidation:
