@@ -13,7 +13,7 @@ from swagger_server.models.suggest_data import SuggestData  # noqa: E501
 from swagger_server.models.suggest_data_jobs import SuggestDataJobs  # noqa: E501
 from swagger_server.controllers.feature_support import *
 from swagger_server import util
-from swagger_server.algorithms.backend-client import *
+from swagger_server.algorithms.backend_client import *
 from swagger_server.algorithms.suggest_algorithm import *
 from swagger_server.algorithms.csv_loader import *
 from swagger_server.controllers.check_auth import *

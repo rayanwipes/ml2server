@@ -1,5 +1,5 @@
 from swagger_server.controllers.global_variables import *
-from swagger_server.algorithms.backend-client import *
+from swagger_server.algorithms.backend_client import *
 
 def end_client_things(client,json):
     # need to add the thing where the final file gets updated

@@ -15,7 +15,7 @@ from swagger_server.models.training_response_data import TrainingResponseData  #
 from swagger_server import util
 from swagger_server.algorithms import wrapper
 from swagger_server.controllers.check_auth import *
-from swagger_server.algorithms.backend-client import *
+from swagger_server.algorithms.backend_client import *
 from swagger_server.algorithms.csv_loader import *
 from swagger_server.fitter.fitter import *
 from swagger_server.controllers.utils import *
