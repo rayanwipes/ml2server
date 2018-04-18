@@ -4,16 +4,20 @@
 from sklearn import metrics
 from sklearn import datasets
 from sklearn.model_selection import train_test_split
+from random import randint
 import unittest
 import import_impl
-
-
 from svm import *
 from csv_loader import *
 from randomforest import *
 
 
 class CsvLoaderTest(unittest.TestCase):
+    def test_headers(self):
+        fname = 'Test/dataset/ints.csv'
+        assert load_headers(fname) == ['a', 'b', 'c']
+        assert load_headers(fname, [1]) == ['b']
+
     def test_int_in_target(self):
         data = load_csv_xy('Test/dataset/ints.csv', [0])
         print(data)
@@ -46,6 +50,14 @@ class CsvLoaderTest(unittest.TestCase):
                                                  average='macro')) + "\n")
         print("Confusion Matrix:\n" +
               str(metrics.confusion_matrix(y_val, predicted_values)) + "\n")
+
+    def test_csv_unload(self):
+        filename = 'Test/dataset/ints.csv'
+        headers = load_headers(filename)
+        data = load_csv(filename)
+        newfile = 'temp_ints_output.csv'
+        unload_csv(newfile, headers, data)
+        assert (data == load_csv(newfile)).all()
 
 
 if __name__ == '__main__':
