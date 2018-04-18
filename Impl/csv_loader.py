@@ -27,7 +27,7 @@ def load_headers(filename, columns=None):
 
 def load_csv_xy(filename, ycolumns, xcolumns=None):
     f = open(filename, 'r')
-    no_cols = len(next(csv.reader(f, delimiter=',')))
+    no_cols = len(load_headers(filename))
     f.close()
     if xcolumns is None:
         xcolumns = [i for i in range(no_cols) if i not in ycolumns]
