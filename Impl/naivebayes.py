@@ -35,7 +35,7 @@ class NaiveBayes():
 
     # Serialize model into byte string
     def dump_model(self):
-        return pickle.dumps(self.clf)
+        return pickle.dumps(self.model)
 
     # Save Model To file
     def save_model(self, filename):
@@ -62,12 +62,12 @@ class NaiveBayes():
 
     # Get feature importances
     def feature_importances(self):
-        return self.clf.feature_importances_
+        return self.model.feature_importances_
 
     # Obtain score for the test data
     def score(self, test_data):
         X, y = test_data
-        return self.clf.score(X, y)
+        return self.model.score(X, y)
 
     # Gets prediction for passed in data
     def predict(self, data_to_predict):
