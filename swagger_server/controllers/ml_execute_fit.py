@@ -133,18 +133,29 @@ if __name__ == "__main__":
                 datafile = par['datafile'] # e.g. file.csvs
                 ycolumns = par['ycolumns'] # array(int)
                 xcolumns = par['xcolumns'] # array(int)
+                data_headers = load_headers(datafile, xcolumns)
                 data = load_csv_xy(datafile, ycolumns, xcolumns)
                 c.fit(data)
                 output_file = par['model_out'] # model output
+                feature_importances_file = par['file1_out']
                 report_file = par['report_out'] # report output
                 c.save_model(output_file) # dumps the model into model file
                 # generate report file
-                # fill in the report
+                # feature importances
+                unload_csv(feature_importances_file, data_headers,
+                           [c.feature_importances()])
+                # roc curves?
+                # precision curves?
+                # scores?
+                # cross validation?
                 report = make_report(
                     title='title',
                     desription='description',
                     created='created',
                     blocks=[
+                        make_table_block(feature_importances_file,
+                                         title='feature importances',
+                                         columns=range(len(xcolumns)))
                     ])
                 json.dump(report, report_file)
                 remove_file(datafile)
@@ -187,8 +198,8 @@ if __name__ == "__main__":
                                         caption='Caption',
                                         plot_infos=[
                                             PlotInformation(type=PlotInformation.LINE,
-                                                            x_col=D,
-                                                            y_col=E,
+                                                            x_col=0,
+                                                            y_col=3,
                                                             file=FileRef(path=output_file))
                                         ])
                     ])
