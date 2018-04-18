@@ -131,8 +131,8 @@ class TestClass(unittest.TestCase):
         svm = SupportVectorMachine()
         rf = RandomForests()
 
-    return [self.get_provisional_score(m, [X_s, y_s], [X_t, y_t])
-            for m in [nb_g, nb_m, nb_b, svm, rf]]
+        return [self.get_provisional_score(m, [X_s, y_s], [X_t, y_t])
+                for m in [nb_g, nb_m, nb_b, svm, rf]]
 
 
 if __name__ == "__main__":
