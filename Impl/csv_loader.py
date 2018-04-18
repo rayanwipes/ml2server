@@ -24,7 +24,6 @@ def load_headers(filename, columns=None):
     return [cols[i] for i in columns]
 
 
-
 def load_csv_xy(filename, ycolumns, xcolumns=None):
     f = open(filename, 'r')
     no_cols = len(load_headers(filename))
